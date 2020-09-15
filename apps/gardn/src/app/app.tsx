@@ -1,27 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from '@gardn/api-interfaces';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-export const App = () => {
-  const [m, setMessage] = useState<Message>({ message: '' });
+import React from 'react';
+// import { Message } from '@gardn/api-interfaces';
 
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
+const client = new ApolloClient({
+  uri: 'http://localhost:3333/graphql',
+  cache: new InMemoryCache()
+});
 
-  return (
-    <>
-      <div style={{ textAlign: 'center' }}>
-        <h1>Welcome to gardn!</h1>
-        <img
-          width="450"
-          src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-        />
-      </div>
-      <div>{m.message}</div>
-    </>
-  );
-};
+client
+  .query({
+    query: gql`
+      query getPlants {
+        plants {
+          name
+        }
+      }
+    `
+  })
+  .then(result => console.log(result));
+
+export const App = () => (
+  <ApolloProvider client={client}>
+    <section style={{ textAlign: 'center' }}>
+      <h1>gardn</h1>
+      <ul></ul>
+    </section>
+  </ApolloProvider>
+);
 
 export default App;
