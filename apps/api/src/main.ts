@@ -1,16 +1,16 @@
 import * as express from 'express';
-import { Message } from '@gardn/api-interfaces';
+import { ApolloServer } from 'apollo-server-express';
 
+import { typeDefs } from './app/schema';
+import { resolvers } from './app/resolvers';
+
+const server = new ApolloServer({ typeDefs, resolvers: resolvers() as any});
+ 
 const app = express();
-
-const greeting: Message = { message: 'Welcome to api!' };
-
-app.get('/api', (req, res) => {
-  res.send(greeting);
-});
-
+server.applyMiddleware({ app });
+ 
 const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log('Listening at http://localhost:' + port + '/api');
-});
-server.on('error', console.error);
+
+app.listen({ port }, () =>
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
+);
