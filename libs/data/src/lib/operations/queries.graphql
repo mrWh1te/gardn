@@ -1,0 +1,12 @@
+query getPlants {
+  plants {
+    id, name
+  }
+}
+
+query getPlant($id: Int!) {
+  plant(id: $id) {
+    name
+  }
+}
+

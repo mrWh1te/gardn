@@ -1,0 +1,5 @@
+mutation addPlant($name: String) {
+  addPlant(name: $name) {
+    id, name
+  }
+}
