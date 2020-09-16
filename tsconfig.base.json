@@ -16,7 +16,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gardn/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@gardn/data": ["libs/data/src/index.ts"]
     }
   },

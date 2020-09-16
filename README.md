@@ -1,33 +1,68 @@
 # Gardn
 
-This project was generated using [Nx](https://nx.dev).
+Open-source full-stack Garden Management app using TypeScript, Node, GraphQL, and React.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="120"></p>
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+🔎 Monorepo setup via [Nx](https://nx.dev)
 
-## Adding capabilities to your workspace
+## Workspace
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+### Applications
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+Main two applications:
 
-Below are our core plugins:
+#### API
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+In `./apps/api` is a GraphQL NodeJS based API built with the Apollo Express Server.
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
+#### Gardn
+
+In `./apps/gardn` is a React based web app.
+
+### Libraries
+
+Main libraries shared in this mono-repo:
+
+#### Data
+
+This focuses on client applications operations with GraphQL to retrieve, create or change data. It exports auto-generates code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
+
+```typescript
+import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Plant
+                                     // built from the GraphQL type called Plant
+```
+
+#### UI
+
+Common UI Components library (to be developed)
+
+```typescript
+import { Button } from '@gardn/ui';
+```
+
+#### Plant
+Domain folder for libraries such as Smart Components, UI Components, View Components, helpful functions, view-models, etc related to an app Plant (to be developed)
+
+```typescript
+import { createPlant } from '@gardn/plant'; // helper function with safe defaults
+```
+
+## Development server
+
+Run `nx serve api` for lifting the GraphQL API. Navigate to http://localhost:3333/graphql. The GraphQL playground will be accessible there. The API will automatically reload if you change any of the source files.
+
+Run `nx serve gardn` for lifting the React web app. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+
+To install new npm dependencies, do it from the root directory. The npm dependencies are shared across apps and libraries.
+
+## Code scaffolding
+
+Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+
+## Build
+
+Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Generate an application
 
@@ -44,18 +79,6 @@ Run `nx g @nrwl/react:lib my-lib` to generate a library.
 > You can also use any of the plugins above to generate libraries as well.
 
 Libraries are sharable across libraries and applications. They can be imported from `@gardn/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 

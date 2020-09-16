@@ -32,9 +32,6 @@
     "api": {
       "tags": []
     },
-    "api-interfaces": {
-      "tags": []
-    },
     "data": {
       "tags": []
     }

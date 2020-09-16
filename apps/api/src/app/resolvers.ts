@@ -1,6 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 
-import { Plant } from '@gardn/data'
+import { Plant } from '@gardn/data';
 
 interface Store {
   plants: Plant[]
