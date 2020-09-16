@@ -6,11 +6,13 @@
 
 Open-source full-stack garden management web app using [TypeScript](https://www.typescriptlang.org/), [Node](https://nodejs.org/), [GraphQL](https://graphql.org/), and [React](https://reactjs.org/) in a mono-repo setup with [Nx](https://nx.dev).
 
-## Workspace
+This project is made better with [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/), [Prettier](https://prettier.io/), [ESLint](https://eslint.org/) and [Babel](https://babeljs.io/).
+
+## Project
+
+This project is a full-stack solution for a garden management web app. It's organized by applications and libraries in a single code repository.
 
 ### Applications
-
-Main two applications:
 
 #### API
 
@@ -21,8 +23,6 @@ In `./apps/api` is a GraphQL NodeJS based API built with the Apollo Express Serv
 In `./apps/gardn` is a React based web app.
 
 ### Libraries
-
-Main libraries shared in this mono-repo:
 
 #### Data
 
