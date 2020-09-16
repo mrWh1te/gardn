@@ -1,17 +1,6 @@
-import { gql } from 'apollo-server-express';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { mergeTypeDefs } from '@graphql-tools/merge';
 
-export const typeDefs = gql`
-  type Plant {
-    id: Int!
-    name: String
-  }
+const typesArray = loadFilesSync('apps/api/src/app/schemas/**/*.graphql');
 
-  type Query {
-    plants: [Plant]
-    plant(id: Int!): Plant
-  }
-
-  type Mutation {
-    addPlant(name: String): Plant
-  }
-`;
+export const typeDefs = mergeTypeDefs(typesArray);
