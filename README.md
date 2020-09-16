@@ -1,10 +1,18 @@
 # Gardn
 
-Open-source full-stack Garden Management app using TypeScript, Node, GraphQL, and React.
+<p align="center"><?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 469.333 469.333" style="enable-background:new 0 0 469.333 469.333;" xml:space="preserve" width="120">
+<path style="fill:#4CAF50;" d="M468.527,6.592c-1.649-3.989-5.54-6.591-9.856-6.592C44.804,0,0.004,171.563,0.004,245.333
+	c0,95.701,72.875,160,181.333,160c136.981,0,165.675-130.347,181.077-200.384c14.973-71.292,51.151-136.391,103.787-186.752
+	C469.248,15.153,470.166,10.575,468.527,6.592z"/>
+<path style="fill:#388E3C;" d="M10.671,469.333c-5.891,0-10.667-4.776-10.667-10.667c0-63.424,109.973-266.923,283.349-350.933
+	c5.302-2.568,11.682-0.353,14.251,4.949c2.568,5.302,0.353,11.682-4.949,14.251l0,0C117.572,211.776,21.337,408.811,21.337,458.667
+	C21.337,464.558,16.562,469.333,10.671,469.333z"/>
+</svg>
+</p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="120"></p>
-
-🔎 Monorepo setup via [Nx](https://nx.dev)
+Open-source full-stack Garden Management app using [TypeScript](https://www.typescriptlang.org/), [Node](https://nodejs.org/), [GraphQL](https://graphql.org/), and [React](https://reactjs.org/) in a mono-repo setup with [Nx](https://nx.dev).
 
 ## Workspace
 
@@ -26,7 +34,7 @@ Main libraries shared in this mono-repo:
 
 #### Data
 
-This focuses on client applications operations with GraphQL to retrieve, create or change data. It exports auto-generates code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
+This focuses on client applications operations with GraphQL to retrieve, create or change data. It exports auto-generated code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
 
 ```typescript
 import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Plant
@@ -48,7 +56,7 @@ Domain folder for libraries such as Smart Components, UI Components, View Compon
 import { createPlant } from '@gardn/plant'; // helper function with safe defaults
 ```
 
-## Development server
+## Development servers
 
 Run `nx serve api` for lifting the GraphQL API. Navigate to http://localhost:3333/graphql. The GraphQL playground will be accessible there. The API will automatically reload if you change any of the source files.
 
@@ -99,15 +107,3 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
