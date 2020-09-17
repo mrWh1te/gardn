@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import Card from './card';
 
-import { empty, hasText } from './card.stories'
+import { empty, hasText } from './card.stories';
 
 describe('Card', () => {
   it('should render successfully', () => {
@@ -18,6 +18,6 @@ describe('Card', () => {
 
   it('should have text', () => {
     const { baseElement } = render( hasText() );
-    expect(baseElement.textContent).toEqual('Text')
+    expect(baseElement.textContent).toEqual('Hi world')
   })
 });

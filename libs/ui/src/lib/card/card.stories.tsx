@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { text } from '@storybook/addon-knobs';
+
 import Card from './card';
 
 export default { title: 'Card' };
@@ -10,6 +12,6 @@ export const empty = () => (
 
 export const hasText = () => (
   <Card>
-    Text
+    { text('Text', 'Hi world') }
   </Card>
 );
