@@ -8,47 +8,56 @@ Open-source full-stack garden management web app using [TypeScript](https://www.
 
 This project is made better with [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/), [Storybook](https://storybook.js.org/), [Prettier](https://prettier.io/), [ESLint](https://eslint.org/) and [Babel](https://babeljs.io/).
 
-## Project
+# Project
 
 This project is a full-stack solution for a garden management web app. It's organized by applications and libraries in a single code repository.
 
-### Applications
+## Applications
 
-#### API
+### API
 
 In `./apps/api` is a GraphQL NodeJS based API built with the Apollo Express Server.
 
-#### Gardn
+### Gardn
 
 In `./apps/gardn` is a React based web app.
 
-### Libraries
+## Libraries
 
-#### Data
+### Data
 
-This focuses on client applications operations with GraphQL to retrieve, create or change data. It exports auto-generated code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
+In `./libs/data` is a library that focuses on main project data from models to client app GraphQL operations that retrieve, create or change data. It exports auto-generated code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
 
 ```typescript
 import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Plant
                                      // built from the GraphQL type called Plant
 ```
 
-This library has a dedicated Storybook app. Run it with `nx run ui:storybook`
+### UI
 
-#### UI
-
-Common UI Components library (to be developed)
+In `./libs/ui` is a library of common UI components.
 
 ```typescript
 import { Button } from '@gardn/ui';
 ```
 
-#### Plant
-Domain folder for libraries such as Smart Components, UI Components, View Components, helpful functions, view-models, etc related to an app Plant (to be developed)
+This library has a dedicated Storybook app. Run it with `nx run ui:storybook`
+
+### Plant
+In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plant feature.
+
+#### Plant: UI
+In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
+
+
+#### Plant: Helpers
+Library to be developed
 
 ```typescript
-import { createPlant } from '@gardn/plant'; // helper function with safe defaults
+import { createPlant } from '@gardn/plant/helpers';
 ```
+
+# Dev Notes
 
 ## Development servers
 
