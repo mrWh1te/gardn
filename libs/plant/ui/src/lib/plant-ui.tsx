@@ -2,21 +2,27 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import { Plant } from '@gardn/data';
+import { Card } from '@gardn/ui';
 
 /* eslint-disable-next-line */
 export interface PlantUiProps {
   plant: Plant
 }
 
-const StyledPlantUi = styled.div`
-  color: pink;
+const InnerPlantCard = styled.div`
+  color: green;
+  h3 {
+    margin: 0;
+  }
 `;
 
 export const PlantUi = (props: PlantUiProps) => {
   return (
-    <StyledPlantUi>
-      <h3>{ props?.plant?.name }</h3>
-    </StyledPlantUi>
+    <Card>
+      <InnerPlantCard>
+        <h3>{ props?.plant?.name }</h3>
+      </InnerPlantCard>
+    </Card>
   );
 };
 

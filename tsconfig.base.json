@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@gardn/data": ["libs/data/src/index.ts"],
-      "@gardn/plant/ui": ["libs/plant/ui/src/index.ts"]
+      "@gardn/plant/ui": ["libs/plant/ui/src/index.ts"],
+      "@gardn/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
