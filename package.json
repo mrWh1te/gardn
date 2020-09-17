@@ -93,6 +93,10 @@
     "ts-jest": "26.1.4",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~3.9.3"
+    "typescript": "~3.9.3",
+    "@storybook/addon-knobs": "5.3.9",
+    "@types/webpack": "4.41.21",
+    "@storybook/react": "5.3.9",
+    "babel-loader": "8.1.0"
   }
 }

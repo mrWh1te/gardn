@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Ui from './card';
+import Card from './card';
 
-describe('Ui', () => {
+describe('Card', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Ui />);
+    const { baseElement } = render(<Card />);
     expect(baseElement).toBeTruthy();
   });
 });

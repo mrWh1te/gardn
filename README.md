@@ -6,7 +6,7 @@
 
 Open-source full-stack garden management web app using [TypeScript](https://www.typescriptlang.org/), [Node](https://nodejs.org/), [GraphQL](https://graphql.org/), and [React](https://reactjs.org/) in a mono-repo setup with [Nx](https://nx.dev).
 
-This project is made better with [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/), [Prettier](https://prettier.io/), [ESLint](https://eslint.org/) and [Babel](https://babeljs.io/).
+This project is made better with [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/), [Storybook](https://storybook.js.org/), [Prettier](https://prettier.io/), [ESLint](https://eslint.org/) and [Babel](https://babeljs.io/).
 
 ## Project
 
@@ -32,6 +32,8 @@ This focuses on client applications operations with GraphQL to retrieve, create 
 import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Plant
                                      // built from the GraphQL type called Plant
 ```
+
+This library has a dedicated Storybook app. Run it with `nx run ui:storybook`
 
 #### UI
 
