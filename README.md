@@ -1,7 +1,7 @@
-# Gardn
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/mrWh1te/gardn/master/apps/gardn/src/assets/leaf.png" alt="Gardn" width="120">
+  <h1>
+    gardn<img src="https://raw.githubusercontent.com/mrWh1te/gardn/master/apps/gardn/src/assets/leaf.png" alt="Gardn" width="32">
+  </h1>
 </p>
 
 Open-source full-stack garden management web app using [TypeScript](https://www.typescriptlang.org/), [Node](https://nodejs.org/), [GraphQL](https://graphql.org/), and [React](https://reactjs.org/) in a mono-repo setup with [Nx](https://nx.dev).
