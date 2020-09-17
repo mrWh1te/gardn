@@ -1,21 +1,46 @@
-import { cleanup, getByText, render, wait } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import App from './app';
 
+// todo common library for jest mocks
+jest.mock('@apollo/client', () => {
+  const originalModule = jest.requireActual('@apollo/client')
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    ApolloClient: class mockClient {
+      constructor() {}
+      then() {}
+      query() {
+        return this
+      }
+    } 
+  }
+})
+
+jest.mock('react-router-dom', () => {
+  const originalModule = jest.requireActual('@apollo/client')
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    Route: () => <div></div>,
+    Link: () => <div></div>
+  }
+})
+
 describe('App', () => {
-  afterEach(() => {
-    delete global['fetch'];
-    cleanup();
-  });
 
   it('should render successfully', async () => {
-    global['fetch'] = jest.fn().mockResolvedValueOnce({
-      json: () => ({
-        message: 'my message',
-      }),
-    });
-
     const { baseElement } = render(<App />);
-    await wait(() => getByText(baseElement, 'my message'));
+    expect(baseElement).toBeTruthy()
   });
+
+  // Clean up
+  afterAll(async() => {
+    jest.unmock('@apollo/client')
+    jest.unmock('react-router-dom');
+  })
+
 });
