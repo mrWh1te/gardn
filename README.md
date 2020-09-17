@@ -8,9 +8,7 @@ Open-source full-stack garden management web app using [TypeScript](https://www.
 
 This project is made better with [Jest](https://jestjs.io/), [Cypress](https://www.cypress.io/), [Storybook](https://storybook.js.org/), [Prettier](https://prettier.io/), [ESLint](https://eslint.org/) and [Babel](https://babeljs.io/).
 
-# Project
-
-This project is a full-stack solution for a garden management web app. It's organized by applications and libraries in a single code repository.
+It is organized by applications and libraries.
 
 ## Applications
 
