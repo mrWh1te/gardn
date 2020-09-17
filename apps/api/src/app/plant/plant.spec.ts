@@ -9,7 +9,7 @@ import { resolvers, mockPlant1, mockPlant2 } from '../resolvers'
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25
 const allPlantsTestCase = {
-    id: 'Generated getPlants',
+    id: 'Generated getPlants -> plants',
     query: print(GetPlantsDocument),
     variables: { },
 
@@ -24,7 +24,7 @@ const allPlantsTestCase = {
 }
 
 const plantId2TestCase = {
-  id: 'Generated getPlant',
+  id: 'Generated getPlant -> plant',
   query: print(GetPlantDocument),
   variables: { 
     id: 2
