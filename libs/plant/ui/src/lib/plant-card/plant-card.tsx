@@ -5,7 +5,7 @@ import { Plant } from '@gardn/data';
 import { Card } from '@gardn/ui';
 
 /* eslint-disable-next-line */
-export interface PlantUiProps {
+export interface PlantCardProps {
   plant: Plant
 }
 
@@ -16,7 +16,7 @@ const InnerPlantCard = styled.div`
   }
 `;
 
-export const PlantUi = (props: PlantUiProps) => {
+export const PlantCard = (props: PlantCardProps) => {
   return (
     <Card>
       <InnerPlantCard>
@@ -26,4 +26,4 @@ export const PlantUi = (props: PlantUiProps) => {
   );
 };
 
-export default PlantUi;
+export default PlantCard;

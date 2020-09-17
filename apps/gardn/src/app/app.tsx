@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
-import { PlantUi } from '@gardn/plant/ui';
+import { PlantCard } from '@gardn/plant/ui';
 import { Plant } from '@gardn/data';
 
 const client = new ApolloClient({
@@ -63,7 +63,7 @@ export const App = () => (
         </div>
       )}
     />
-    <Route path="/plant" component={() => <PlantUi plant={mockPlant} />} />
+    <Route path="/plant" component={() => <PlantCard plant={mockPlant} />} />
     {/* END: routes */}
   </ApolloProvider>
 );

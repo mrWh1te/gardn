@@ -1,1 +1,1 @@
-export * from './lib/plant-ui';
+export * from './lib/plant-card/plant-card';
