@@ -16,8 +16,8 @@ const createPlantFactory = (lastPlantId = 0) => (name: string): Plant => {
 
 const createPlant = createPlantFactory()
 
-const mockPlant1 = createPlant('Lavender')
-const mockPlant2 = createPlant('Parsley')
+export const mockPlant1 = createPlant('Lavender')
+export const mockPlant2 = createPlant('Parsley')
 
 const initialStore: Store = {
   plants: [mockPlant1, mockPlant2]
