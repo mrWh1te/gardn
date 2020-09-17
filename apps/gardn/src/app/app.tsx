@@ -2,12 +2,10 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 import React from 'react';
-
 import { Route, Link } from 'react-router-dom';
 
 import { PlantUi } from '@gardn/plant/ui';
 import { Plant } from '@gardn/data';
-// import { Message } from '@gardn/api-interfaces';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3333/graphql',
@@ -52,7 +50,7 @@ export const App = () => (
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/ui">Plant</Link>
+          <Link to="/plant">Plant</Link>
         </li>
       </ul>
     </div>
@@ -62,11 +60,10 @@ export const App = () => (
       render={() => (
         <div>
           This is the generated root route.{' '}
-          <Link to="/page-2">Click here for page 2.</Link>
         </div>
       )}
     />
-    <Route path="/ui" component={() => <PlantUi plant={mockPlant} />} />
+    <Route path="/plant" component={() => <PlantUi plant={mockPlant} />} />
     {/* END: routes */}
   </ApolloProvider>
 );
