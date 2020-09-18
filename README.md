@@ -31,6 +31,10 @@ import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Pl
                                      // built from the GraphQL type called Plant
 ```
 
+#### Data: Plant
+
+Inside the Data library are domain specific libraries such as "data-plant" in `./libs/data/plant`. It is specific to the Plant model from mocks to helper functions to manage the data.
+
 ### UI
 
 In `./libs/ui` is a library of common UI components.
@@ -47,13 +51,19 @@ In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Component
 #### Plant: UI
 In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
 
+### Container
+In `./libs/container` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Container feature. A container, in gardn, is a physical box that can contain plants from seeds to soil.
 
-#### Plant: Helpers
-Library to be developed
+#### Container: UI
 
-```typescript
-import { createPlant } from '@gardn/plant/helpers';
-```
+In `./libs/container/ui` is a library of container UI components.
+
+### Containers
+In `./libs/containers` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Containers feature.
+
+#### Containers: UI
+
+In `./libs/containesr/ui` is a library of containers UI components like a list of Containers.
 
 ## Development servers
 
