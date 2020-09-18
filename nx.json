@@ -33,9 +33,7 @@
     },
     "gardn-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "gardn"
-      ]
+      "implicitDependencies": ["gardn"]
     },
     "api": {
       "tags": []
@@ -47,6 +45,12 @@
       "tags": []
     },
     "ui": {
+      "tags": []
+    },
+    "container-ui": {
+      "tags": []
+    },
+    "containers-ui": {
       "tags": []
     }
   }

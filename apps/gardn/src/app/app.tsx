@@ -7,6 +7,9 @@ import { Route, Link } from 'react-router-dom';
 import { PlantCard } from '@gardn/plant/ui';
 import { Plant } from '@gardn/data';
 
+import { ContainerCard } from '@gardn/container/ui';
+import { ContainersList } from '@gardn/containers/ui';
+
 const client = new ApolloClient({
   uri: 'http://localhost:3333/graphql',
   cache: new InMemoryCache(),
@@ -26,8 +29,8 @@ client
 
 const mockPlant: Plant = {
   id: -1,
-  name: 'Parsley'
-}
+  name: 'Parsley',
+};
 
 export const App = () => (
   <ApolloProvider client={client}>
@@ -50,20 +53,24 @@ export const App = () => (
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/containers">Containers</Link>
+        </li>
+        <li>
           <Link to="/plant">Plant</Link>
+        </li>
+        <li>
+          <Link to="/container">Container</Link>
         </li>
       </ul>
     </div>
     <Route
       path="/"
       exact
-      render={() => (
-        <div>
-          This is the generated root route.{' '}
-        </div>
-      )}
+      render={() => <div>This app is under development. </div>}
     />
+    <Route path="/containers" component={ContainersList} />
     <Route path="/plant" component={() => <PlantCard plant={mockPlant} />} />
+    <Route path="/container" component={ContainerCard} />
     {/* END: routes */}
   </ApolloProvider>
 );

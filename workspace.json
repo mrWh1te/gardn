@@ -15,10 +15,7 @@
             "main": "apps/gardn/src/main.tsx",
             "polyfills": "apps/gardn/src/polyfills.ts",
             "tsConfig": "apps/gardn/tsconfig.app.json",
-            "assets": [
-              "apps/gardn/src/favicon.ico",
-              "apps/gardn/src/assets"
-            ],
+            "assets": ["apps/gardn/src/favicon.ico", "apps/gardn/src/assets"],
             "styles": [],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
@@ -68,10 +65,7 @@
               "apps/gardn/tsconfig.app.json",
               "apps/gardn/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/gardn/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/gardn/**/*"]
           }
         },
         "test": {
@@ -105,13 +99,8 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/gardn-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/gardn-e2e/**/*"
-            ]
+            "tsConfig": ["apps/gardn-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/gardn-e2e/**/*"]
           }
         }
       }
@@ -129,9 +118,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -161,10 +148,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
@@ -200,10 +184,7 @@
               "libs/data/tsconfig.lib.json",
               "libs/data/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/data/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/data/**/*"]
           }
         },
         "test": {
@@ -229,10 +210,7 @@
               "libs/plant/ui/tsconfig.lib.json",
               "libs/plant/ui/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/plant/ui/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/plant/ui/**/*"]
           }
         },
         "test": {
@@ -259,10 +237,7 @@
               "libs/ui/tsconfig.spec.json",
               "libs/ui/.storybook/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/ui/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/ui/**/*"]
           }
         },
         "test": {
@@ -300,6 +275,58 @@
             "ci": {
               "quiet": true
             }
+          }
+        }
+      }
+    },
+    "container-ui": {
+      "root": "libs/container/ui",
+      "sourceRoot": "libs/container/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/container/ui/tsconfig.lib.json",
+              "libs/container/ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/container/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/container/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "containers-ui": {
+      "root": "libs/containers/ui",
+      "sourceRoot": "libs/containers/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/containers/ui/tsconfig.lib.json",
+              "libs/containers/ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/containers/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/containers/ui/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
