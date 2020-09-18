@@ -3,9 +3,11 @@ import { graphql, print } from 'graphql'
 
 import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 
+// todo reduce scope to plant
 import { typeDefs } from 'apps/api/src/app/schema'
 import { resolvers } from 'apps/api/src/app/resolvers'
-import { mockPlant1, mockPlant2 } from 'apps/api/src/app/resolvers/plant'
+
+import { mockPlant1, mockPlant2 } from './mocks'
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25

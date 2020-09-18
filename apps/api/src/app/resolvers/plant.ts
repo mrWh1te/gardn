@@ -1,12 +1,9 @@
-import { createPlantFactory } from '@gardn/data/plant'
+import { createPlant, mockPlant1, mockPlant2 } from '@gardn/data/plant';
 
-const createPlant = createPlantFactory();
-
-// todo move to data/plant ?
-export const mockPlant1 = createPlant('Lavender');
-export const mockPlant2 = createPlant('Parsley');
-
-
+/**
+ * Data is stored in memory for development
+ * @param plants 
+ */
 export const resolvers = (plants = [mockPlant1, mockPlant2]) => ({
   Query: {
     plants: () => plants,
