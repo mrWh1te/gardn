@@ -1,10 +1,11 @@
 import { Plant } from '@gardn/data';
 
 // todo helper
-const createPlantFactory = (lastPlantId = 0) => (name: string): Plant => { 
-  lastPlantId++
+const createPlantFactory = (lastPlantId = 0) => (name: string, id?: number): Plant => { 
+  const nextId = typeof id === 'number' ? id : lastPlantId++
+  
   return {
-    id: lastPlantId, 
+    id: nextId, 
     name 
   }
 };
