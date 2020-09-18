@@ -20,7 +20,8 @@
       "@gardn/plant/ui": ["libs/plant/ui/src/index.ts"],
       "@gardn/ui": ["libs/ui/src/index.ts"],
       "@gardn/container/ui": ["libs/container/ui/src/index.ts"],
-      "@gardn/containers/ui": ["libs/containers/ui/src/index.ts"]
+      "@gardn/containers/ui": ["libs/containers/ui/src/index.ts"],
+      "@gardn/data/plant": ["libs/data/plant/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

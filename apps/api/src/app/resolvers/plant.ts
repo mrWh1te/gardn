@@ -1,14 +1,5 @@
-import { Plant } from '@gardn/data';
+import { createPlantFactory } from '@gardn/data/plant'
 
-// todo helper
-const createPlantFactory = (lastPlantId = 0) => (name: string, id?: number): Plant => { 
-  const nextId = typeof id === 'number' ? id : lastPlantId++
-  
-  return {
-    id: nextId, 
-    name 
-  }
-};
 const createPlant = createPlantFactory();
 
 // todo move to data/plant ?

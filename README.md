@@ -98,7 +98,7 @@ Current unit-tests:
  - run `nx test api` for nodejs graphql server
  - run `nx test ui` for main ui library
  - run `nx test plant-ui` for domain plant's ui library
- - run `nx test data` for main data library
+ - run `nx test data-plant` for data/plant library
 
 ## Running end-to-end tests
 
