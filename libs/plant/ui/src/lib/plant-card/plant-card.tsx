@@ -21,6 +21,7 @@ export const PlantCard = (props: PlantCardProps) => {
     <Card>
       <InnerPlantCard>
         <h3>{ props?.plant?.name }</h3>
+        <p>Plant can be in a Container, but doesn't have to be in one, for users with minimal app feature requirements, who don't care about containers</p>
       </InnerPlantCard>
     </Card>
   );

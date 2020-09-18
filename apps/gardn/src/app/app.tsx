@@ -10,6 +10,8 @@ import { Plant } from '@gardn/data';
 import { ContainerCard } from '@gardn/container/ui';
 import { ContainersList } from '@gardn/containers/ui';
 
+import { PlantsList } from '@gardn/plants/ui';
+
 const client = new ApolloClient({
   uri: 'http://localhost:3333/graphql',
   cache: new InMemoryCache(),
@@ -53,6 +55,9 @@ export const App = () => (
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/plants">Plants</Link>
+        </li>
+        <li>
           <Link to="/containers">Containers</Link>
         </li>
         <li>
@@ -68,8 +73,9 @@ export const App = () => (
       exact
       render={() => <div>This app is under development. </div>}
     />
-    <Route path="/containers" component={ContainersList} />
+    <Route path="/plants" component={PlantsList} />
     <Route path="/plant" component={() => <PlantCard plant={mockPlant} />} />
+    <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
     {/* END: routes */}
   </ApolloProvider>

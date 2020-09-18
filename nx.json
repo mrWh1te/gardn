@@ -55,6 +55,9 @@
     },
     "plant-helpers": {
       "tags": []
+    },
+    "plants-ui": {
+      "tags": []
     }
   }
 }

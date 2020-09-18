@@ -59,6 +59,16 @@ In `./libs/plant/helpers` is a dedicated library to functions that facilitate wi
 import { createPlantFactory, mockPlant1 } from '@gardn/plant/helpers';
 ```
 
+### Plants
+In `./libs/plants` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plants feature.
+
+#### Plants: UI
+In `./libs/plants/ui` is a dedicated UI components library for the Plants feature. These may or may not build on the components from the main UI library.
+
+```typescript
+import { PlantsList } from '@gardn/plants/ui';
+```
+
 ### Container
 In `./libs/container` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Container feature. A container, in gardn, is a physical box that can contain plants from seeds to soil.
 
@@ -126,6 +136,7 @@ Current unit-tests:
  - run `nx test ui` for main ui library
  - run `nx test plant-ui` for domain plant's ui library
  - run `nx test plant-helpers` for domain plant's helpers library
+ - run `nx test plants-ui` for domain plants' ui library
  - run `nx test container-ui` for domain container's ui library
  - run `nx test containers-ui` for domain containers's ui library
 
