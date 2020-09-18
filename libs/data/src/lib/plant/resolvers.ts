@@ -4,7 +4,7 @@ import { createPlant, mockPlant1, mockPlant2 } from '@gardn/plant/helpers';
  * Data is stored in memory for development
  * @param plants 
  */
-export const resolvers = (plants = [mockPlant1, mockPlant2]) => ({
+export const plantResolversFactory = (plants = [mockPlant1, mockPlant2]) => ({
   Query: {
     plants: () => plants,
     plant: (parent, args) => plants.find(plant => plant.id === args.id)

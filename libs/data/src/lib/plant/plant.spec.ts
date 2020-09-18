@@ -3,10 +3,16 @@ import { graphql, print } from 'graphql'
 
 import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 
-// todo reduce scope to plant
-import { typeDefs } from 'apps/api/src/app/schema'
-import { resolvers } from 'apps/api/src/app/resolvers'
+// TypeDefs for this data feature
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { mergeTypeDefs } from '@graphql-tools/merge';
+const typesArray = loadFilesSync('libs/data/src/lib/plant/*schema.graphql');
+const typeDefs = mergeTypeDefs(typesArray);
 
+// resolvers for this data feature
+import { plantResolversFactory } from './resolvers'
+
+// mocked data used in the development in-memory db
 import { mockPlant1, mockPlant2 } from '@gardn/plant/helpers'
 
 // a nice structure for test cases
@@ -48,7 +54,7 @@ describe('Plant Types & Resolvers', () => {
 
     // reading the actual schema
     // make the actual schema and resolvers executable
-    const schema = makeExecutableSchema({ typeDefs, resolvers })
+    const schema = makeExecutableSchema({ typeDefs, resolvers: plantResolversFactory() as any })
     
     // running the test for each case in the cases array
     cases.forEach(obj => {

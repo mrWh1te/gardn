@@ -1,6 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 
-import { resolvers as plantResolversFactory } from './resolvers/plant'
+import { plantResolversFactory } from '@gardn/data'
 
 const plantResolvers = plantResolversFactory()
 
