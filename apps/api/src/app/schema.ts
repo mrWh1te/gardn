@@ -1,6 +1,6 @@
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 
-const typesArray = loadFilesSync('apps/api/src/app/**/*schema.graphql');
+const typesArray = loadFilesSync('libs/data/src/lib/**/*schema.graphql');
 
 export const typeDefs = mergeTypeDefs(typesArray);

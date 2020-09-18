@@ -3,8 +3,8 @@ import { graphql, print } from 'graphql'
 
 import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 
-import { typeDefs } from '../schema'
-import { resolvers, mockPlant1, mockPlant2 } from '../resolvers'
+import { typeDefs } from 'apps/api/src/app/schema'
+import { resolvers, mockPlant1, mockPlant2 } from 'apps/api/src/app/resolvers'
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25
