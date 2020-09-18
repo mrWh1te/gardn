@@ -7,7 +7,7 @@ import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 import { typeDefs } from 'apps/api/src/app/schema'
 import { resolvers } from 'apps/api/src/app/resolvers'
 
-import { mockPlant1, mockPlant2 } from './mocks'
+import { mockPlant1, mockPlant2 } from '@gardn/plant/helpers'
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25

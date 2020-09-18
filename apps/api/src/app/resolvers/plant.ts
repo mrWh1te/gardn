@@ -1,4 +1,4 @@
-import { createPlant, mockPlant1, mockPlant2 } from '@gardn/data/plant';
+import { createPlant, mockPlant1, mockPlant2 } from '@gardn/plant/helpers';
 
 /**
  * Data is stored in memory for development

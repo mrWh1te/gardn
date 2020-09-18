@@ -331,9 +331,9 @@
         }
       }
     },
-    "data-plant": {
-      "root": "libs/data/plant",
-      "sourceRoot": "libs/data/plant/src",
+    "plant-helpers": {
+      "root": "libs/plant/helpers",
+      "sourceRoot": "libs/plant/helpers/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -342,16 +342,16 @@
           "options": {
             "linter": "eslint",
             "tsConfig": [
-              "libs/data/plant/tsconfig.lib.json",
-              "libs/data/plant/tsconfig.spec.json"
+              "libs/plant/helpers/tsconfig.lib.json",
+              "libs/plant/helpers/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/data/plant/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/plant/helpers/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/data/plant/jest.config.js",
+            "jestConfig": "libs/plant/helpers/jest.config.js",
             "passWithNoTests": true
           }
         }

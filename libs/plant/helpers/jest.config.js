@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'data-plant',
+  name: 'plant-helpers',
   preset: '../../../jest.config.js',
   transform: {
     '^.+\\.[tj]sx?$': [
@@ -8,5 +8,5 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/libs/data/plant',
+  coverageDirectory: '../../../coverage/libs/plant/helpers',
 };
