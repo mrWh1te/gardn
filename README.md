@@ -51,6 +51,13 @@ In `./libs/plant/ui` is a dedicated UI components library for the Plant feature.
 import { PlantCard } from '@gardn/plant/ui';
 ```
 
+#### Plant: View
+In `./libs/plant/view` is a dedicated View components library for the Plant feature (pages, parts of pages). These may or may not build on the components from the smart & UI libraries.
+
+```typescript
+import { PlantPage } from '@gardn/plant/view';
+```
+
 #### Plant: Helpers
 
 In `./libs/plant/helpers` is a dedicated library to functions that facilitate with the plant feature from creating, mapping data to DOM operations, anything Plant related.
@@ -145,6 +152,7 @@ Current unit-tests:
  - run `nx test data` for main data library
  - run `nx test ui` for main ui library
  - run `nx test plant-ui` for domain plant's ui library
+ - run `nx test plant-view` for domain plant's view library
  - run `nx test plant-helpers` for domain plant's helpers library
  - run `nx test plants-ui` for domain plants' ui library
  - run `nx test plants-smart` for domain plants' smart library

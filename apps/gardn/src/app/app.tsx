@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
-import { PlantCard } from '@gardn/plant/ui';
+import { PlantPage } from '@gardn/plant/view';
 import { Plant } from '@gardn/data';
 
 import { ContainerCard } from '@gardn/container/ui';
@@ -17,21 +17,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-client
-  .query({
-    query: gql`
-      query getPlants {
-        plants {
-          name
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result));
-
-const mockPlant: Plant = {
+const plant: Plant = {
   id: -1,
-  name: 'Parsley',
+  name: 'Basil'
 };
 
 export const App = () => (
@@ -61,7 +49,7 @@ export const App = () => (
           <Link to="/containers">Containers</Link>
         </li>
         <li>
-          <Link to="/plant">Plant</Link>
+          <Link to="/plant/6">Plant</Link>
         </li>
         <li>
           <Link to="/container">Container</Link>
@@ -74,7 +62,7 @@ export const App = () => (
       render={() => <div>This app is under development. </div>}
     />
     <Route path="/plants" component={PlantsList} />
-    <Route path="/plant" component={() => <PlantCard plant={mockPlant} />} />
+    <Route path="/plant/:id" component={PlantPage} />
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
     {/* END: routes */}
