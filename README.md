@@ -67,7 +67,7 @@ In `./libs/plants` is a domain folder (DDD) for libraries such as Smart Componen
 In `./libs/plants/smart` is a dedicated Smart components library for the Plants feature. These may or may not build on the generated React query hooks from the GraphQl operations and mutations.
 
 ```typescript
-import { Plants } from '@gardn/plants/smart';
+import { PlantsList } from '@gardn/plants/smart';
 ```
 
 Smart libraries may or may not depend on UI libraries.
