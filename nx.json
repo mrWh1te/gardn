@@ -58,6 +58,9 @@
     },
     "plants-ui": {
       "tags": []
+    },
+    "plants-smart": {
+      "tags": []
     }
   }
 }

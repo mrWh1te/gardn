@@ -382,6 +382,32 @@
           }
         }
       }
+    },
+    "plants-smart": {
+      "root": "libs/plants/smart",
+      "sourceRoot": "libs/plants/smart/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/plants/smart/tsconfig.lib.json",
+              "libs/plants/smart/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/plants/smart/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/plants/smart/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
