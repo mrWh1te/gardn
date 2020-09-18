@@ -39,7 +39,7 @@ In `./libs/ui` is a library of common UI components.
 import { Button } from '@gardn/ui';
 ```
 
-This library has a dedicated Storybook app. Run it with `nx run ui:storybook`
+This library has a dedicated Storybook app. Run it with `nx run ui:storybook`. The stories use the [CSF format](https://storybook.js.org/docs/react/api/csf), which can be reused in unit-tests like for the Card component in this library.
 
 ### Plant
 In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plant feature.
