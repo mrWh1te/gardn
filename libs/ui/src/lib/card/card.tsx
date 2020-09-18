@@ -6,7 +6,7 @@ import { white, black } from '../colors';
 export const Card = styled.div`
   position: relative;
 
-  border: .1rem solid ${black};
+  border: .1rem solid transparent;
   border-radius: .3rem;
   background-color: ${white};
   

@@ -55,8 +55,6 @@ Library to be developed
 import { createPlant } from '@gardn/plant/helpers';
 ```
 
-# Dev Notes
-
 ## Development servers
 
 Run `nx serve api` for lifting the GraphQL API. Navigate to http://localhost:3333/graphql. The GraphQL playground will be accessible there. The API will automatically reload if you change any of the source files.
@@ -95,11 +93,20 @@ Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
 Run `nx affected:test` to execute the unit tests affected by a change.
 
+Current unit-tests:
+ - run `nx test gardn` for react web app
+ - run `nx test api` for nodejs graphql server
+ - run `nx test ui` for main ui library
+ - run `nx test plant-ui` for domain plant's ui library
+
 ## Running end-to-end tests
 
 Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
 
 Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+
+Current e2e tests:
+ - run `nx e2e gardn-e2e` for react web app cypress tests
 
 ## Understand your workspace
 
