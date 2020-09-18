@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Plant } from '@gardn/data';
 
+import { PlantCard } from '@gardn/plant/ui';
+
 import styled from '@emotion/styled';
 
 
@@ -11,15 +13,17 @@ export interface PlantsListProps {
 }
 
 const StyledPlantsList = styled.div`
-  color: pink;
+  margin: 1rem;
+  padding: 1rem 0;
+  PlantCard {
+    margin-bottom: 1rem;
+  }
 `;
 
 export const PlantsList = (props: PlantsListProps) => {
   return (
     <StyledPlantsList>
-      <ul>
-        { props.plants.map( plant => <li>{ plant.name }</li> ) }
-      </ul>
+      { props.plants.map( plant => <PlantCard plant={plant} /> ) }
     </StyledPlantsList>
   );
 };
