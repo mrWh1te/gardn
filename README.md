@@ -47,9 +47,17 @@ In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Component
 #### Plant: UI
 In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
 
+```typescript
+import { PlantCard } from '@gardn/plants/ui';
+```
+
 #### Plant: Helpers
 
 In `./libs/plant/helpers` is a dedicated library to functions that facilitate with the plant feature from creating, mapping data to DOM operations, anything Plant related.
+
+```typescript
+import { createPlantFactory } from '@gardn/plants/helpers';
+```
 
 ### Container
 In `./libs/container` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Container feature. A container, in gardn, is a physical box that can contain plants from seeds to soil.
@@ -58,12 +66,20 @@ In `./libs/container` is a domain folder (DDD) for libraries such as Smart Compo
 
 In `./libs/container/ui` is a library of container UI components.
 
+```typescript
+import { ContainerCard } from '@gardn/container/ui';
+```
+
 ### Containers
 In `./libs/containers` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Containers feature.
 
 #### Containers: UI
 
 In `./libs/containesr/ui` is a library of containers UI components like a list of Containers.
+
+```typescript
+import { ContainersList } from '@gardn/containers/ui';
+```
 
 ## Development servers
 
