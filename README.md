@@ -48,7 +48,7 @@ In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Component
 In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
 
 ```typescript
-import { PlantCard } from '@gardn/plants/ui';
+import { PlantCard } from '@gardn/plant/ui';
 ```
 
 #### Plant: Helpers
@@ -56,7 +56,7 @@ import { PlantCard } from '@gardn/plants/ui';
 In `./libs/plant/helpers` is a dedicated library to functions that facilitate with the plant feature from creating, mapping data to DOM operations, anything Plant related.
 
 ```typescript
-import { createPlantFactory } from '@gardn/plants/helpers';
+import { createPlantFactory, mockPlant1 } from '@gardn/plant/helpers';
 ```
 
 ### Container
