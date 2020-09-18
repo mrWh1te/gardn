@@ -4,7 +4,8 @@ import { graphql, print } from 'graphql'
 import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 
 import { typeDefs } from 'apps/api/src/app/schema'
-import { resolvers, mockPlant1, mockPlant2 } from 'apps/api/src/app/resolvers'
+import { resolvers } from 'apps/api/src/app/resolvers'
+import { mockPlant1, mockPlant2 } from 'apps/api/src/app/resolvers/plant'
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25
@@ -45,7 +46,7 @@ describe('Plant Types & Resolvers', () => {
 
     // reading the actual schema
     // make the actual schema and resolvers executable
-    const schema = makeExecutableSchema({ typeDefs, resolvers: resolvers() as any })
+    const schema = makeExecutableSchema({ typeDefs, resolvers })
     
     // running the test for each case in the cases array
     cases.forEach(obj => {

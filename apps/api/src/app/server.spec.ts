@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, gql, HttpLink } from '@apollo/client';
 import fetch from 'cross-fetch';
 
 import App from './server';
-import { mockPlant1, mockPlant2 } from './resolvers';
+import { mockPlant1, mockPlant2 } from './resolvers/plant';
 
 describe('Server', () => {
   const port = 1337;

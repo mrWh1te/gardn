@@ -1,40 +1,14 @@
 import { IResolvers } from 'graphql-tools';
 
-import { Plant } from '@gardn/data';
+import { resolvers as plantResolversFactory } from './resolvers/plant'
 
-interface Store {
-  plants: Plant[]
-};
+const plantResolvers = plantResolversFactory()
 
-const createPlantFactory = (lastPlantId = 0) => (name: string): Plant => { 
-  lastPlantId++
-  return {
-    id: lastPlantId, 
-    name 
-  }
-}
-
-const createPlant = createPlantFactory()
-
-export const mockPlant1 = createPlant('Lavender')
-export const mockPlant2 = createPlant('Parsley')
-
-const initialStore: Store = {
-  plants: [mockPlant1, mockPlant2]
-};
-
-export const resolvers = (store = initialStore): IResolvers => ({
+export const resolvers: IResolvers = {
   Query: {
-    plants: () => store['plants'],
-    plant: (parent, args) => 
-      store['plants'].find(plant => plant.id === args.id)
+    ...plantResolvers.Query
   },
   Mutation: {
-    addPlant: (parent, args) => {
-      const newPlant = createPlant(args.name)
-      store.plants.push(newPlant)
-
-      return newPlant
-    }
+    ...plantResolvers.Mutation
   }
-})
+};
