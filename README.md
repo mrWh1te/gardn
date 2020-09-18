@@ -106,9 +106,11 @@ Run `nx affected:test` to execute the unit tests affected by a change.
 Current unit-tests:
  - run `nx test gardn` for react web app
  - run `nx test api` for nodejs graphql server
+ - run `nx test data-plant` for data/plant library
  - run `nx test ui` for main ui library
  - run `nx test plant-ui` for domain plant's ui library
- - run `nx test data-plant` for data/plant library
+ - run `nx test container-ui` for domain container's ui library
+ - run `nx test containers-ui` for domain containers's ui library
 
 ## Running end-to-end tests
 
