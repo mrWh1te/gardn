@@ -12,15 +12,26 @@ import { ContainersList } from '@gardn/containers/ui';
 
 import { PlantsList } from '@gardn/plants/smart';
 
+import styled from '@emotion/styled';
+
+const StyledNavigation = styled.ul`
+  list-style: none;
+  li {
+    display: inline-block;
+    margin-left: .5rem;
+    &:first-child {
+      margin-left: 0;
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+`;
+
 const client = new ApolloClient({
   uri: 'http://localhost:3333/graphql',
   cache: new InMemoryCache(),
 });
-
-const plant: Plant = {
-  id: -1,
-  name: 'Basil'
-};
 
 export const App = () => (
   <ApolloProvider client={client}>
@@ -31,14 +42,8 @@ export const App = () => (
       </h1>
     </section>
 
-    {/* START: routes */}
-    {/* These routes and navigation have been generated for you */}
-    {/* Feel free to move and update them to fit your needs */}
-    <br />
-    <hr />
-    <br />
     <div role="navigation">
-      <ul>
+      <StyledNavigation>
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -51,8 +56,11 @@ export const App = () => (
         <li>
           <Link to="/container">Container</Link>
         </li>
-      </ul>
+      </StyledNavigation>
     </div>
+
+    <hr />
+    
     <Route
       path="/"
       exact
@@ -60,10 +68,9 @@ export const App = () => (
     />
     <Route path="/plants" component={PlantsList} />
     <Route path="/plant/:id" component={PlantPage} />
-    
+
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
-    {/* END: routes */}
   </ApolloProvider>
 );
 
