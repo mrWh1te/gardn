@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Plant } from '@gardn/data';
 
@@ -18,12 +19,23 @@ const StyledPlantsList = styled.div`
   PlantCard {
     margin-bottom: 1rem;
   }
+
+  // todo move the following into a global stylesheet
+  a {
+    text-decoration: none;
+  }
 `;
 
 export const PlantsList = (props: PlantsListProps) => {
   return (
     <StyledPlantsList>
-      { props.plants.map( plant => <PlantCard plant={plant} /> ) }
+      { 
+        props.plants.map( plant => 
+          <Link to={`/plant/${plant.id}`}>
+            <PlantCard plant={plant} /> 
+          </Link>
+        ) 
+      }
     </StyledPlantsList>
   );
 };

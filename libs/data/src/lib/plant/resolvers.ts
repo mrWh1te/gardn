@@ -7,7 +7,15 @@ import { createPlant, mockPlant1, mockPlant2 } from '@gardn/plant/helpers';
 export const plantResolversFactory = (plants = [mockPlant1, mockPlant2]) => ({
   Query: {
     plants: () => plants,
-    plant: (parent, args) => plants.find(plant => plant.id === args.id)
+    plant: (parent, args) => {
+      const plant = plants.find(plant => plant.id === args.id);
+
+      if (plant) {
+        return plant;
+      }
+      
+      return new Error('Plant not found')
+    }
   },
   Mutation: {
     addPlant: (parent, args) => {

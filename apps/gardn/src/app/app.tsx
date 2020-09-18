@@ -1,5 +1,5 @@
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
@@ -49,9 +49,6 @@ export const App = () => (
           <Link to="/containers">Containers</Link>
         </li>
         <li>
-          <Link to="/plant/6">Plant</Link>
-        </li>
-        <li>
           <Link to="/container">Container</Link>
         </li>
       </ul>
@@ -63,6 +60,7 @@ export const App = () => (
     />
     <Route path="/plants" component={PlantsList} />
     <Route path="/plant/:id" component={PlantPage} />
+    
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
     {/* END: routes */}
