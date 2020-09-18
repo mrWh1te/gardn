@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Plants from './plants';
+import PlantsList from './plants-list';
 
 jest.mock('@gardn/data', () => ({
   esModule: true,
@@ -14,7 +14,7 @@ jest.mock('@gardn/data', () => ({
 
 describe('Plants', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Plants />);
+    const { baseElement } = render(<PlantsList />);
     expect(baseElement).toBeTruthy();
   });
 

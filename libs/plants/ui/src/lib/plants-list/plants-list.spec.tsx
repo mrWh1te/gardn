@@ -5,7 +5,7 @@ import PlantsList from './plants-list';
 
 describe('PlantsList', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<PlantsList />);
+    const { baseElement } = render(<PlantsList plants={[]} />);
     expect(baseElement).toBeTruthy();
   });
 });

@@ -1,9 +1,14 @@
 import React from 'react';
 
+import { Plant } from '@gardn/data';
+
 import styled from '@emotion/styled';
 
+
 /* eslint-disable-next-line */
-export interface PlantsListProps {}
+export interface PlantsListProps {
+  plants: Plant[]
+}
 
 const StyledPlantsList = styled.div`
   color: pink;
@@ -12,10 +17,8 @@ const StyledPlantsList = styled.div`
 export const PlantsList = (props: PlantsListProps) => {
   return (
     <StyledPlantsList>
-      <h1>Welcome to plants</h1>
       <ul>
-        <li>plant 1</li>
-        <li>plant 2</li>
+        { props.plants.map( plant => <li>{ plant.name }</li> ) }
       </ul>
     </StyledPlantsList>
   );

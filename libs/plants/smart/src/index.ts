@@ -1,1 +1,1 @@
-export * from './lib/plants';
+export * from './lib/plants-list/plants-list';
