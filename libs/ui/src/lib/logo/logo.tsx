@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import LogoIcon from '../logo-icon/logo-icon';
 
 /* eslint-disable-next-line */
 export interface LogoProps {}
@@ -16,7 +17,7 @@ export const Logo = (props: LogoProps) => {
     <StyledLogo>
       <h1>
         gardn
-        <img src="/assets/leaf.svg" width="32" alt="gardn leaf logo" />
+        <LogoIcon width="2rem" />
       </h1>
     </StyledLogo>
   );

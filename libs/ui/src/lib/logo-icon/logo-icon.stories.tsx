@@ -6,7 +6,7 @@ import LogoIcon from './logo-icon';
 
 export default { title: 'LogoIcon' };
 
-export const defaultNoParams = () => (
+export const exampleNoParams = () => (
   <LogoIcon />
 );
 

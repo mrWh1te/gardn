@@ -1,9 +1,9 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import { Logo } from '@gardn/ui';
 
 import { Navigation } from '../navigation/navigation';
-import { Logo } from '../logo/logo';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}

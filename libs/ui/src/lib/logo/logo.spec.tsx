@@ -1,11 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
-import Logo from './logo';
+import { example } from './logo.stories'
 
 describe('Logo', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Logo />);
+    const { baseElement } = render(example());
     expect(baseElement).toBeTruthy();
   });
 });

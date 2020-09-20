@@ -35,7 +35,7 @@ export const ActionMenu = (props: ActionMenuProps) => {
       <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)}>
         Page dependent actions, ie if on a Plant page: water, temperature reading, re-pot, etc
 
-        <Route path="/plant/:id" component={() => <div>Plant page info view</div>} />
+        <Route path="/plant/:id" component={() => <div>Plant page drawer view</div>} />
       </Drawer>
     </>
   );
