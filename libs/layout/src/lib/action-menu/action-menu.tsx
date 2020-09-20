@@ -1,6 +1,7 @@
 import Drawer from '@material-ui/core/Drawer';
 
 import React from 'react';
+import { Route } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
@@ -33,6 +34,8 @@ export const ActionMenu = (props: ActionMenuProps) => {
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
       <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)}>
         Page dependent actions, ie if on a Plant page: water, temperature reading, re-pot, etc
+
+        <Route path="/plant/:id" component={() => <div>Plant page info view</div>} />
       </Drawer>
     </>
   );
