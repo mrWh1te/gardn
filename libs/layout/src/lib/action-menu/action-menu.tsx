@@ -11,6 +11,16 @@ export interface ActionMenuProps {}
 
 const StyledActionMenu = styled.section``;
 
+/**
+ * This component extends upon a page with page dependent Actions
+ *  Could be just icons/links ie Watering Plant(s) or full-drawer with information, etc. 
+ *    If plant page just a photo at first, with maybe a name, then the drawer can have the actual information with actions
+ * 
+ * Current Plan:
+ *  SpeedDialActions on Plant page always appear, therefore SpeedDial opens/closes Drawer for details/info
+ * 
+ * @param props 
+ */
 export const ActionMenu = (props: ActionMenuProps) => {
   const [menuOpenStatus, setMenuOpenStatus] = React.useState(false);
 

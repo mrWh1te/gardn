@@ -4,6 +4,8 @@ import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
+import { LogoIcon } from '@gardn/ui';
+
 /* eslint-disable-next-line */
 export interface ActionButtonProps {
   open: boolean,
@@ -17,8 +19,8 @@ export const ActionButton = (props: ActionButtonProps) => {
       icon={<SpeedDialIcon />}
       direction={'up'}
       open={props.open}
-      onClick={props.toggleMenu(true)}
-      style={{position: 'fixed', right: '1rem', bottom: '1rem'}}
+      onClick={props.toggleMenu(!props.open)}
+      style={{position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 10000}}
     >
       {/* {actions.map((action) => (
         <SpeedDialAction
