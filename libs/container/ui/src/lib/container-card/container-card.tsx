@@ -1,8 +1,7 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 
 import styled from '@emotion/styled';
-
-import { Card } from '@gardn/ui';
 
 /* eslint-disable-next-line */
 export interface ContainerCardProps {}
@@ -13,11 +12,11 @@ const InnerContainerCard = styled.div`
 
 export const ContainerCard = (props: ContainerCardProps) => {
   return (
-    <Card>
+    <Paper>
       <InnerContainerCard>
         <h1>Welcome to a Container Card</h1>
       </InnerContainerCard>
-    </Card>
+    </Paper>
   );
 };
 

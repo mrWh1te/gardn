@@ -16,7 +16,7 @@ export interface PlantsListProps {
 const StyledPlantsList = styled.div`
   margin: 1rem;
   padding: 1rem 0;
-  PlantCard {
+  .plant-card {
     margin-bottom: 1rem;
   }
 
@@ -31,7 +31,7 @@ export const PlantsList = (props: PlantsListProps) => {
     <StyledPlantsList>
       { 
         props.plants.map( plant => 
-          <article>  
+          <article className="plant-card">  
             <Link to={`/plant/${plant.id}`}>
               <PlantCard plant={plant} /> 
             </Link>
