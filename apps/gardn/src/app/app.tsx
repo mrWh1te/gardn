@@ -11,6 +11,12 @@ import { ContainersList } from '@gardn/containers/ui';
 
 import { Header } from '@gardn/layout';
 
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+
+let open = false;
+
 export const App = () => (
   <>
     <Header />
@@ -27,6 +33,23 @@ export const App = () => (
 
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
+
+    <SpeedDial
+      ariaLabel="SpeedDial example"
+      icon={<SpeedDialIcon />}
+      direction={'up'}
+      open={open}
+      style={{position: 'fixed', right: '1rem', bottom: '1rem'}}
+    >
+      {/* {actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={action.icon}
+          tooltipTitle={action.name}
+          onClick={handleClose}
+        />
+      ))} */}
+    </SpeedDial>
   </>
 );
 

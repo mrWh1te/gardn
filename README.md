@@ -41,6 +41,14 @@ import { Button } from '@gardn/ui';
 
 This library has a dedicated Storybook app. Run it with `nx run ui:storybook`. The stories use the [CSF format](https://storybook.js.org/docs/react/api/csf), which can be reused in unit-tests like for the Card component in this library.
 
+### Layout
+
+In `./libs/layout` is a library of common Layout components.
+
+```typescript
+import { Header, Navigation, Logo } from '@gardn/layout';
+```
+
 ### Plant
 In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plant feature.
 
@@ -151,6 +159,7 @@ Current unit-tests:
  - run `nx test api` for nodejs graphql server
  - run `nx test data` for main data library
  - run `nx test ui` for main ui library
+ - run `nx test layout` for main layout library
  - run `nx test plant-ui` for domain plant's ui library
  - run `nx test plant-view` for domain plant's view library
  - run `nx test plant-helpers` for domain plant's helpers library
