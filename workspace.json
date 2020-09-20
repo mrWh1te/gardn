@@ -15,7 +15,7 @@
             "main": "apps/gardn/src/main.tsx",
             "polyfills": "apps/gardn/src/polyfills.ts",
             "tsConfig": "apps/gardn/tsconfig.app.json",
-            "assets": ["apps/gardn/src/favicon.ico", "apps/gardn/src/assets"],
+            "assets": ["apps/gardn/src/favicon.ico", "apps/gardn/src/favicon.png", "apps/gardn/src/assets"],
             "styles": [],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"

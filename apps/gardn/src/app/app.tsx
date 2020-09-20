@@ -1,16 +1,13 @@
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+
 
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
 import { PlantPage } from '@gardn/plant/view';
-import { Plant } from '@gardn/data';
+import { PlantsList } from '@gardn/plants/smart';
 
 import { ContainerCard } from '@gardn/container/ui';
 import { ContainersList } from '@gardn/containers/ui';
-
-import { PlantsList } from '@gardn/plants/smart';
 
 import styled from '@emotion/styled';
 
@@ -19,7 +16,7 @@ const StyledNavigation = styled.ul`
   li {
     display: inline-block;
     margin-left: .5rem;
-    &:first-child {
+    &:first-of-type {
       margin-left: 0;
     }
     a {
@@ -28,13 +25,8 @@ const StyledNavigation = styled.ul`
   }
 `;
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3333/graphql',
-  cache: new InMemoryCache(),
-});
-
 export const App = () => (
-  <ApolloProvider client={client}>
+  <>
     <section style={{ textAlign: 'center' }}>
       <h1>
         gardn
@@ -71,7 +63,7 @@ export const App = () => (
 
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />
-  </ApolloProvider>
+  </>
 );
 
 export default App;

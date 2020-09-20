@@ -3,21 +3,21 @@ import React from 'react';
 import App from './app';
 
 // todo common library for jest mocks
-jest.mock('@apollo/client', () => {
-  const originalModule = jest.requireActual('@apollo/client')
+// jest.mock('@apollo/client', () => {
+//   const originalModule = jest.requireActual('@apollo/client')
 
-  return {
-    __esModule: true,
-    ...originalModule,
-    ApolloClient: class mockClient {
-      constructor() {}
-      then() {}
-      query() {
-        return this
-      }
-    } 
-  }
-})
+//   return {
+//     __esModule: true,
+//     ...originalModule,
+//     ApolloClient: class mockClient {
+//       constructor() {}
+//       then() {}
+//       query() {
+//         return this
+//       }
+//     } 
+//   }
+// })
 
 jest.mock('react-router-dom', () => {
   const originalModule = jest.requireActual('@apollo/client')
@@ -39,7 +39,7 @@ describe('App', () => {
 
   // Clean up
   afterAll(async() => {
-    jest.unmock('@apollo/client')
+    // jest.unmock('@apollo/client')
     jest.unmock('react-router-dom');
   })
 
