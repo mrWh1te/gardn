@@ -30,6 +30,7 @@ jest.mock('react-router-dom', () => {
   }
 })
 
+
 describe('App', () => {
 
   it('should render successfully', async () => {

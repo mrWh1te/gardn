@@ -5,7 +5,7 @@ import ActionButton from './action-button';
 
 describe('ActionButton', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<ActionButton />);
+    const { baseElement } = render(<ActionButton toggleMenu={() => () => {}} open={true} />);
     expect(baseElement).toBeTruthy();
   });
 });

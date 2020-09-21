@@ -12,6 +12,8 @@ export interface ActionMenuProps {}
 
 const StyledActionMenu = styled.section``;
 
+// TODO add tests
+
 /**
  * This component extends upon a page with page dependent Actions
  *  Could be just icons/links ie Watering Plant(s) or full-drawer with information, etc. 

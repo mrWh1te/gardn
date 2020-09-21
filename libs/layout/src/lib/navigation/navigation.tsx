@@ -3,6 +3,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
+import { SeedlingIcon } from '@gardn/ui';
+
 /* eslint-disable-next-line */
 export interface NavigationProps {}
 
@@ -27,7 +29,9 @@ export const Navigation = (props: NavigationProps) => {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/plants"><i className="fad fa-seedling"></i></Link>
+        <Link to="/plants">
+          <SeedlingIcon />
+        </Link>
       </li>
       <li>
         <Link to="/containers">Containers</Link>
