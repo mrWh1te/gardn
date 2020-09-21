@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
-import Box from '@material-ui/core/Box';
 
 import { Logo, white, gray, greenishBlack } from '@gardn/ui';
 
@@ -12,9 +11,13 @@ import { Navigation } from '../navigation/navigation';
 export interface HeaderProps {}
 
 const StyledHeader = styled.header`
+  display: flex;
+  align-items: center;
+  min-height: 4rem;
   background-color: ${white};
   border-bottom: 1px solid ${gray};
   padding: 0 1rem;
+
   a {
     text-decoration: none;
     color: ${greenishBlack};
@@ -24,19 +27,22 @@ const StyledHeader = styled.header`
   }
 `;
 
+const NavigationContainer = styled.div`
+  align-self: stretch;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export const Header = () => {
   return (
     <StyledHeader role="navigation">
-      <Box display="flex" alignItems="center" style={{minHeight: '4rem'}}>
-        <Box>
-          <Link to="/">
-            <Logo />
-          </Link>
-        </Box>
-        <Box flexGrow={1} display="flex" justifyContent="flex-end">
-          <Navigation />
-        </Box>
-      </Box>
+      <Link to="/">
+        <Logo />
+      </Link>
+      <NavigationContainer>
+        <Navigation />
+      </NavigationContainer>
     </StyledHeader>
   );
 };
