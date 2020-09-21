@@ -39,7 +39,8 @@ export const plantResolversFactory = (plants = [mockPlant1, mockPlant2], species
       }
 
       return new Error('Species not found');
-    }
+    },
+    allSpecies: () => species
   },
   Mutation: {
     //

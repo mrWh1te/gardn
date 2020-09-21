@@ -1,14 +1,20 @@
 import { IResolvers } from 'graphql-tools';
 
-import { plantResolversFactory } from '@gardn/data'
+import { 
+  plantResolversFactory,
+  photoResolversFactory
+} from '@gardn/data';
 
-const plantResolvers = plantResolversFactory()
+const plantResolvers = plantResolversFactory();
+const photoResolvers = photoResolversFactory();
 
 export const resolvers: IResolvers = {
   Query: {
+    ...photoResolvers.Query,
     ...plantResolvers.Query
   },
   Mutation: {
+    ...photoResolvers.Mutation,
     ...plantResolvers.Mutation
   }
 };

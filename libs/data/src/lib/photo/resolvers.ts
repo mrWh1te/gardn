@@ -1,10 +1,23 @@
-import { createPhoto, mockPhoto1, mockPhoto2 } from '@gardn/photo/helpers';
+import { 
+  createPhoto,
+  mockLargePhoto1,
+  mockLargePhoto2,
+  mockLargePhoto3,
+  mockLargePhoto4,
+  mockLargePhoto5
+ } from '@gardn/photo/helpers';
 
 /**
  * Data is stored in memory for development
  * @param photos 
  */
-export const plantResolversFactory = (photos = [mockPlant1, mockPlant2]) => ({
+export const photoResolversFactory = (photos = [
+  mockLargePhoto1,
+  mockLargePhoto2,
+  mockLargePhoto3,
+  mockLargePhoto4,
+  mockLargePhoto5
+]) => ({
   Query: {
     photos: () => photos,
     photo: (parent, args) => {
@@ -19,10 +32,10 @@ export const plantResolversFactory = (photos = [mockPlant1, mockPlant2]) => ({
   },
   Mutation: {
     addPlant: (parent, args) => {
-      const newPlant = createPlant(args.name)
-      photos.push(newPlant)
+      const newPhoto = createPhoto(args.name)
+      photos.push(newPhoto)
 
-      return newPlant
+      return newPhoto
     }
   }
 })

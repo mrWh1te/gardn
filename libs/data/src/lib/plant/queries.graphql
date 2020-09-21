@@ -15,3 +15,9 @@ query getSpecies($id: Int!) {
     name, description
   }
 }
+
+query getAllSpecies {
+  allSpecies {
+    id, name
+  }
+}

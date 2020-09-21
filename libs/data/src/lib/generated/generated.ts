@@ -75,6 +75,8 @@ export type Plant = {
   dateGerminated?: Maybe<Scalars['Int']>;
   datePlanted?: Maybe<Scalars['Int']>;
   dateSprouted?: Maybe<Scalars['Int']>;
+  photos?: Maybe<Array<Maybe<Photo>>>;
+  photo?: Maybe<Photo>;
 };
 
 export type Species = {
@@ -82,6 +84,8 @@ export type Species = {
   id: Scalars['Int'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
+  photo?: Maybe<Photo>;
+  avatar?: Maybe<Photo>;
 };
 
 export type AddPhotoMutationVariables = Exact<{
