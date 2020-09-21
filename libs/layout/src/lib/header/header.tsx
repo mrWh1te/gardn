@@ -27,6 +27,10 @@ const StyledHeader = styled.header`
   }
 `;
 
+const LogoContainer = styled.div`
+  padding-left: 0.5rem;
+`;
+
 const NavigationContainer = styled.div`
   align-self: stretch;
   flex-grow: 1;
@@ -37,9 +41,11 @@ const NavigationContainer = styled.div`
 export const Header = () => {
   return (
     <StyledHeader role="navigation">
-      <Link to="/">
-        <Logo />
-      </Link>
+      <LogoContainer>
+        <Link to="/">
+          <Logo />
+        </Link>
+      </LogoContainer>
       <NavigationContainer>
         <Navigation />
       </NavigationContainer>

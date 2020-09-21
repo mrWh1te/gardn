@@ -10,3 +10,8 @@ query getPlant($id: Int!) {
   }
 }
 
+query getSpecies($id: Int!) {
+  species(id: $id) {
+    name, description
+  }
+}

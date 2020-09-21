@@ -1,0 +1,15 @@
+type Photo {
+  id: Int!
+  url: String!
+  title: String
+  dateCreated: Int 
+}
+
+type Query {
+  photos: [Photo]
+  photo(id: Int!): Photo
+}
+
+type Mutation {
+  addPhoto(url: String, title: String): Photo
+}

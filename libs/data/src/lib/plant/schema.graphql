@@ -1,6 +1,12 @@
 type Plant {
   id: Int!
   name: String
+  species: Species
+  dateGerminated: Int
+  datePlanted: Int
+  dateSprouted: Int
+  photos: [Photo]
+  photo: Photo
 }
 
 type Query {
@@ -10,4 +16,22 @@ type Query {
 
 type Mutation {
   addPlant(name: String): Plant
+}
+
+
+
+type Species {
+  id: Int!
+  name: String!
+  description: String
+  photo: Photo
+  avatar: Photo
+}
+
+type Query {
+  species(id: Int!): Species
+}
+
+type Mutation {
+  addSpecies(name: String!, description: String): Species
 }
