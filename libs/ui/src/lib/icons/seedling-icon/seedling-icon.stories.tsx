@@ -4,7 +4,7 @@ import { text } from '@storybook/addon-knobs';
 
 import SeedlingIcon from './seedling-icon';
 
-export default { title: 'SeedlingIcon' };
+export default { title: 'Icons/SeedlingIcon' };
 
 export const exampleNoParams = () => (
   <SeedlingIcon />

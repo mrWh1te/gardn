@@ -12,7 +12,7 @@ export const Logo = (props: LogoProps) => {
   return (
     <StyledLogo>
       gardn
-      <LogoIcon width="2rem" />
+      <LogoIcon width="1.75rem" />
     </StyledLogo>
   );
 };

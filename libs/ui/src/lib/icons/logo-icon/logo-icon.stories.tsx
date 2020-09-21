@@ -4,7 +4,7 @@ import { text } from '@storybook/addon-knobs';
 
 import LogoIcon from './logo-icon';
 
-export default { title: 'LogoIcon' };
+export default { title: 'Icons/LogoIcon' };
 
 export const exampleNoParams = () => (
   <LogoIcon />
