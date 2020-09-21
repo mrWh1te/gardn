@@ -14,8 +14,18 @@ import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
   palette: {
-    primary: green
+    primary: {
+      light: green[300],
+      main: green[700], // speeddial bg color
+      dark: green[600], // speeddial bg color hover
+    },
+    secondary: {
+      light: green[700],
+      main: green[700],
+      dark: green[700],
+    },
   },
+
 });
 
 const client = new ApolloClient({

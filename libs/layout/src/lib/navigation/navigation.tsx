@@ -11,6 +11,8 @@ export interface NavigationProps {}
 const StyledNavigation = styled.div`
   display: flex;
   align-content: stretch;
+  width: 3rem;
+  
   a {
     display: flex;
     justify-content: center;

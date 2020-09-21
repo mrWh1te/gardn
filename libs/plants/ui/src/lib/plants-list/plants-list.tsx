@@ -31,7 +31,7 @@ export const PlantsList = (props: PlantsListProps) => {
     <StyledPlantsList>
       { 
         props.plants.map( plant => 
-          <article className="plant-card">  
+          <article className="plant-card" key={plant.id}>  
             <Link to={`/plant/${plant.id}`}>
               <PlantCard plant={plant} /> 
             </Link>
