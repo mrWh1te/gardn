@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import LogoIcon from '../logo-icon/logo-icon';
+import LogoIcon from '../icons/logo-icon/logo-icon';
 
 /* eslint-disable-next-line */
 export interface LogoProps {}

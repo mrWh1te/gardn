@@ -27,7 +27,7 @@ export const Navigation = (props: NavigationProps) => {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/plants">Plants</Link>
+        <Link to="/plants"><i className="fad fa-seedling"></i></Link>
       </li>
       <li>
         <Link to="/containers">Containers</Link>

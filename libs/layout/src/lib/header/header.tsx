@@ -1,14 +1,16 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { Logo } from '@gardn/ui';
+import { Logo, white } from '@gardn/ui';
 
 import { Navigation } from '../navigation/navigation';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}
 
-const StyledHeader = styled.section``;
+const StyledHeader = styled.section`
+  background-color: ${white};
+`;
 
 export const Header = (props: HeaderProps) => {
   return (
