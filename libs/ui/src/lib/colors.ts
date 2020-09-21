@@ -5,6 +5,9 @@ export const black = '#181818';
 
 export const gray = '#e4e4e4';
 
+// Mix Colors
+export const greenishBlack = '#102918'; // black with hint of dark green
+
 //
 // Logo Colors
 export const logoDarkGreen = '#388E3C';
