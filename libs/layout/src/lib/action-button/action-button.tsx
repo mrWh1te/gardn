@@ -4,8 +4,6 @@ import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
-import { LogoIcon, white } from '@gardn/ui';
-
 /* eslint-disable-next-line */
 export interface ActionButtonProps {
   open: boolean,
