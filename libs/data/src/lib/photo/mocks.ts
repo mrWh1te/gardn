@@ -1,4 +1,4 @@
-import { createPhoto } from './create-photo/create-photo';
+import { createPhoto } from './helpers/create-photo/create-photo';
 
 export const mockLargePhoto1 = createPhoto('https://picsum.photos/1200/800', 'Title 1')
 export const mockLargePhoto2 = createPhoto('https://picsum.photos/1200/800', 'Title 2')

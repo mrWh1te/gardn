@@ -6,14 +6,14 @@ import { GetPlantDocument, GetPlantsDocument } from '@gardn/data'
 // TypeDefs for this data feature
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-const typesArray = loadFilesSync('libs/data/src/lib/plant/*schema.graphql');
+const typesArray = loadFilesSync('libs/data/src/lib/**/*schema.graphql');
 const typeDefs = mergeTypeDefs(typesArray);
 
 // resolvers for this data feature
 import { plantResolversFactory } from './resolvers';
 
 // mocked data used in the development in-memory db
-import { mockPlant1, mockPlant2 } from '@gardn/data';
+import { mockPlant1, mockPlant2 } from './mocks';
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25
