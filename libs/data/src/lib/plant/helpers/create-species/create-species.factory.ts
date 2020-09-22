@@ -5,11 +5,16 @@ import { Species } from '@gardn/data';
  * @param nextSpeciesId 
  */
 export const createSpeciesFactory = (nextSpeciesId = 1) => (name: string, description?: string, id?: number): Species => { 
-  const nextId = typeof id === 'number' ? id : nextSpeciesId++
+  const nextId = typeof id === 'number' ? id : nextSpeciesId++;
+
+  const dateCreated = new Date().getTime();
   
   return {
     id: nextId, 
+    dateCreated,
     name,
-    description
+    description,
   }
 };
+
+// @future todo `photo`, `avatar` integration

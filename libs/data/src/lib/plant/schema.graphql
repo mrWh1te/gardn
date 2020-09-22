@@ -2,6 +2,7 @@ type Plant {
   id: Int!
   name: String
   species: Species
+  dateCreated: Timestamp
   dateGerminated: Timestamp
   datePlanted: Timestamp
   dateSprouted: Timestamp
@@ -23,6 +24,7 @@ type Mutation {
 type Species {
   id: Int!
   name: String!
+  dateCreated: Timestamp
   description: String
   photo: Photo
   avatar: Photo

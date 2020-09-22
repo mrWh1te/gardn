@@ -75,6 +75,7 @@ export type Plant = {
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
   species?: Maybe<Species>;
+  dateCreated?: Maybe<Scalars['Timestamp']>;
   dateGerminated?: Maybe<Scalars['Timestamp']>;
   datePlanted?: Maybe<Scalars['Timestamp']>;
   dateSprouted?: Maybe<Scalars['Timestamp']>;
@@ -86,6 +87,7 @@ export type Species = {
   __typename?: 'Species';
   id: Scalars['Int'];
   name: Scalars['String'];
+  dateCreated?: Maybe<Scalars['Timestamp']>;
   description?: Maybe<Scalars['String']>;
   photo?: Maybe<Photo>;
   avatar?: Maybe<Photo>;

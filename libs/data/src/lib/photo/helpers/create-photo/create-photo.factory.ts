@@ -7,7 +7,7 @@ import { Photo } from '@gardn/data';
 export const createPhotoFactory = (nextPhotoId = 1) => (url: string, title?: string, id?: number): Photo => { 
   const nextId = typeof id === 'number' ? id : nextPhotoId++
 
-  const dateCreated = new Date().getTime() // unix epoch timestamp in milliseconds
+  const dateCreated = new Date().getTime(); // unix epoch timestamp in milliseconds
   
   return {
     id: nextId, 
