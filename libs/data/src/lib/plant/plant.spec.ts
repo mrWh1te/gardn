@@ -10,10 +10,10 @@ const typesArray = loadFilesSync('libs/data/src/lib/plant/*schema.graphql');
 const typeDefs = mergeTypeDefs(typesArray);
 
 // resolvers for this data feature
-import { plantResolversFactory } from './resolvers'
+import { plantResolversFactory } from './resolvers';
 
 // mocked data used in the development in-memory db
-import { mockPlant1, mockPlant2 } from '@gardn/plant/helpers'
+import { mockPlant1, mockPlant2 } from '@gardn/data';
 
 // a nice structure for test cases
 // found at https://hackernoon.com/extensive-graphql-testing-57e8760f1c25
