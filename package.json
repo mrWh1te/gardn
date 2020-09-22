@@ -39,7 +39,7 @@
     "document-register-element": "1.13.1",
     "express": "4.17.1",
     "graphql": "^15.3.0",
-    "graphql-date": "^1.0.3",
+    "graphql-scalars": "^1.2.7",
     "graphql-tools": "^6.2.2",
     "http": "0.0.1-security",
     "ncp": "^2.0.0",

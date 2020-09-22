@@ -1,4 +1,4 @@
-import { IResolvers } from 'graphql-tools';
+import { TimestampResolver } from 'graphql-scalars';
 
 import { 
   plantResolversFactory,
@@ -8,7 +8,7 @@ import {
 const plantResolvers = plantResolversFactory();
 const photoResolvers = photoResolversFactory();
 
-export const resolvers: IResolvers = {
+export const resolvers: any = {
   Query: {
     ...photoResolvers.Query,
     ...plantResolvers.Query
@@ -16,5 +16,7 @@ export const resolvers: IResolvers = {
   Mutation: {
     ...photoResolvers.Mutation,
     ...plantResolvers.Mutation
-  }
+  },
+  // Custom Scalars
+  Timestamp: TimestampResolver
 };

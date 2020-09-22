@@ -2,7 +2,7 @@ type Photo {
   id: Int!
   url: String!
   title: String
-  dateCreated: Int 
+  dateCreated: Timestamp 
 }
 
 type Query {

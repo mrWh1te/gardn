@@ -9,18 +9,21 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Timestamp: any;
 };
+
 
 export type Photo = {
   __typename?: 'Photo';
   id: Scalars['Int'];
   url: Scalars['String'];
   title?: Maybe<Scalars['String']>;
-  dateCreated?: Maybe<Scalars['Int']>;
+  dateCreated?: Maybe<Scalars['Timestamp']>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  allSpecies?: Maybe<Array<Maybe<Species>>>;
   photo?: Maybe<Photo>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   plant?: Maybe<Plant>;
@@ -72,9 +75,9 @@ export type Plant = {
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
   species?: Maybe<Species>;
-  dateGerminated?: Maybe<Scalars['Int']>;
-  datePlanted?: Maybe<Scalars['Int']>;
-  dateSprouted?: Maybe<Scalars['Int']>;
+  dateGerminated?: Maybe<Scalars['Timestamp']>;
+  datePlanted?: Maybe<Scalars['Timestamp']>;
+  dateSprouted?: Maybe<Scalars['Timestamp']>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   photo?: Maybe<Photo>;
 };
@@ -188,6 +191,17 @@ export type GetSpeciesQuery = (
     { __typename?: 'Species' }
     & Pick<Species, 'name' | 'description'>
   )> }
+);
+
+export type GetAllSpeciesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSpeciesQuery = (
+  { __typename?: 'Query' }
+  & { allSpecies?: Maybe<Array<Maybe<(
+    { __typename?: 'Species' }
+    & Pick<Species, 'id' | 'name'>
+  )>>> }
 );
 
 
@@ -466,3 +480,36 @@ export function useGetSpeciesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetSpeciesQueryHookResult = ReturnType<typeof useGetSpeciesQuery>;
 export type GetSpeciesLazyQueryHookResult = ReturnType<typeof useGetSpeciesLazyQuery>;
 export type GetSpeciesQueryResult = Apollo.QueryResult<GetSpeciesQuery, GetSpeciesQueryVariables>;
+export const GetAllSpeciesDocument = gql`
+    query getAllSpecies {
+  allSpecies {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetAllSpeciesQuery__
+ *
+ * To run a query within a React component, call `useGetAllSpeciesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllSpeciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllSpeciesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllSpeciesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>) {
+        return Apollo.useQuery<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>(GetAllSpeciesDocument, baseOptions);
+      }
+export function useGetAllSpeciesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>) {
+          return Apollo.useLazyQuery<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>(GetAllSpeciesDocument, baseOptions);
+        }
+export type GetAllSpeciesQueryHookResult = ReturnType<typeof useGetAllSpeciesQuery>;
+export type GetAllSpeciesLazyQueryHookResult = ReturnType<typeof useGetAllSpeciesLazyQuery>;
+export type GetAllSpeciesQueryResult = Apollo.QueryResult<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>;

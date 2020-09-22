@@ -2,9 +2,9 @@ type Plant {
   id: Int!
   name: String
   species: Species
-  dateGerminated: Int
-  datePlanted: Int
-  dateSprouted: Int
+  dateGerminated: Timestamp
+  datePlanted: Timestamp
+  dateSprouted: Timestamp
   photos: [Photo]
   photo: Photo
 }
