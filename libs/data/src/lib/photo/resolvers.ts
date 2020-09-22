@@ -5,7 +5,7 @@ import {
   mockLargePhoto3,
   mockLargePhoto4,
   mockLargePhoto5
- } from '@gardn/photo/helpers';
+ } from '@gardn/data';
 
 /**
  * Data is stored in memory for development
