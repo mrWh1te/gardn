@@ -1,15 +1,18 @@
 import { 
-  createPlant,
-  createSpecies,
-  // data
   mockPlant1,
   mockPlant2,
+} from './mocks';
+
+import {
   species1,
   species2,
   species3,
   species4,
   species5
-} from '@gardn/plant/helpers';
+} from './seed-data';
+
+import { createPlant } from './helpers/create-plant/create-plant';
+import { createSpecies } from './helpers/create-species/create-species';
 
 /**
  * Data is stored in memory for development
