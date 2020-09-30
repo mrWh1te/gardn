@@ -45,7 +45,8 @@
     "ncp": "^2.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-router-dom": "5.2.0"
+    "react-router-dom": "5.2.0",
+    "react-swipeable-views": "^0.13.9"
   },
   "devDependencies": {
     "@babel/core": "7.9.6",

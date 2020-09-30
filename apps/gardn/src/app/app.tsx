@@ -14,7 +14,7 @@ import { Header, ActionMenu } from '@gardn/layout';
 export const App = () => (
   <>
     <Header />
-    <ActionMenu /> { /* todo move ActionMenu into another library, maybe Event:Smart ? */ }
+    <ActionMenu /> { /* todo move ActionMenu into another library, maybe Event:Smart ? Utility? */ }
 
     <Route
       path="/"

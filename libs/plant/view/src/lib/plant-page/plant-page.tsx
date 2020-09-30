@@ -18,8 +18,8 @@ const StyledPlantPage = styled.div`
 
 const PositionedGoBack = styled.div`
   position: absolute;
-  left: 1rem;
-  top: 1rem;
+  left: 1.35rem;
+  top: 1.35rem;
   height: 1rem;
   width: 1rem;
 `;

@@ -5,6 +5,8 @@ import { Route } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
+import { PlantDrawer } from '@gardn/plant/view';
+
 import ActionButton from '../action-button/action-button';
 
 /* eslint-disable-next-line */
@@ -35,9 +37,7 @@ export const ActionMenu = (props: ActionMenuProps) => {
     <>
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
       <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)}>
-        Page dependent actions, ie if on a Plant page: water, temperature reading, re-pot, etc
-
-        <Route path="/plant/:id" component={() => <div>Plant page drawer view</div>} />
+        <Route path="/plant/:id" component={PlantDrawer} />
       </Drawer>
     </>
   );
