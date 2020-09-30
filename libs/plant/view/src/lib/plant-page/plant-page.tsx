@@ -16,10 +16,20 @@ const StyledPlantPage = styled.div`
   width: 100%;
 `;
 
+const PositionedGoBack = styled.div`
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  height: 1rem;
+  width: 1rem;
+`;
+
 export const PlantPage = () => {
   return (
     <StyledPlantPage>
-      <GoBack />
+      <PositionedGoBack>
+        <GoBack />
+      </PositionedGoBack>
       <Plant />
     </StyledPlantPage>
   );

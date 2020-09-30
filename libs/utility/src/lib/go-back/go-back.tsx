@@ -1,22 +1,24 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 
 import styled from '@emotion/styled';
 
-import { withRouter } from 'react-router-dom'
-const StyledBackButton = styled.div`
-  background-color: green;
+import { ChevronIcon, darkGray } from '@gardn/ui';
 
-  position: absolute;
-  left: .5rem;
-  top: .5rem;
-  height: 1rem;
-  width: 1rem;
+const StyledBackButton = styled.div`
+  button {
+    background: none;
+    border: 0;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 export const GoBack = withRouter(({ history }) => {
   return (
     <StyledBackButton>
       <button onClick={() => history.goBack()}>
-        &#x3C;
+        <ChevronIcon color={darkGray} />
       </button>
     </StyledBackButton>
   )
