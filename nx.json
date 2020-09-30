@@ -73,6 +73,9 @@
     },
     "plant-smart": {
       "tags": []
+    },
+    "utility": {
+      "tags": []
     }
   }
 }

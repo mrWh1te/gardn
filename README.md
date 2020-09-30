@@ -49,6 +49,14 @@ In `./libs/layout` is a library of common Layout components.
 import { Header, Navigation, Logo } from '@gardn/layout';
 ```
 
+### Utility
+
+In `./libs/utility` is a library of common components.
+
+```typescript
+import { GoBack } from '@gardn/utility';
+```
+
 ### Plant
 In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plant feature.
 
@@ -167,6 +175,7 @@ Current unit-tests:
  - run `nx test data` for main data library
  - run `nx test ui` for main ui library
  - run `nx test layout` for main layout library
+ - run `nx test utility` for utility components library
  - run `nx test plant-view` for domain plant's view library
  - run `nx test plant-smart` for domain plant's smart library
  - run `nx test plant-ui` for domain plant's ui library
