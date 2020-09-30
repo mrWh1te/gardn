@@ -15,8 +15,8 @@ const StyledPlant = styled.div`
     margin: 0;
   }
   h3, p {
-    background-color: green;
-    text-align: center;
+    text-align: right;
+    padding-right: 1rem;
   }
 `;
 

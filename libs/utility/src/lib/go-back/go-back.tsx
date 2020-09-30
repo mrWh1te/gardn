@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import styled from '@emotion/styled';
 
-import { ChevronIcon, darkGray } from '@gardn/ui';
+import { ChevronIcon, white } from '@gardn/ui';
 
 const StyledBackButton = styled.div`
   button {
@@ -18,7 +18,7 @@ export const GoBack = withRouter(({ history }) => {
   return (
     <StyledBackButton>
       <button onClick={() => history.goBack()}>
-        <ChevronIcon color={darkGray} />
+        <ChevronIcon color={white} />
       </button>
     </StyledBackButton>
   )
