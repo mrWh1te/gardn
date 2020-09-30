@@ -17,7 +17,12 @@ import {
   mockLargePhoto2,
   mockLargePhoto3,
   mockLargePhoto4,
-  mockLargePhoto5
+  mockLargePhoto5,
+  //
+  mockLargePhoto6,
+  mockLargePhoto7,
+  mockLargePhoto8,
+  mockLargePhoto9
 } from './photo/mocks';
 
 
@@ -83,12 +88,33 @@ const fakeLargePhoto5: DBPhoto = {
   ...mockLargePhoto5,
   plantId: fakePlant1.id
 }
+const fakeLargePhoto6: DBPhoto = {
+  ...mockLargePhoto6,
+  plantId: fakePlant1.id
+}
+const fakeLargePhoto7: DBPhoto = {
+  ...mockLargePhoto7,
+  plantId: fakePlant1.id
+}
+const fakeLargePhoto8: DBPhoto = {
+  ...mockLargePhoto8,
+  plantId: fakePlant1.id
+}
+const fakeLargePhoto9: DBPhoto = {
+  ...mockLargePhoto9,
+  plantId: fakePlant1.id
+}
+
 export const photosSeed = [
   mockLargePhoto1,
   mockLargePhoto2,
   fakeLargePhoto3,
   fakeLargePhoto4,
-  fakeLargePhoto5
+  fakeLargePhoto5,
+  fakeLargePhoto6,
+  fakeLargePhoto7,
+  fakeLargePhoto8,
+  fakeLargePhoto9
 ];
 
 
