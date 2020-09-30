@@ -1,22 +1,23 @@
 import { TimestampResolver } from 'graphql-scalars';
 
 import { 
-  plantResolversFactory,
-  photoResolversFactory
+  plantResolvers,
+  photoResolvers,
+  speciesResolvers
 } from '@gardn/data';
-
-const plantResolvers = plantResolversFactory();
-const photoResolvers = photoResolversFactory();
 
 export const resolvers: any = {
   Query: {
     ...photoResolvers.Query,
-    ...plantResolvers.Query
+    ...plantResolvers.Query,
+    ...speciesResolvers.Query
   },
   Mutation: {
     ...photoResolvers.Mutation,
-    ...plantResolvers.Mutation
+    ...plantResolvers.Mutation,
+    ...speciesResolvers.Mutation
   },
+  Plant: plantResolvers.Plant,
   // Custom Scalars
   Timestamp: TimestampResolver
 };

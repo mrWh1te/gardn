@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as ApolloReactHoc from '@apollo/client/react/hoc';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -80,7 +81,7 @@ export type Plant = {
   datePlanted?: Maybe<Scalars['Timestamp']>;
   dateSprouted?: Maybe<Scalars['Timestamp']>;
   photos?: Maybe<Array<Maybe<Photo>>>;
-  photo?: Maybe<Photo>;
+  avatar?: Maybe<Photo>;
 };
 
 export type Species = {
@@ -89,12 +90,12 @@ export type Species = {
   name: Scalars['String'];
   dateCreated?: Maybe<Scalars['Timestamp']>;
   description?: Maybe<Scalars['String']>;
-  photo?: Maybe<Photo>;
+  coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
 };
 
 export type AddPhotoMutationVariables = Exact<{
-  url?: Maybe<Scalars['String']>;
+  url: Scalars['String'];
   title?: Maybe<Scalars['String']>;
 }>;
 
@@ -208,7 +209,7 @@ export type GetAllSpeciesQuery = (
 
 
 export const AddPhotoDocument = gql`
-    mutation addPhoto($url: String, $title: String) {
+    mutation addPhoto($url: String!, $title: String) {
   addPhoto(url: $url, title: $title) {
     id
     url
@@ -218,6 +219,19 @@ export const AddPhotoDocument = gql`
 }
     `;
 export type AddPhotoMutationFn = Apollo.MutationFunction<AddPhotoMutation, AddPhotoMutationVariables>;
+export type AddPhotoProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<AddPhotoMutation, AddPhotoMutationVariables>
+    } & TChildProps;
+export function withAddPhoto<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddPhotoMutation,
+  AddPhotoMutationVariables,
+  AddPhotoProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, AddPhotoMutation, AddPhotoMutationVariables, AddPhotoProps<TChildProps, TDataName>>(AddPhotoDocument, {
+      alias: 'addPhoto',
+      ...operationOptions
+    });
+};
 
 /**
  * __useAddPhotoMutation__
@@ -253,6 +267,19 @@ export const GetPhotosDocument = gql`
   }
 }
     `;
+export type GetPhotosProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetPhotosQuery, GetPhotosQueryVariables>
+    } & TChildProps;
+export function withGetPhotos<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetPhotosQuery,
+  GetPhotosQueryVariables,
+  GetPhotosProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetPhotosQuery, GetPhotosQueryVariables, GetPhotosProps<TChildProps, TDataName>>(GetPhotosDocument, {
+      alias: 'getPhotos',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetPhotosQuery__
@@ -288,6 +315,19 @@ export const GetPhotoDocument = gql`
   }
 }
     `;
+export type GetPhotoProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetPhotoQuery, GetPhotoQueryVariables>
+    } & TChildProps;
+export function withGetPhoto<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetPhotoQuery,
+  GetPhotoQueryVariables,
+  GetPhotoProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetPhotoQuery, GetPhotoQueryVariables, GetPhotoProps<TChildProps, TDataName>>(GetPhotoDocument, {
+      alias: 'getPhoto',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetPhotoQuery__
@@ -323,6 +363,19 @@ export const AddPlantDocument = gql`
 }
     `;
 export type AddPlantMutationFn = Apollo.MutationFunction<AddPlantMutation, AddPlantMutationVariables>;
+export type AddPlantProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<AddPlantMutation, AddPlantMutationVariables>
+    } & TChildProps;
+export function withAddPlant<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddPlantMutation,
+  AddPlantMutationVariables,
+  AddPlantProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, AddPlantMutation, AddPlantMutationVariables, AddPlantProps<TChildProps, TDataName>>(AddPlantDocument, {
+      alias: 'addPlant',
+      ...operationOptions
+    });
+};
 
 /**
  * __useAddPlantMutation__
@@ -357,6 +410,19 @@ export const AddSpeciesDocument = gql`
 }
     `;
 export type AddSpeciesMutationFn = Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>;
+export type AddSpeciesProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>
+    } & TChildProps;
+export function withAddSpecies<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddSpeciesMutation,
+  AddSpeciesMutationVariables,
+  AddSpeciesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, AddSpeciesMutation, AddSpeciesMutationVariables, AddSpeciesProps<TChildProps, TDataName>>(AddSpeciesDocument, {
+      alias: 'addSpecies',
+      ...operationOptions
+    });
+};
 
 /**
  * __useAddSpeciesMutation__
@@ -390,6 +456,19 @@ export const GetPlantsDocument = gql`
   }
 }
     `;
+export type GetPlantsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetPlantsQuery, GetPlantsQueryVariables>
+    } & TChildProps;
+export function withGetPlants<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetPlantsQuery,
+  GetPlantsQueryVariables,
+  GetPlantsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetPlantsQuery, GetPlantsQueryVariables, GetPlantsProps<TChildProps, TDataName>>(GetPlantsDocument, {
+      alias: 'getPlants',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetPlantsQuery__
@@ -422,6 +501,19 @@ export const GetPlantDocument = gql`
   }
 }
     `;
+export type GetPlantProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetPlantQuery, GetPlantQueryVariables>
+    } & TChildProps;
+export function withGetPlant<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetPlantQuery,
+  GetPlantQueryVariables,
+  GetPlantProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetPlantQuery, GetPlantQueryVariables, GetPlantProps<TChildProps, TDataName>>(GetPlantDocument, {
+      alias: 'getPlant',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetPlantQuery__
@@ -456,6 +548,19 @@ export const GetSpeciesDocument = gql`
   }
 }
     `;
+export type GetSpeciesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetSpeciesQuery, GetSpeciesQueryVariables>
+    } & TChildProps;
+export function withGetSpecies<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetSpeciesQuery,
+  GetSpeciesQueryVariables,
+  GetSpeciesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetSpeciesQuery, GetSpeciesQueryVariables, GetSpeciesProps<TChildProps, TDataName>>(GetSpeciesDocument, {
+      alias: 'getSpecies',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetSpeciesQuery__
@@ -490,6 +595,19 @@ export const GetAllSpeciesDocument = gql`
   }
 }
     `;
+export type GetAllSpeciesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>
+    } & TChildProps;
+export function withGetAllSpecies<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetAllSpeciesQuery,
+  GetAllSpeciesQueryVariables,
+  GetAllSpeciesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetAllSpeciesQuery, GetAllSpeciesQueryVariables, GetAllSpeciesProps<TChildProps, TDataName>>(GetAllSpeciesDocument, {
+      alias: 'getAllSpecies',
+      ...operationOptions
+    });
+};
 
 /**
  * __useGetAllSpeciesQuery__

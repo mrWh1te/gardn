@@ -1,27 +1,8 @@
-import { 
-  createPhoto,
-  mockLargePhoto1,
-  mockLargePhoto2,
-  mockLargePhoto3,
-  mockLargePhoto4,
-  mockLargePhoto5
- } from '@gardn/data';
-
-/**
- * Data is stored in memory for development
- * @param photos 
- */
-export const photoResolversFactory = (photos = [
-  mockLargePhoto1,
-  mockLargePhoto2,
-  mockLargePhoto3,
-  mockLargePhoto4,
-  mockLargePhoto5
-]) => ({
+export const photoResolvers = {
   Query: {
-    photos: () => photos,
-    photo: (parent, args) => {
-      const photo = photos.find(photo => photo.id === args.id);
+    photos: (_, __, { dataSources }) => dataSources.photo.getAllPhotos(),
+    photo: (_, { id }, { dataSources }) => {
+      const photo = dataSources.photo.getPhotoById({id});
 
       if (photo) {
         return photo;
@@ -31,11 +12,6 @@ export const photoResolversFactory = (photos = [
     }
   },
   Mutation: {
-    addPlant: (parent, args) => {
-      const newPhoto = createPhoto(args.name)
-      photos.push(newPhoto)
-
-      return newPhoto
-    }
+    addPhoto: (_, { url, title }, { dataSources }) => dataSources.photo.addPhoto({url, title})
   }
-})
+}

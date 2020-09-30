@@ -1,66 +1,43 @@
-import { 
-  mockPlant1,
-  mockPlant2,
-} from './mocks';
-
-import {
-  species1,
-  species2,
-  species3,
-  species4,
-  species5
-} from './seed-data';
-
-import { createPlant } from './helpers/create-plant/create-plant';
-import { createSpecies } from './helpers/create-species/create-species';
-
 /**
  * Data is stored in memory for development
  * @param plants 
  */
-export const plantResolversFactory = (plants = [mockPlant1, mockPlant2], species = [species1, species2, species3, species4, species5]) => ({
+export const plantResolvers = {
   Query: {
-    //
-    // Plant
-    plants: () => plants,
-    plant: (parent, args) => {
-      const plant = plants.find(plant => plant.id === args.id);
+    plants: (_, __, { dataSources }) => dataSources.plant.getPlants(),
+    plant: (_, { id }, { dataSources }) => {
+      const plant = dataSources.plant.getPlantById({ id })
 
       if (plant) {
         return plant;
       }
       
       return new Error('Plant not found')
-    },
-    //
-    // Species
-    species: (parent, args) => {
-      const oneSpecies = species.find(aSpecies => aSpecies.id === args.id);
-
-      if (oneSpecies) {
-        return oneSpecies;
+    }
+  },
+  Plant: {
+    avatar: (plant, _, { dataSources }) => {
+      if (plant.avatarPhotoId) {
+        const avatar = dataSources.photo.getPhotoById({ id: plant.avatarPhotoId });
+        return avatar;
       }
 
-      return new Error('Species not found');
+      return null;
     },
-    allSpecies: () => species
+    photos: (plant, _, { dataSources }) => {
+      const photos = dataSources.photo.getPhotosByPlantId({ id: plant.id });
+      return photos;
+    },
+    species: (plant, _, { dataSources }) => {
+      if (plant.speciesId) {
+        const species = dataSources.species.getSpeciesById({ id: plant.speciesId })
+        return species;
+      }
+
+      return null;
+    }
   },
   Mutation: {
-    //
-    // Plant
-    addPlant: (parent, args) => {
-      const newPlant = createPlant(args.name)
-      plants.push(newPlant)
-
-      return newPlant
-    },
-    //
-    // Species
-    addSpecies: (parent, args) => {
-      const newSpecies = createSpecies(args.name, args.description);
-      species.push(newSpecies);
-
-      return newSpecies;
-    }
+    addPlant: (_, { name }, { dataSources }) => dataSources.plant.newPlant({name})
   }
-})
+}

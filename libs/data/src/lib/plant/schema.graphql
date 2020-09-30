@@ -7,7 +7,7 @@ type Plant {
   datePlanted: Timestamp
   dateSprouted: Timestamp
   photos: [Photo]
-  photo: Photo
+  avatar: Photo
 }
 
 type Query {
@@ -17,24 +17,4 @@ type Query {
 
 type Mutation {
   addPlant(name: String): Plant
-}
-
-
-
-type Species {
-  id: Int!
-  name: String!
-  dateCreated: Timestamp
-  description: String
-  photo: Photo
-  avatar: Photo
-}
-
-type Query {
-  species(id: Int!): Species
-  allSpecies: [Species]
-}
-
-type Mutation {
-  addSpecies(name: String!, description: String): Species
 }

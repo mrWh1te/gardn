@@ -10,7 +10,7 @@ const typesArray = loadFilesSync('libs/data/src/lib/**/*schema.graphql');
 const typeDefs = mergeTypeDefs(typesArray);
 
 // resolvers for this data feature
-import { photoResolversFactory } from './resolvers';
+import { photoResolvers } from './resolvers';
 
 // mocked data used in the development in-memory db
 import { 
@@ -66,7 +66,7 @@ describe('Plant Types & Resolvers', () => {
 
     // reading the actual schema
     // make the actual schema and resolvers executable
-    const schema = makeExecutableSchema({ typeDefs, resolvers: photoResolversFactory() as any })
+    const schema = makeExecutableSchema({ typeDefs, resolvers: photoResolvers })
     
     // running the test for each case in the cases array
     cases.forEach(obj => {
