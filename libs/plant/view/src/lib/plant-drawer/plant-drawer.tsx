@@ -11,6 +11,8 @@ import styled from '@emotion/styled';
 import { Plant } from '@gardn/plant/smart';
 import { white, DrawerView } from '@gardn/ui';
 
+import { PlantPhotos } from '@gardn/plant/smart';
+
 export const a11yProps = (index) => {
   return {
     id: `full-width-tab-${index}`,
@@ -42,10 +44,6 @@ export const TabPanel = (props: TabPanelProps) => {
   );
 }
 
-const StyledPlantDrawer = styled.div`
-  background-color: ${white};
-`;
-
 /**
  * Component shown in Drawer on Plant page
  */
@@ -61,7 +59,7 @@ export const PlantDrawer = () => {
   };
 
   return (
-    <StyledPlantDrawer>
+    <>
       <SwipeableViews
         axis={'x'}
         index={value}
@@ -69,17 +67,23 @@ export const PlantDrawer = () => {
       >
         <TabPanel value={value} index={0}>
           <DrawerView>
-            Photos
+            <PlantPhotos />
           </DrawerView>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <DrawerView>
-            Info
+            PlantInfo -> UI:PlantInfo (vertical scrolling optional, not swiping slides)
           </DrawerView>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <DrawerView>
             Feed
+            <br />
+            <br />
+            Scroll down....
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <p>You made it!</p>
+            <br />
           </DrawerView>
         </TabPanel>
       </SwipeableViews>
@@ -100,8 +104,7 @@ export const PlantDrawer = () => {
           <Tab label="Feed" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      
-    </StyledPlantDrawer>
+    </>
   );
 };
 

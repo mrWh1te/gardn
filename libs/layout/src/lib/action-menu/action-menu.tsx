@@ -4,6 +4,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { PlantDrawer } from '@gardn/plant/view';
+import { white } from '@gardn/ui';
 
 import ActionButton from '../action-button/action-button';
 
@@ -27,13 +28,14 @@ export const ActionMenu = () => {
   };
 
   const style: React.CSSProperties = {
-    backgroundColor: 'transparent',
+    backgroundColor: white,
     borderTopLeftRadius: '.5rem',
     borderTopRightRadius: '.5rem',
   }
 
   return (
     <>
+      {/* todo ActionButton disabled when a particular page route of routes is active */}
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
       <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
         PaperProps={{ elevation: 0, style, square: false }}>

@@ -542,6 +542,32 @@
           }
         }
       }
+    },
+    "photo-ui": {
+      "root": "libs/photo/ui",
+      "sourceRoot": "libs/photo/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/photo/ui/tsconfig.lib.json",
+              "libs/photo/ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/photo/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/photo/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

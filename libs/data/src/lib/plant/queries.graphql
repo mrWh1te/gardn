@@ -22,3 +22,11 @@ query getPlant($id: Int!) {
     }
   }
 }
+
+query getPlantPhotos($id: Int!) {
+  plant(id: $id) {
+    photos {
+      id, url, title, dateCreated
+    }
+  }
+}
