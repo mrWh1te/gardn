@@ -25,7 +25,10 @@ const StyledPlantInner = styled.div`
 `
 
 export const Plant = (props: GetPlantQuery) => {
-  console.log('props = ', props);
+  // todo future switch out name for temperature icon + last temperature reading
+  //  also add a water droplet icon if its been recently watered
+  // both icons have tooltips for click/hover for information as to what they mean
+  //  maybe reserve name & species for plant drawer info tab panel
   return (
     <StyledPlant style={{backgroundImage: `url(${props.plant.coverPhoto?.url})`}}>
       <StyledPlantInner>

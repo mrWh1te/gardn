@@ -10,4 +10,5 @@ export * from './lib/icons/seedling-icon/seedling-icon';
 export * from './lib/icons/home-icon/home-icon';
 export * from './lib/icons/chevron-icon/chevron-icon';
 
-// components
+// view components
+export * from './lib/drawer-view/drawer-view';

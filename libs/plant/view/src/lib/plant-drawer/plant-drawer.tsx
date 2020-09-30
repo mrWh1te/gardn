@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import styled from '@emotion/styled';
 
 import { Plant } from '@gardn/plant/smart';
-import { white } from '@gardn/ui';
+import { white, DrawerView } from '@gardn/ui';
 
 export const a11yProps = (index) => {
   return {
@@ -68,16 +68,25 @@ export const PlantDrawer = () => {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0}>
-          Photos
+          <DrawerView>
+            Photos
+          </DrawerView>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Info
+          <DrawerView>
+            Info
+          </DrawerView>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Feed
+          <DrawerView>
+            Feed
+          </DrawerView>
         </TabPanel>
       </SwipeableViews>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" style={{
+        boxShadow: 'rgba(0, 0, 0, 0.75) 0px 1px 3px 2px',
+        position: 'relative'
+      }}>
         <Tabs
           value={value}
           onChange={handleChange}

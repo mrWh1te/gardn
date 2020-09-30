@@ -3,16 +3,9 @@ import Drawer from '@material-ui/core/Drawer';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import styled from '@emotion/styled';
-
 import { PlantDrawer } from '@gardn/plant/view';
 
 import ActionButton from '../action-button/action-button';
-
-/* eslint-disable-next-line */
-export interface ActionMenuProps {}
-
-const StyledActionMenu = styled.section``;
 
 // TODO add tests
 
@@ -26,17 +19,24 @@ const StyledActionMenu = styled.section``;
  * 
  * @param props 
  */
-export const ActionMenu = (props: ActionMenuProps) => {
+export const ActionMenu = () => {
   const [menuOpenStatus, setMenuOpenStatus] = React.useState(false);
 
   const toggleDrawer = (newOpenStatus: boolean) => (event) => {
     setMenuOpenStatus(newOpenStatus);
   };
 
+  const style: React.CSSProperties = {
+    backgroundColor: 'transparent',
+    borderTopLeftRadius: '.5rem',
+    borderTopRightRadius: '.5rem',
+  }
+
   return (
     <>
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
-      <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)}>
+      <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
+        PaperProps={{ elevation: 0, style, square: false }}>
         <Route path="/plant/:id" component={PlantDrawer} />
       </Drawer>
     </>
