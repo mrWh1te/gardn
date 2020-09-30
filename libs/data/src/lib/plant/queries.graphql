@@ -17,7 +17,7 @@ query getPlant($id: Int!) {
     photos {
       url, title
     },
-    avatar {
+    coverPhoto {
       url
     }
   }

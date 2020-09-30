@@ -24,6 +24,14 @@ export const plantResolvers = {
 
       return null;
     },
+    coverPhoto: (plant, _, { dataSources }) => {
+      if (plant.coverPhotoId) {
+        const coverPhoto = dataSources.photo.getPhotoById({ id: plant.coverPhotoId });
+        return coverPhoto;
+      }
+
+      return null;
+    },
     photos: (plant, _, { dataSources }) => {
       const photos = dataSources.photo.getPhotosByPlantId({ id: plant.id });
       return photos;

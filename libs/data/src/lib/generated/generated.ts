@@ -81,6 +81,7 @@ export type Plant = {
   datePlanted?: Maybe<Scalars['Timestamp']>;
   dateSprouted?: Maybe<Scalars['Timestamp']>;
   photos?: Maybe<Array<Maybe<Photo>>>;
+  coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
 };
 
@@ -172,7 +173,7 @@ export type GetPlantQuery = (
     )>, photos?: Maybe<Array<Maybe<(
       { __typename?: 'Photo' }
       & Pick<Photo, 'url' | 'title'>
-    )>>>, avatar?: Maybe<(
+    )>>>, coverPhoto?: Maybe<(
       { __typename?: 'Photo' }
       & Pick<Photo, 'url'>
     )> }
@@ -471,7 +472,7 @@ export const GetPlantDocument = gql`
       url
       title
     }
-    avatar {
+    coverPhoto {
       url
     }
   }

@@ -30,6 +30,7 @@ import {
  */
 export interface DBPlant extends Plant {
   speciesId?: number, // not required on User to associate data to Species
+  coverPhotoId?: number,
   avatarPhotoId?: number // not required of User to upload avatar photo 
 }
 
@@ -60,12 +61,12 @@ export const speciesSeed = [
 
 const fakePlant1: DBPlant = {
   ...mockPlant1,
-  avatarPhotoId: mockLargePhoto1.id,
+  coverPhotoId: mockLargePhoto1.id,
   speciesId: species1.id
 }
 const fakePlant2: DBPlant = {
   ...mockPlant2,
-  avatarPhotoId: mockLargePhoto2.id,
+  coverPhotoId: mockLargePhoto2.id,
   speciesId: species2.id
 }
 export const plantsSeed = [fakePlant1, fakePlant2];

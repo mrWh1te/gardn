@@ -2,21 +2,36 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import { GetPlantQuery } from '@gardn/data';
-import { white } from '@gardn/ui';
+import { black } from '@gardn/ui';
 
 const StyledPlant = styled.div`
-  padding: 1rem;
-  color: ${white};
+  
+  color: ${black};
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+
   h3 {
     margin: 0;
   }
+  h3, p {
+    background-color: green;
+    text-align: center;
+  }
 `;
 
+const StyledPlantInner = styled.div`
+  padding-top: 2rem;
+`
+
 export const Plant = (props: GetPlantQuery) => {
+  console.log('props = ', props);
   return (
-    <StyledPlant>
-      <h3>{ props.plant.name }</h3>
-      <p>{ props.plant.species?.name }</p>
+    <StyledPlant style={{backgroundImage: `url(${props.plant.coverPhoto?.url})`}}>
+      <StyledPlantInner>
+        <h3>{ props.plant.name }</h3>
+        <p>{ props.plant.species?.name }</p>
+      </StyledPlantInner>
     </StyledPlant>
   );
 };
