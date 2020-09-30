@@ -145,20 +145,6 @@ export type AddPlantMutation = (
   )> }
 );
 
-export type AddSpeciesMutationVariables = Exact<{
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-}>;
-
-
-export type AddSpeciesMutation = (
-  { __typename?: 'Mutation' }
-  & { addSpecies?: Maybe<(
-    { __typename?: 'Species' }
-    & Pick<Species, 'id' | 'name' | 'description'>
-  )> }
-);
-
 export type GetPlantsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -179,7 +165,31 @@ export type GetPlantQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'name'>
+    & Pick<Plant, 'id' | 'name' | 'dateCreated' | 'dateGerminated' | 'datePlanted' | 'dateSprouted'>
+    & { species?: Maybe<(
+      { __typename?: 'Species' }
+      & Pick<Species, 'name'>
+    )>, photos?: Maybe<Array<Maybe<(
+      { __typename?: 'Photo' }
+      & Pick<Photo, 'url' | 'title'>
+    )>>>, avatar?: Maybe<(
+      { __typename?: 'Photo' }
+      & Pick<Photo, 'url'>
+    )> }
+  )> }
+);
+
+export type AddSpeciesMutationVariables = Exact<{
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AddSpeciesMutation = (
+  { __typename?: 'Mutation' }
+  & { addSpecies?: Maybe<(
+    { __typename?: 'Species' }
+    & Pick<Species, 'id' | 'name' | 'description'>
   )> }
 );
 
@@ -400,54 +410,6 @@ export function useAddPlantMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddPlantMutationHookResult = ReturnType<typeof useAddPlantMutation>;
 export type AddPlantMutationResult = Apollo.MutationResult<AddPlantMutation>;
 export type AddPlantMutationOptions = Apollo.BaseMutationOptions<AddPlantMutation, AddPlantMutationVariables>;
-export const AddSpeciesDocument = gql`
-    mutation addSpecies($name: String!, $description: String) {
-  addSpecies(name: $name, description: $description) {
-    id
-    name
-    description
-  }
-}
-    `;
-export type AddSpeciesMutationFn = Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>;
-export type AddSpeciesProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>
-    } & TChildProps;
-export function withAddSpecies<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  AddSpeciesMutation,
-  AddSpeciesMutationVariables,
-  AddSpeciesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, AddSpeciesMutation, AddSpeciesMutationVariables, AddSpeciesProps<TChildProps, TDataName>>(AddSpeciesDocument, {
-      alias: 'addSpecies',
-      ...operationOptions
-    });
-};
-
-/**
- * __useAddSpeciesMutation__
- *
- * To run a mutation, you first call `useAddSpeciesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddSpeciesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addSpeciesMutation, { data, loading, error }] = useAddSpeciesMutation({
- *   variables: {
- *      name: // value for 'name'
- *      description: // value for 'description'
- *   },
- * });
- */
-export function useAddSpeciesMutation(baseOptions?: Apollo.MutationHookOptions<AddSpeciesMutation, AddSpeciesMutationVariables>) {
-        return Apollo.useMutation<AddSpeciesMutation, AddSpeciesMutationVariables>(AddSpeciesDocument, baseOptions);
-      }
-export type AddSpeciesMutationHookResult = ReturnType<typeof useAddSpeciesMutation>;
-export type AddSpeciesMutationResult = Apollo.MutationResult<AddSpeciesMutation>;
-export type AddSpeciesMutationOptions = Apollo.BaseMutationOptions<AddSpeciesMutation, AddSpeciesMutationVariables>;
 export const GetPlantsDocument = gql`
     query getPlants {
   plants {
@@ -497,7 +459,22 @@ export type GetPlantsQueryResult = Apollo.QueryResult<GetPlantsQuery, GetPlantsQ
 export const GetPlantDocument = gql`
     query getPlant($id: Int!) {
   plant(id: $id) {
+    id
     name
+    species {
+      name
+    }
+    dateCreated
+    dateGerminated
+    datePlanted
+    dateSprouted
+    photos {
+      url
+      title
+    }
+    avatar {
+      url
+    }
   }
 }
     `;
@@ -540,6 +517,54 @@ export function useGetPlantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetPlantQueryHookResult = ReturnType<typeof useGetPlantQuery>;
 export type GetPlantLazyQueryHookResult = ReturnType<typeof useGetPlantLazyQuery>;
 export type GetPlantQueryResult = Apollo.QueryResult<GetPlantQuery, GetPlantQueryVariables>;
+export const AddSpeciesDocument = gql`
+    mutation addSpecies($name: String!, $description: String) {
+  addSpecies(name: $name, description: $description) {
+    id
+    name
+    description
+  }
+}
+    `;
+export type AddSpeciesMutationFn = Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>;
+export type AddSpeciesProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: Apollo.MutationFunction<AddSpeciesMutation, AddSpeciesMutationVariables>
+    } & TChildProps;
+export function withAddSpecies<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddSpeciesMutation,
+  AddSpeciesMutationVariables,
+  AddSpeciesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, AddSpeciesMutation, AddSpeciesMutationVariables, AddSpeciesProps<TChildProps, TDataName>>(AddSpeciesDocument, {
+      alias: 'addSpecies',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useAddSpeciesMutation__
+ *
+ * To run a mutation, you first call `useAddSpeciesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddSpeciesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addSpeciesMutation, { data, loading, error }] = useAddSpeciesMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useAddSpeciesMutation(baseOptions?: Apollo.MutationHookOptions<AddSpeciesMutation, AddSpeciesMutationVariables>) {
+        return Apollo.useMutation<AddSpeciesMutation, AddSpeciesMutationVariables>(AddSpeciesDocument, baseOptions);
+      }
+export type AddSpeciesMutationHookResult = ReturnType<typeof useAddSpeciesMutation>;
+export type AddSpeciesMutationResult = Apollo.MutationResult<AddSpeciesMutation>;
+export type AddSpeciesMutationOptions = Apollo.BaseMutationOptions<AddSpeciesMutation, AddSpeciesMutationVariables>;
 export const GetSpeciesDocument = gql`
     query getSpecies($id: Int!) {
   species(id: $id) {

@@ -1,4 +1,4 @@
-import { createSpecies } from '@gardn/data';
+import { createSpecies } from './helpers/create-species/create-species';
 import { Store } from './../store';
 
 export const speciesDataSourceFactory = (store: Store) => ({

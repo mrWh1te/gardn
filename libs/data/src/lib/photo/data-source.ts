@@ -1,4 +1,5 @@
-import { QueryPhotoArgs, MutationAddPhotoArgs, createPhoto } from '@gardn/data';
+import { createPhoto } from './helpers/create-photo/create-photo';
+import { QueryPhotoArgs, MutationAddPhotoArgs } from './../generated/generated';
 
 import { Store } from './../store';
 

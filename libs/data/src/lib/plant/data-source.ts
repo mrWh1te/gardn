@@ -1,4 +1,4 @@
-import { createPlant } from '@gardn/data';
+import { createPlant } from './helpers/create-plant/create-plant';
 import { Store } from './../store';
 
 export const plantDataSourceFactory = (store: Store) => ({

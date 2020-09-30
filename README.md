@@ -52,6 +52,13 @@ import { Header, Navigation, Logo } from '@gardn/layout';
 ### Plant
 In `./libs/plant` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plant feature.
 
+#### Plant: Smart
+In `./libs/plant/smart` is a dedicated smart components library for the Plant feature.
+
+```typescript
+import { Plant } from '@gardn/plant/smart';
+```
+
 #### Plant: UI
 In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
 
@@ -160,8 +167,9 @@ Current unit-tests:
  - run `nx test data` for main data library
  - run `nx test ui` for main ui library
  - run `nx test layout` for main layout library
- - run `nx test plant-ui` for domain plant's ui library
  - run `nx test plant-view` for domain plant's view library
+ - run `nx test plant-smart` for domain plant's smart library
+ - run `nx test plant-ui` for domain plant's ui library
  - run `nx test plant-helpers` for domain plant's helpers library
  - run `nx test plants-ui` for domain plants' ui library
  - run `nx test plants-smart` for domain plants' smart library

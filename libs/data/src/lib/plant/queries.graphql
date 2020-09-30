@@ -6,6 +6,20 @@ query getPlants {
 
 query getPlant($id: Int!) {
   plant(id: $id) {
-    name
+    id,
+    name,
+    species {
+      name
+    },
+    dateCreated,
+    dateGerminated,
+    datePlanted,
+    dateSprouted,
+    photos {
+      url, title
+    },
+    avatar {
+      url
+    }
   }
 }
