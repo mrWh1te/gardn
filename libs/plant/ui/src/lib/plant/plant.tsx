@@ -1,13 +1,8 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { Plant as PlantModel } from '@gardn/data';
+import { GetPlantQuery } from '@gardn/data';
 import { white } from '@gardn/ui';
-
-/* eslint-disable-next-line */
-export interface PlantProps {
-  plant: PlantModel
-}
 
 const StyledPlant = styled.div`
   padding: 1rem;
@@ -17,7 +12,7 @@ const StyledPlant = styled.div`
   }
 `;
 
-export const Plant = (props: PlantProps) => {
+export const Plant = (props: GetPlantQuery) => {
   return (
     <StyledPlant>
       <h3>{ props.plant.name }</h3>

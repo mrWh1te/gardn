@@ -165,7 +165,7 @@ export type GetPlantQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'id' | 'name' | 'dateCreated' | 'dateGerminated' | 'datePlanted' | 'dateSprouted'>
+    & Pick<Plant, 'name' | 'dateCreated' | 'dateGerminated' | 'datePlanted' | 'dateSprouted'>
     & { species?: Maybe<(
       { __typename?: 'Species' }
       & Pick<Species, 'name'>
@@ -459,7 +459,6 @@ export type GetPlantsQueryResult = Apollo.QueryResult<GetPlantsQuery, GetPlantsQ
 export const GetPlantDocument = gql`
     query getPlant($id: Int!) {
   plant(id: $id) {
-    id
     name
     species {
       name
