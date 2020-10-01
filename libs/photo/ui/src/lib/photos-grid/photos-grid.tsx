@@ -27,7 +27,7 @@ export interface PhotoGridProps {
 }
 /* eslint-disable-next-line */
 export interface PhotosGridState {
-  open: boolean,
+  photoModalOpen: boolean,
   clickedPhoto?: Photo
 }
 
@@ -43,12 +43,12 @@ const CloseButton = styled.div`
 `;
 
 export const PhotosGrid = (props: PhotoGridProps) => {
-  const [photosGridState, setPhotosGridState] = useState<PhotosGridState>({open: false});
+  const [photosGridState, setPhotosGridState] = useState<PhotosGridState>({photoModalOpen: false});
 
   const handleClickOpen = (clickedPhotoIndex: number) => () => {
     setPhotosGridState({
       ...photosGridState,
-      open: true,
+      photoModalOpen: true,
       clickedPhoto: props.photos[clickedPhotoIndex]
     });
   };
@@ -56,7 +56,7 @@ export const PhotosGrid = (props: PhotoGridProps) => {
   const handleClose = () => {
     setPhotosGridState({
       ...photosGridState,
-      open: false
+      photoModalOpen: false
     });
   };
 
@@ -73,7 +73,7 @@ export const PhotosGrid = (props: PhotoGridProps) => {
             </PhotoContainer>
           )}
         </Grid>
-        <Dialog fullScreen open={photosGridState.open} onClose={handleClose}>
+        <Dialog fullScreen open={photosGridState.photoModalOpen} onClose={handleClose}>
           <section onClick={handleClose} style={{height: '100%'}}>
             <CloseButton>
               <SpeedDialIcon style={{color: gray}} />
@@ -92,7 +92,7 @@ export const PhotosGrid = (props: PhotoGridProps) => {
 
   return (
     <NoPhotosContainer>
-      <h5>No Photos</h5>
+      <h5 style={{fontWeight: 300}}>No Photos</h5>
     </NoPhotosContainer>
   )
 };

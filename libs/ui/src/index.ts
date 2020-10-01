@@ -14,5 +14,9 @@ export * from './lib/icons/close-icon/close-icon';
 // view components
 export * from './lib/drawer-view/drawer-view';
 
-/// layout components
+// layout components
 export * from './lib/grid/grid';
+export * from './lib/tab-panel/tab-panel';
+
+// helpers
+export * from './lib/helpers/a11y-props';
