@@ -27,6 +27,17 @@ export interface PhotosGridState {
   clickedPhoto?: Photo
 }
 
+export const PhotoViewer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  img {
+    
+  }
+`;
+
 export const PhotosGrid = (props: PhotoGridProps) => {
   const [photosGridState, setPhotosGridState] = useState<PhotosGridState>({open: false});
 
@@ -60,9 +71,12 @@ export const PhotosGrid = (props: PhotoGridProps) => {
         </Grid>
         <Dialog fullScreen open={photosGridState.open} onClose={handleClose}>
           {/* <GoBack /> */}
-          <PhotoContainer>
-            <img src={ photosGridState.clickedPhoto?.url } alt={photosGridState.clickedPhoto?.title ? photosGridState.clickedPhoto?.title : photosGridState.clickedPhoto?.id+''} />
-          </PhotoContainer>
+          <PhotoViewer onClick={handleClose}>
+            {/* <PhotoContainer imgBorderRadius={'0'} imgBorder={'none'}> */}
+              <img src={ photosGridState.clickedPhoto?.url } alt={photosGridState.clickedPhoto?.title ? photosGridState.clickedPhoto?.title : photosGridState.clickedPhoto?.id+''} />
+            {/* </PhotoContainer> */}
+          </PhotoViewer>
+          {/* </PhotoContainer> */}
         </Dialog>
       </>
     );

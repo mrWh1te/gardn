@@ -38,7 +38,7 @@ export const ActionMenu = () => {
       {/* todo ActionButton disabled when a particular page route of routes is active */}
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
       <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
-        PaperProps={{ elevation: 0, style, square: false }}>
+        PaperProps={{ elevation: 0, style, square: false }} style={{zIndex: 1000}}>
         <Route path="/plant/:id" component={PlantDrawer} />
       </Drawer>
     </>
