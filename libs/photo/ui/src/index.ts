@@ -1,1 +1,1 @@
-export * from './lib/photos-slider/photos-slider';
+export * from './lib/photos-grid/photos-grid';
