@@ -3,10 +3,14 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Dialog from '@material-ui/core/Dialog';
 
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+
 import { Photo } from '@gardn/data';
-import { Grid } from '@gardn/ui';
+import { Grid, gray } from '@gardn/ui';
 
 import PhotoContainer from '../photo-container/photo-container';
+import PhotoViewer from '../photo-viewer/photo-viewer';
+import PhotoTitle from '../photo-title/photo-title';
 
 const NoPhotosContainer = styled.section`
   display: flex;
@@ -27,14 +31,14 @@ export interface PhotosGridState {
   clickedPhoto?: Photo
 }
 
-export const PhotoViewer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  img {
-    
+const CloseButton = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transform: rotate(45deg);
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -59,24 +63,28 @@ export const PhotosGrid = (props: PhotoGridProps) => {
   if (props.photos?.length > 0) {
     const numberOfColumns = props.columns ? props.columns : 3;
 
-    // Future virtualize
     return (
       <>
+        { /* Future: Virtualize */ }
         <Grid columns={numberOfColumns} rows={Math.ceil(props.photos.length / numberOfColumns)} >
           { props.photos.map((photo, i) => 
-            <PhotoContainer key={i}>
+            <PhotoContainer key={i} hoverMouseEffect={true}>
               <img src={photo.url} alt={photo.title ? photo.title : photo.id+''} onClick={handleClickOpen(i)} />
             </PhotoContainer>
           )}
         </Grid>
         <Dialog fullScreen open={photosGridState.open} onClose={handleClose}>
-          {/* <GoBack /> */}
-          <PhotoViewer onClick={handleClose}>
-            {/* <PhotoContainer imgBorderRadius={'0'} imgBorder={'none'}> */}
+          <section onClick={handleClose} style={{height: '100%'}}>
+            <CloseButton>
+              <SpeedDialIcon style={{color: gray}} />
+            </CloseButton>
+            <PhotoViewer>
               <img src={ photosGridState.clickedPhoto?.url } alt={photosGridState.clickedPhoto?.title ? photosGridState.clickedPhoto?.title : photosGridState.clickedPhoto?.id+''} />
-            {/* </PhotoContainer> */}
-          </PhotoViewer>
-          {/* </PhotoContainer> */}
+              {
+                photosGridState.clickedPhoto?.title ? <PhotoTitle>{ photosGridState.clickedPhoto.title }</PhotoTitle> : ''
+              }
+            </PhotoViewer>
+          </section>
         </Dialog>
       </>
     );

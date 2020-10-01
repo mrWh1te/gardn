@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import styled from '@emotion/styled';
 
@@ -14,14 +14,30 @@ const StyledBackButton = styled.div`
     }
   }
 `;
-export const GoBack = withRouter(({ history }) => {
+
+/* eslint-disable-next-line */
+export interface GoBackProps extends RouteComponentProps {
+  disableClickHandler?: boolean
+} 
+
+export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandler }) => {
+  if (disableClickHandler) {
+    return (
+      <StyledBackButton>
+        <button>
+          <ChevronIcon color={white} />
+        </button>
+      </StyledBackButton>
+    );
+  }
+
   return (
     <StyledBackButton>
       <button onClick={() => history.goBack()}>
         <ChevronIcon color={white} />
       </button>
     </StyledBackButton>
-  )
+  );
 });
 
 export default GoBack;
