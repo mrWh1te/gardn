@@ -12,3 +12,6 @@ export * from './lib/icons/chevron-icon/chevron-icon';
 
 // view components
 export * from './lib/drawer-view/drawer-view';
+
+/// layout components
+export * from './lib/grid/grid';

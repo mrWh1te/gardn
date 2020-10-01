@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import PhotosSlider from './photos-slider';
+import PhotosGrid from './photos-grid';
 
-describe('Photos Slider', () => {
+describe('Photos Grid', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<PhotosSlider />);
+    const { baseElement } = render(<PhotosGrid />);
     expect(baseElement).toBeTruthy();
   });
 });
