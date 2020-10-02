@@ -5,6 +5,10 @@ type Species {
   description: String
   coverPhoto: Photo
   avatar: Photo
+
+  sproutToHarvest: number
+
+  lifeCycles: [LifeCycle]
 }
 
 type Query {

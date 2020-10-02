@@ -7,7 +7,7 @@ import { Plant } from '@gardn/data';
 export const createPlantFactory = 
   (nextPlantId = 1) => 
     (
-      name: string, 
+      name?: string, 
       dateGerminated?: number, 
       datePlanted?: number,
       dateSprouted?: number,

@@ -3,9 +3,9 @@ type Plant {
   name: String
   species: Species
   dateCreated: Timestamp
-  dateGerminated: Timestamp
-  datePlanted: Timestamp
-  dateSprouted: Timestamp
+
+  currentLifeCycle: LifeCycle
+
   photos: [Photo]
   coverPhoto: Photo
   avatar: Photo

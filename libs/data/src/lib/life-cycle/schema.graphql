@@ -1,0 +1,6 @@
+type LifeCycle {
+  id: Int!
+  name: String!
+  description: String
+  environment: Environment
+}

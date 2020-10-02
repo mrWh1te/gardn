@@ -11,9 +11,6 @@ query getPlant($id: Int!) {
       name
     },
     dateCreated,
-    dateGerminated,
-    datePlanted,
-    dateSprouted,
     photos {
       url, title
     },
@@ -38,10 +35,7 @@ query getPlantInfo($id: Int!) {
     species {
       name
     },
-    dateCreated,
-    dateGerminated,
-    datePlanted,
-    dateSprouted
+    dateCreated
   }
 }
 

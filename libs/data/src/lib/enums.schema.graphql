@@ -1,0 +1,32 @@
+enum LiquidUnit {
+  GIL
+  PINT
+  QUART
+  GALLON
+  MILLILITER
+  LITER
+  KILOLITER
+}
+
+enum TimeUnit {
+  SECOND
+  MINUTE
+  HOUR
+  DAY
+  WEEK
+  MONTH
+  YEAR
+  DECADE
+  CENTURY
+}
+
+enum TemperatureUnit {
+  FAHRENHEIT
+  CELSIUS
+}
+
+enum HumidityUnit {
+  GRAMS_PER_CUBIC_METER
+  GRAMS_PER_KILOGRAM
+  PERCENTAGE
+}

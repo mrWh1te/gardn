@@ -16,8 +16,6 @@ const StyledPlantInfo = styled.div`
 `;
 
 export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
-  console.log('plant info = ', plant)
-
   if (!plant) {
     return (
       <FlexBox>
@@ -45,19 +43,12 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
   const name = plant.name ? plant.name : plant.species?.name ? plant.species.name : plant.id;
   const subName = plant.name && plant.species?.name ? plant.species.name : ''
 
-
-
-  // todo future switch out name for temperature icon + last temperature reading
-  //  also add a water droplet icon if its been recently watered
-  // both icons have tooltips for click/hover for information as to what they mean
-  //  maybe reserve name & species for plant drawer info tab panel
   return (
     <StyledPlantInfo>
       <h3>{ name }</h3>
       <h6>{ subName }</h6>
-      { plant?.dateGerminated ? <p>Germinated: { new Date(plant.dateGerminated).toDateString()} </p> : ''}
-      { plant?.datePlanted ? <p>Planted: { new Date(plant.datePlanted).toDateString()} </p> : ''}
-      { plant?.dateSprouted ? <p>Sprouted: { new Date(plant.dateSprouted).toDateString()} </p> : ''} 
+      { /* Future timeline of evenhts filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
+      { /* todo depending on plant current life cycle -> show the info of that life cycle's environment */ }
     </StyledPlantInfo>
   );
 };

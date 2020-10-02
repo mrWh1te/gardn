@@ -1,0 +1,25 @@
+type Environment {
+  id: Int!
+  name: String
+  description: String
+
+  idealWaterAmount: number
+  idealWaterAmountUnit: LiquidUnit
+  idealWaterAmountPerTimePeriod: number
+  idealWaterAmountPerTimePeriodUnit: TimeUnit
+
+  idealTemperatureMin: number
+  idealTemperatueMax: number
+  idealTemperatureMinUnit: TemperatureUnit
+  idealTemperatureMaxUnit: TemperatureUnit
+
+  idealHumidityMin: number
+  idealHumidityMax: number
+  idealHumidityMinUnit: HumidityUnit
+  idealHumidityMaxUnit: HumidityUnit
+
+  lightOnTime: number
+  lightOnTimeUnit: TimeUnit
+  lightOnTimePerTimePeriod: number
+  lightOnTimePerTimePeriodUnit: TimeUnit
+}
