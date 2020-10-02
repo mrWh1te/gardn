@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantQuery } from '@gardn/data';
+import { useGetPlantCoverPhotoQuery } from '@gardn/data';
 import { Plant as PlantUi } from '@gardn/plant/ui'
 
 /**
@@ -11,7 +11,7 @@ import { Plant as PlantUi } from '@gardn/plant/ui'
 export const Plant = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantQuery({
+  const { data, loading, error } = useGetPlantCoverPhotoQuery({
     variables: {
       id: parseInt(id)
     }

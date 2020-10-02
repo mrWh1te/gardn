@@ -179,6 +179,22 @@ export type GetPlantQuery = (
   )> }
 );
 
+export type GetPlantCoverPhotoQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPlantCoverPhotoQuery = (
+  { __typename?: 'Query' }
+  & { plant?: Maybe<(
+    { __typename?: 'Plant' }
+    & { coverPhoto?: Maybe<(
+      { __typename?: 'Photo' }
+      & Pick<Photo, 'url'>
+    )> }
+  )> }
+);
+
 export type GetPlantPhotosQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -454,6 +470,41 @@ export function useGetPlantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetPlantQueryHookResult = ReturnType<typeof useGetPlantQuery>;
 export type GetPlantLazyQueryHookResult = ReturnType<typeof useGetPlantLazyQuery>;
 export type GetPlantQueryResult = Apollo.QueryResult<GetPlantQuery, GetPlantQueryVariables>;
+export const GetPlantCoverPhotoDocument = gql`
+    query getPlantCoverPhoto($id: Int!) {
+  plant(id: $id) {
+    coverPhoto {
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlantCoverPhotoQuery__
+ *
+ * To run a query within a React component, call `useGetPlantCoverPhotoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantCoverPhotoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantCoverPhotoQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlantCoverPhotoQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>) {
+        return Apollo.useQuery<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>(GetPlantCoverPhotoDocument, baseOptions);
+      }
+export function useGetPlantCoverPhotoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>(GetPlantCoverPhotoDocument, baseOptions);
+        }
+export type GetPlantCoverPhotoQueryHookResult = ReturnType<typeof useGetPlantCoverPhotoQuery>;
+export type GetPlantCoverPhotoLazyQueryHookResult = ReturnType<typeof useGetPlantCoverPhotoLazyQuery>;
+export type GetPlantCoverPhotoQueryResult = Apollo.QueryResult<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>;
 export const GetPlantPhotosDocument = gql`
     query getPlantPhotos($id: Int!) {
   plant(id: $id) {

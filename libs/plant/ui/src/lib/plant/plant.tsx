@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { GetPlantQuery } from '@gardn/data';
+import { GetPlantCoverPhotoQuery } from '@gardn/data';
 import { black } from '@gardn/ui';
 
 const StyledPlant = styled.div`
@@ -24,7 +24,7 @@ const StyledPlantInner = styled.div`
   padding-top: 2rem;
 `
 
-export const Plant = (props: GetPlantQuery) => {
+export const Plant = (props: GetPlantCoverPhotoQuery) => {
   // todo future switch out name for temperature icon + last temperature reading
   //  also add a water droplet icon if its been recently watered
   // both icons have tooltips for click/hover for information as to what they mean
@@ -32,8 +32,14 @@ export const Plant = (props: GetPlantQuery) => {
   return (
     <StyledPlant style={{backgroundImage: `url(${props.plant.coverPhoto?.url})`}}>
       <StyledPlantInner>
-        <h3>{ props.plant.name }</h3>
-        <p>{ props.plant.species?.name }</p>
+        {/* <ul>
+          <li>
+            Needs Water Icon
+          </li>
+          <li>
+            Temperature Icon with Reading
+          </li>
+        </ul> */}
       </StyledPlantInner>
     </StyledPlant>
   );
