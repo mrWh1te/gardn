@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { PlantView } from '@gardn/plant/view';
-import { PlantsList } from '@gardn/plants/smart';
+import { PlantsView } from '@gardn/plants/view';
 
 import { ContainerCard } from '@gardn/container/ui';
 import { ContainersList } from '@gardn/containers/ui';
@@ -25,7 +25,7 @@ export const App = () => (
       exact
       render={() => <div>This app is under development. </div>}
     />
-    <Route path="/plants" component={PlantsList} />
+    <Route path="/plants" component={PlantsView} />
     <Route path="/plant/:id" component={PlantView} />
     <Route path="/containers" component={ContainersList} />
     <Route path="/container" component={ContainerCard} />

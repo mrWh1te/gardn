@@ -29,7 +29,8 @@
       "@gardn/photo/helpers": ["libs/photo/helpers/src/index.ts"],
       "@gardn/plant/smart": ["libs/plant/smart/src/index.ts"],
       "@gardn/utility": ["libs/utility/src/index.ts"],
-      "@gardn/photo/ui": ["libs/photo/ui/src/index.ts"]
+      "@gardn/photo/ui": ["libs/photo/ui/src/index.ts"],
+      "@gardn/plants/view": ["libs/plants/view/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

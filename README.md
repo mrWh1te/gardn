@@ -92,6 +92,12 @@ import { createPlantFactory, mockPlant1 } from '@gardn/plant/helpers';
 ### Plants
 In `./libs/plants` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plants feature.
 
+#### Plants: View
+In `./libs/plants/view` is a dedicated View components library for the Plants feature. These may or may not build on other smart or ui libraries.
+
+```typescript
+import { PlantsView } from '@gardn/plants/view';
+```
 
 #### Plants: Smart
 In `./libs/plants/smart` is a dedicated Smart components library for the Plants feature. These may or may not build on the generated React query hooks from the GraphQl operations and mutations.
@@ -180,6 +186,7 @@ Current unit-tests:
  - run `nx test plant-smart` for domain plant's smart library
  - run `nx test plant-ui` for domain plant's ui library
  - run `nx test plant-helpers` for domain plant's helpers library
+ - run `nx test plants-view` for domain plants' view library
  - run `nx test plants-ui` for domain plants' ui library
  - run `nx test plants-smart` for domain plants' smart library
  - run `nx test container-ui` for domain container's ui library
