@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 
 import styled from '@emotion/styled';
-import Dialog from '@material-ui/core/Dialog';
-
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 
 import { Photo } from '@gardn/data';
-import { Grid, gray } from '@gardn/ui';
+import { Grid } from '@gardn/ui';
 
 import PhotoContainer from '../photo-container/photo-container';
-import PhotoViewer from '../photo-viewer/photo-viewer';
-import PhotoTitle from '../photo-title/photo-title';
+import PhotoDialog from '../photo-dialog/photo-dialog';
 
 const NoPhotosContainer = styled.section`
   display: flex;
@@ -31,21 +27,10 @@ export interface PhotosGridState {
   clickedPhoto?: Photo
 }
 
-const CloseButton = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  transform: rotate(45deg);
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const PhotosGrid = (props: PhotoGridProps) => {
   const [photosGridState, setPhotosGridState] = useState<PhotosGridState>({photoModalOpen: false});
 
-  const handleClickOpen = (clickedPhotoIndex: number) => () => {
+  const openPhotoDialog = (clickedPhotoIndex: number) => () => {
     setPhotosGridState({
       ...photosGridState,
       photoModalOpen: true,
@@ -53,7 +38,7 @@ export const PhotosGrid = (props: PhotoGridProps) => {
     });
   };
 
-  const handleClose = () => {
+  const closePhotoDialog = () => {
     setPhotosGridState({
       ...photosGridState,
       photoModalOpen: false
@@ -69,23 +54,11 @@ export const PhotosGrid = (props: PhotoGridProps) => {
         <Grid columns={numberOfColumns} rows={Math.ceil(props.photos.length / numberOfColumns)} >
           { props.photos.map((photo, i) => 
             <PhotoContainer key={i} hoverMouseEffect={true}>
-              <img src={photo.url} alt={photo.title ? photo.title : photo.id+''} onClick={handleClickOpen(i)} />
+              <img src={photo.url} alt={photo.title ? photo.title : photo.id+''} onClick={openPhotoDialog(i)} />
             </PhotoContainer>
           )}
         </Grid>
-        <Dialog fullScreen open={photosGridState.photoModalOpen} onClose={handleClose}>
-          <section onClick={handleClose} style={{height: '100%'}}>
-            <CloseButton>
-              <SpeedDialIcon style={{color: gray}} />
-            </CloseButton>
-            <PhotoViewer>
-              <img src={ photosGridState.clickedPhoto?.url } alt={photosGridState.clickedPhoto?.title ? photosGridState.clickedPhoto?.title : photosGridState.clickedPhoto?.id+''} />
-              {
-                photosGridState.clickedPhoto?.title ? <PhotoTitle>{ photosGridState.clickedPhoto.title }</PhotoTitle> : ''
-              }
-            </PhotoViewer>
-          </section>
-        </Dialog>
+        <PhotoDialog closeHandler={closePhotoDialog} dialogOpen={photosGridState.photoModalOpen} photo={photosGridState.clickedPhoto} />
       </>
     );
   }
