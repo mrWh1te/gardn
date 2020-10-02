@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -9,11 +7,17 @@ import { PlantsList } from '@gardn/plants/smart';
 import { ContainerCard } from '@gardn/container/ui';
 import { ContainersList } from '@gardn/containers/ui';
 
-import { Header, ActionMenu } from '@gardn/layout';
+import { ActionMenu } from '@gardn/layout'; // todo move * into new librar(y|ies) & delete layout library
+import { Header } from '@gardn/ui';
+
+import { Navigation } from './navigation/navigation';
 
 export const App = () => (
   <>
-    <Header />
+    <Header>
+      <Navigation />
+    </Header>
+
     <ActionMenu /> { /* todo move ActionMenu into another library, maybe Event:Smart ? Utility? */ }
 
     <Route

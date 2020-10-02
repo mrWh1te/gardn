@@ -5,9 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 import { SeedlingIcon } from '@gardn/ui';
 
-/* eslint-disable-next-line */
-export interface NavigationProps {}
-
 const StyledNavigation = styled.div`
   display: flex;
   align-content: stretch;
@@ -42,7 +39,7 @@ const NavLabel = styled.div`
   }
 `;
 
-export const Navigation = (props: NavigationProps) => {
+export const Navigation = () => {
   return (
     <StyledNavigation>
       <NavLink to="/plants">

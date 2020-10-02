@@ -14,6 +14,9 @@ export * from './lib/icons/close-icon/close-icon';
 // view components
 export * from './lib/drawer-view/drawer-view';
 
+// block components
+export * from './lib/header/header';
+
 // layout components
 export * from './lib/grid/grid';
 export * from './lib/tab-panel/tab-panel';
