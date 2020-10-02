@@ -6,7 +6,7 @@ type Species {
   coverPhoto: Photo
   avatar: Photo
 
-  sproutToHarvest: number
+  sproutToHarvest: Int
 
   lifeCycles: [LifeCycle]
 }

@@ -13,6 +13,70 @@ export type Scalars = {
 };
 
 
+export enum LiquidUnit {
+  Gil = 'GIL',
+  Pint = 'PINT',
+  Quart = 'QUART',
+  Gallon = 'GALLON',
+  Milliliter = 'MILLILITER',
+  Liter = 'LITER',
+  Kiloliter = 'KILOLITER'
+}
+
+export enum TimeUnit {
+  Second = 'SECOND',
+  Minute = 'MINUTE',
+  Hour = 'HOUR',
+  Day = 'DAY',
+  Week = 'WEEK',
+  Month = 'MONTH',
+  Year = 'YEAR',
+  Decade = 'DECADE',
+  Century = 'CENTURY'
+}
+
+export enum TemperatureUnit {
+  Fahrenheit = 'FAHRENHEIT',
+  Celsius = 'CELSIUS'
+}
+
+export enum HumidityUnit {
+  GramsPerCubicMeter = 'GRAMS_PER_CUBIC_METER',
+  GramsPerKilogram = 'GRAMS_PER_KILOGRAM',
+  Percentage = 'PERCENTAGE'
+}
+
+export type Environment = {
+  __typename?: 'Environment';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  idealWaterAmount?: Maybe<Scalars['Int']>;
+  idealWaterAmountUnit?: Maybe<LiquidUnit>;
+  idealWaterAmountPerTimePeriod?: Maybe<Scalars['Int']>;
+  idealWaterAmountPerTimePeriodUnit?: Maybe<TimeUnit>;
+  idealTemperatureMin?: Maybe<Scalars['Int']>;
+  idealTemperatueMax?: Maybe<Scalars['Int']>;
+  idealTemperatureMinUnit?: Maybe<TemperatureUnit>;
+  idealTemperatureMaxUnit?: Maybe<TemperatureUnit>;
+  idealHumidityMin?: Maybe<Scalars['Int']>;
+  idealHumidityMax?: Maybe<Scalars['Int']>;
+  idealHumidityMinUnit?: Maybe<HumidityUnit>;
+  idealHumidityMaxUnit?: Maybe<HumidityUnit>;
+  lightOnTime?: Maybe<Scalars['Int']>;
+  lightOnTimeUnit?: Maybe<TimeUnit>;
+  lightOnTimePerTimePeriod?: Maybe<Scalars['Int']>;
+  lightOnTimePerTimePeriodUnit?: Maybe<TimeUnit>;
+};
+
+export type LifeCycle = {
+  __typename?: 'LifeCycle';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  environment?: Maybe<Environment>;
+};
+
 export type Photo = {
   __typename?: 'Photo';
   id: Scalars['Int'];
@@ -76,9 +140,7 @@ export type Plant = {
   name?: Maybe<Scalars['String']>;
   species?: Maybe<Species>;
   dateCreated?: Maybe<Scalars['Timestamp']>;
-  dateGerminated?: Maybe<Scalars['Timestamp']>;
-  datePlanted?: Maybe<Scalars['Timestamp']>;
-  dateSprouted?: Maybe<Scalars['Timestamp']>;
+  currentLifeCycle?: Maybe<LifeCycle>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
@@ -92,6 +154,8 @@ export type Species = {
   description?: Maybe<Scalars['String']>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
+  sproutToHarvest?: Maybe<Scalars['Int']>;
+  lifeCycles?: Maybe<Array<Maybe<LifeCycle>>>;
 };
 
 export type AddPhotoMutationVariables = Exact<{
@@ -165,7 +229,7 @@ export type GetPlantQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'name' | 'dateCreated' | 'dateGerminated' | 'datePlanted' | 'dateSprouted'>
+    & Pick<Plant, 'name' | 'dateCreated'>
     & { species?: Maybe<(
       { __typename?: 'Species' }
       & Pick<Species, 'name'>
@@ -204,7 +268,7 @@ export type GetPlantInfoQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'id' | 'name' | 'dateCreated' | 'dateGerminated' | 'datePlanted' | 'dateSprouted'>
+    & Pick<Plant, 'id' | 'name' | 'dateCreated'>
     & { species?: Maybe<(
       { __typename?: 'Species' }
       & Pick<Species, 'name'>
@@ -448,9 +512,6 @@ export const GetPlantDocument = gql`
       name
     }
     dateCreated
-    dateGerminated
-    datePlanted
-    dateSprouted
     photos {
       url
       title
@@ -531,9 +592,6 @@ export const GetPlantInfoDocument = gql`
       name
     }
     dateCreated
-    dateGerminated
-    datePlanted
-    dateSprouted
   }
 }
     `;

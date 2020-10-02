@@ -3,23 +3,23 @@ type Environment {
   name: String
   description: String
 
-  idealWaterAmount: number
+  idealWaterAmount: Int
   idealWaterAmountUnit: LiquidUnit
-  idealWaterAmountPerTimePeriod: number
+  idealWaterAmountPerTimePeriod: Int
   idealWaterAmountPerTimePeriodUnit: TimeUnit
 
-  idealTemperatureMin: number
-  idealTemperatueMax: number
+  idealTemperatureMin: Int
+  idealTemperatueMax: Int
   idealTemperatureMinUnit: TemperatureUnit
   idealTemperatureMaxUnit: TemperatureUnit
 
-  idealHumidityMin: number
-  idealHumidityMax: number
+  idealHumidityMin: Int
+  idealHumidityMax: Int
   idealHumidityMinUnit: HumidityUnit
   idealHumidityMaxUnit: HumidityUnit
 
-  lightOnTime: number
+  lightOnTime: Int
   lightOnTimeUnit: TimeUnit
-  lightOnTimePerTimePeriod: number
+  lightOnTimePerTimePeriod: Int
   lightOnTimePerTimePeriodUnit: TimeUnit
 }

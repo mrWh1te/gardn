@@ -8,9 +8,6 @@ export const createPlantFactory =
   (nextPlantId = 1) => 
     (
       name?: string, 
-      dateGerminated?: number, 
-      datePlanted?: number,
-      dateSprouted?: number,
       id?: number
     ): Plant => { 
       const nextId = typeof id === 'number' ? id : nextPlantId++
@@ -20,11 +17,6 @@ export const createPlantFactory =
       return {
         id: nextId, 
         dateCreated,
-        name,
-        dateGerminated,
-        datePlanted,
-        dateSprouted
+        name
       }
     };
-
-    // @future todo `species`, `photos`, `photo` integration

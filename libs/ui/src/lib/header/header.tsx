@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
-import { Logo, white, gray, greenishBlack } from '@gardn/ui';
+import { Logo } from './../logo/logo';
+import { white, gray, greenishBlack } from './../colors';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {
