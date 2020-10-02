@@ -18,7 +18,10 @@ export * from './lib/drawer-view/drawer-view';
 export * from './lib/header/header';
 
 // layout components
-export * from './lib/grid/grid';
+export * from './lib/layout/grid/grid';
+export * from './lib/layout/flexbox/flexbox';
+
+// other components
 export * from './lib/tab-panel/tab-panel';
 
 // helpers

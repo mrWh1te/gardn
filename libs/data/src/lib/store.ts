@@ -67,7 +67,10 @@ export const speciesSeed = [
 const fakePlant1: DBPlant = {
   ...mockPlant1,
   coverPhotoId: mockLargePhoto1.id,
-  speciesId: species1.id
+  speciesId: species1.id,
+  dateGerminated: 1601658940721,
+  datePlanted: 1601745340721,
+  dateSprouted: 1602263740721
 }
 const fakePlant2: DBPlant = {
   ...mockPlant2,

@@ -31,6 +31,20 @@ query getPlantCoverPhoto($id: Int!) {
   }
 }
 
+query getPlantInfo($id: Int!) {
+  plant(id: $id) {
+    id,
+    name,
+    species {
+      name
+    },
+    dateCreated,
+    dateGerminated,
+    datePlanted,
+    dateSprouted
+  }
+}
+
 query getPlantPhotos($id: Int!) {
   plant(id: $id) {
     photos {

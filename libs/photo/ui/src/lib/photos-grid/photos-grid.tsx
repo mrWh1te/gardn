@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
 
-import styled from '@emotion/styled';
-
 import { Photo } from '@gardn/data';
-import { Grid } from '@gardn/ui';
+import { Grid, FlexBox } from '@gardn/ui';
 
 import PhotoContainer from '../photo-container/photo-container';
 import PhotoDialog from '../photo-dialog/photo-dialog';
-
-const NoPhotosContainer = styled.section`
-  display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 
 /* eslint-disable-next-line */
 export interface PhotoGridProps {
@@ -64,9 +54,9 @@ export const PhotosGrid = (props: PhotoGridProps) => {
   }
 
   return (
-    <NoPhotosContainer>
+    <FlexBox>
       <h5 style={{fontWeight: 300}}>No Photos</h5>
-    </NoPhotosContainer>
+    </FlexBox>
   )
 };
 

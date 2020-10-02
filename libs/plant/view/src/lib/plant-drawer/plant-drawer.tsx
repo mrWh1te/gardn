@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import { DrawerView, TabPanel, a11yProps } from '@gardn/ui';
-import { PlantPhotos } from '@gardn/plant/smart';
+import { PlantPhotos, PlantInfo } from '@gardn/plant/smart';
 
 /**
  * Component shown in Drawer on Plant page
@@ -37,7 +37,7 @@ export const PlantDrawer = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <DrawerView>
-            PlantInfo -> UI:PlantInfo (vertical scrolling optional, not swiping slides)
+            <PlantInfo />
           </DrawerView>
         </TabPanel>
         <TabPanel value={value} index={2}>
