@@ -5,8 +5,7 @@ import styled from '@emotion/styled';
 import { Plant } from '@gardn/plant/smart';
 import { GoBack } from '@gardn/utility';
 
-
-const StyledPlantPage = styled.div`
+const StyledPlantView = styled.div`
   background-color: green;
 
   position: absolute;
@@ -24,15 +23,15 @@ const PositionedGoBack = styled.div`
   width: 1rem;
 `;
 
-export const PlantPage = () => {
+export const PlantView = () => {
   return (
-    <StyledPlantPage>
+    <StyledPlantView>
       <PositionedGoBack>
         <GoBack />
       </PositionedGoBack>
       <Plant />
-    </StyledPlantPage>
+    </StyledPlantView>
   );
 };
 
-export default PlantPage;
+export default PlantView;

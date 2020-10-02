@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import PlantPage from './plant-page';
+import PlantView from './plant-view';
 
 jest.mock('react-router-dom', () => {
 
@@ -19,7 +19,7 @@ jest.mock('react-router-dom', () => {
 
 describe('PlantPage', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<PlantPage />);
+    const { baseElement } = render(<PlantView />);
     expect(baseElement).toBeTruthy();
   });
 });
