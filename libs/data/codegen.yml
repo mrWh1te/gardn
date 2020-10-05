@@ -1,7 +1,7 @@
 schema: "libs/data/src/lib/**/*schema.graphql"
 overwrite: true
 generates:
-  libs/data/src/lib/generated/generated.ts:
+  libs/data/src/lib/generated/index.ts:
     documents: 
       - "libs/data/src/lib/**/*quer(y|ies).graphql"
       - "libs/data/src/lib/**/*mutation(s).graphql"

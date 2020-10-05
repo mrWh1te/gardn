@@ -49,7 +49,8 @@ export enum HumidityUnit {
 export type Environment = {
   __typename?: 'Environment';
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  dateCreated?: Maybe<Scalars['Timestamp']>;
+  name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   idealWaterAmount?: Maybe<Scalars['Int']>;
   idealWaterAmountUnit?: Maybe<LiquidUnit>;
@@ -67,15 +68,49 @@ export type Environment = {
   lightOnTimeUnit?: Maybe<TimeUnit>;
   lightOnTimePerTimePeriod?: Maybe<Scalars['Int']>;
   lightOnTimePerTimePeriodUnit?: Maybe<TimeUnit>;
+  lightSource?: Maybe<Array<Maybe<LightSource>>>;
 };
 
 export type LifeCycle = {
   __typename?: 'LifeCycle';
   id: Scalars['Int'];
   name: Scalars['String'];
+  dateCreated?: Maybe<Scalars['Timestamp']>;
   description?: Maybe<Scalars['String']>;
   environment?: Maybe<Environment>;
 };
+
+export type LightSource = {
+  __typename?: 'LightSource';
+  id: Scalars['Int'];
+  dateCreated?: Maybe<Scalars['Timestamp']>;
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  bulbType?: Maybe<BulbType>;
+  wattage?: Maybe<Scalars['Int']>;
+  lumens?: Maybe<Scalars['Int']>;
+  color?: Maybe<LightColor>;
+};
+
+export enum BulbType {
+  Hid = 'HID',
+  Mh = 'MH',
+  Cmh = 'CMH',
+  Cdm = 'CDM',
+  Hps = 'HPS',
+  Led = 'LED',
+  Cfl = 'CFL',
+  Ccfl = 'CCFL'
+}
+
+export enum LightColor {
+  Uva = 'UVA',
+  Blue = 'BLUE',
+  Green = 'GREEN',
+  Red = 'RED',
+  FarRed = 'FAR_RED',
+  Infrared = 'INFRARED'
+}
 
 export type Photo = {
   __typename?: 'Photo';
@@ -140,17 +175,17 @@ export type Plant = {
   name?: Maybe<Scalars['String']>;
   species?: Maybe<Species>;
   dateCreated?: Maybe<Scalars['Timestamp']>;
-  currentLifeCycle?: Maybe<LifeCycle>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
+  currentLifeCycle?: Maybe<LifeCycle>;
 };
 
 export type Species = {
   __typename?: 'Species';
   id: Scalars['Int'];
-  name: Scalars['String'];
   dateCreated?: Maybe<Scalars['Timestamp']>;
+  name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;

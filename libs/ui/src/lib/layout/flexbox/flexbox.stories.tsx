@@ -5,7 +5,7 @@ import { text } from '@storybook/addon-knobs';
 import FlexBox from './flexbox';
 
 export default { 
-  title: 'Flexbox',
+  title: 'Layout/Flexbox',
   component: FlexBox
 };
 

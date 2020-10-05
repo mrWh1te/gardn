@@ -1,5 +1,5 @@
 import { createPhoto } from './helpers/create-photo/create-photo';
-import { QueryPhotoArgs, MutationAddPhotoArgs } from './../generated/generated';
+import { QueryPhotoArgs, MutationAddPhotoArgs } from './../generated';
 
 import { Store } from './../store';
 

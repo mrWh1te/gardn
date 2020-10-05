@@ -8,9 +8,11 @@ export const createPhotoFactory = (nextPhotoId = 1) => (url: string, title?: str
   const nextId = typeof id === 'number' ? id : nextPhotoId++
 
   const dateCreated = new Date().getTime(); // unix epoch timestamp in milliseconds
+  const __typename = 'Photo';
   
   return {
     id: nextId, 
+    __typename,
     dateCreated,
     url,
     title

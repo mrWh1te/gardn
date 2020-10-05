@@ -1,0 +1,30 @@
+type LightSource {
+  id: Int!
+  dateCreated: Timestamp
+  name: String
+  description: String
+  bulbType: BulbType
+  wattage: Int
+  lumens: Int
+  color: LightColor
+}
+
+enum BulbType {
+  HID
+  MH
+  CMH
+  CDM
+  HPS
+  LED
+  CFL
+  CCFL
+}
+
+enum LightColor {
+  UVA
+  BLUE
+  GREEN
+  RED
+  FAR_RED
+  INFRARED
+}

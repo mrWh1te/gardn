@@ -1,6 +1,7 @@
 type LifeCycle {
   id: Int!
   name: String!
+  dateCreated: Timestamp
   description: String
   environment: Environment
 }

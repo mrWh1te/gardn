@@ -1,7 +1,7 @@
 type Species {
   id: Int!
-  name: String!
   dateCreated: Timestamp
+  name: String!
   description: String
   coverPhoto: Photo
   avatar: Photo

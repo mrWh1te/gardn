@@ -1,5 +1,5 @@
 // Generated types from Schema & Generated hooks from Operations
-export * from './lib/generated/generated';
+export * from './lib/generated';
 
 // Resolvers
 export * from './lib/plant/resolvers';
@@ -28,6 +28,16 @@ export * from './lib/species/helpers/create-species/create-species';
 // Photo
 export * from './lib/photo/helpers/create-photo/create-photo.factory';
 export * from './lib/photo/helpers/create-photo/create-photo';
+
+// LifeCycle
+export * from './lib/life-cycle/helpers/create-life-cycle/create-life-cycle.factory';
+export * from './lib/life-cycle/helpers/create-life-cycle/create-life-cycle';
+
+// Environment
+export * from './lib/environment/helpers/create-environment/create-environment.factory';
+export * from './lib/environment/helpers/create-environment/create-environment';
+
+// Light Source
 
 // Mock data
 export * from './lib/plant/mocks';

@@ -4,7 +4,7 @@ import { number } from '@storybook/addon-knobs';
 
 import Grid from './grid';
 
-export default { title: 'Grid' };
+export default { title: 'Layout/Grid' };
 
 export const example1x6 = () => (
   <Grid rows={number('Rows', 6)} columns={number('Columns', 1)}>

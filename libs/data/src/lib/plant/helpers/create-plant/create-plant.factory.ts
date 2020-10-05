@@ -13,9 +13,11 @@ export const createPlantFactory =
       const nextId = typeof id === 'number' ? id : nextPlantId++
 
       const dateCreated = new Date().getTime();
+      const __typename = 'Plant';
       
       return {
         id: nextId, 
+        __typename,
         dateCreated,
         name
       }

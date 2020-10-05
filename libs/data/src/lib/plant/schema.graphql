@@ -3,12 +3,11 @@ type Plant {
   name: String
   species: Species
   dateCreated: Timestamp
-
-  currentLifeCycle: LifeCycle
-
   photos: [Photo]
   coverPhoto: Photo
   avatar: Photo
+
+  currentLifeCycle: LifeCycle
 }
 
 type Query {

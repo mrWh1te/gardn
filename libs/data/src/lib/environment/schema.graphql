@@ -1,6 +1,8 @@
 type Environment {
   id: Int!
-  name: String
+  dateCreated: Timestamp
+
+  name: String!
   description: String
 
   idealWaterAmount: Int
@@ -22,4 +24,5 @@ type Environment {
   lightOnTimeUnit: TimeUnit
   lightOnTimePerTimePeriod: Int
   lightOnTimePerTimePeriodUnit: TimeUnit
+  lightSource: [LightSource]
 }

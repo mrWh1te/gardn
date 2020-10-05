@@ -8,12 +8,14 @@ export const createSpeciesFactory = (nextSpeciesId = 1) => (name: string, descri
   const nextId = typeof id === 'number' ? id : nextSpeciesId++;
 
   const dateCreated = new Date().getTime();
+  const __typename = 'Species';
   
   return {
     id: nextId, 
+    __typename,
     dateCreated,
     name,
-    description,
+    description
   }
 };
 
