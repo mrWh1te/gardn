@@ -46,22 +46,28 @@ export enum HumidityUnit {
   Percentage = 'PERCENTAGE'
 }
 
+export enum ElectricalConductivityUnit {
+  SiemensPerSquareMeterPerMole = 'SIEMENS_PER_SQUARE_METER_PER_MOLE',
+  MillisiemensPerMeter = 'MILLISIEMENS_PER_METER',
+  MillisiemensPerCentimeter = 'MILLISIEMENS_PER_CENTIMETER'
+}
+
 export type Environment = {
   __typename?: 'Environment';
   id: Scalars['Int'];
   dateCreated?: Maybe<Scalars['Timestamp']>;
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  idealWaterAmount?: Maybe<Scalars['Int']>;
+  idealWaterAmount?: Maybe<Scalars['Float']>;
   idealWaterAmountUnit?: Maybe<LiquidUnit>;
   idealWaterAmountPerTimePeriod?: Maybe<Scalars['Int']>;
   idealWaterAmountPerTimePeriodUnit?: Maybe<TimeUnit>;
-  idealTemperatureMin?: Maybe<Scalars['Int']>;
-  idealTemperatueMax?: Maybe<Scalars['Int']>;
+  idealTemperatureMin?: Maybe<Scalars['Float']>;
+  idealTemperatueMax?: Maybe<Scalars['Float']>;
   idealTemperatureMinUnit?: Maybe<TemperatureUnit>;
   idealTemperatureMaxUnit?: Maybe<TemperatureUnit>;
-  idealHumidityMin?: Maybe<Scalars['Int']>;
-  idealHumidityMax?: Maybe<Scalars['Int']>;
+  idealHumidityMin?: Maybe<Scalars['Float']>;
+  idealHumidityMax?: Maybe<Scalars['Float']>;
   idealHumidityMinUnit?: Maybe<HumidityUnit>;
   idealHumidityMaxUnit?: Maybe<HumidityUnit>;
   lightOnTime?: Maybe<Scalars['Int']>;
@@ -69,6 +75,15 @@ export type Environment = {
   lightOnTimePerTimePeriod?: Maybe<Scalars['Int']>;
   lightOnTimePerTimePeriodUnit?: Maybe<TimeUnit>;
   lightSource?: Maybe<Array<Maybe<LightSource>>>;
+  desiredPH?: Maybe<Scalars['Float']>;
+  phMinimum?: Maybe<Scalars['Float']>;
+  phMaximum?: Maybe<Scalars['Float']>;
+  desiredElectricalConductivity?: Maybe<Scalars['Float']>;
+  desiredElectricalConductivityUnit?: Maybe<ElectricalConductivityUnit>;
+  electricalConductivityMin?: Maybe<Scalars['Float']>;
+  electricalConductivityMax?: Maybe<Scalars['Float']>;
+  electricalConductivityMinUnit?: Maybe<ElectricalConductivityUnit>;
+  electricalConductivityMaxUnit?: Maybe<ElectricalConductivityUnit>;
 };
 
 export type LifeCycle = {

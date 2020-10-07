@@ -5,18 +5,18 @@ type Environment {
   name: String!
   description: String
 
-  idealWaterAmount: Int
+  idealWaterAmount: Float
   idealWaterAmountUnit: LiquidUnit
   idealWaterAmountPerTimePeriod: Int
   idealWaterAmountPerTimePeriodUnit: TimeUnit
 
-  idealTemperatureMin: Int
-  idealTemperatueMax: Int
+  idealTemperatureMin: Float
+  idealTemperatueMax: Float
   idealTemperatureMinUnit: TemperatureUnit
   idealTemperatureMaxUnit: TemperatureUnit
 
-  idealHumidityMin: Int
-  idealHumidityMax: Int
+  idealHumidityMin: Float
+  idealHumidityMax: Float
   idealHumidityMinUnit: HumidityUnit
   idealHumidityMaxUnit: HumidityUnit
 
@@ -25,4 +25,15 @@ type Environment {
   lightOnTimePerTimePeriod: Int
   lightOnTimePerTimePeriodUnit: TimeUnit
   lightSource: [LightSource]
+
+  desiredPH: Float
+  phMinimum: Float
+  phMaximum: Float
+
+  desiredElectricalConductivity: Float
+  desiredElectricalConductivityUnit: ElectricalConductivityUnit
+  electricalConductivityMin: Float
+  electricalConductivityMax: Float
+  electricalConductivityMinUnit: ElectricalConductivityUnit
+  electricalConductivityMaxUnit: ElectricalConductivityUnit
 }

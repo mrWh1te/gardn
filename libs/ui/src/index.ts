@@ -10,6 +10,9 @@ export * from './lib/icons/seedling-icon/seedling-icon';
 export * from './lib/icons/home-icon/home-icon';
 export * from './lib/icons/chevron-icon/chevron-icon';
 export * from './lib/icons/close-icon/close-icon';
+// new scafolding (given folder icons, no need for "-icon" in folder or file names)
+export * from './lib/icons/bolt/bolt';
+export * from './lib/icons/vial/vial';
 
 // view components
 export * from './lib/drawer-view/drawer-view';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { text, boolean } from '@storybook/addon-knobs';
+import { text, boolean, color } from '@storybook/addon-knobs';
 
 import ChevronIcon from './chevron-icon';
 
@@ -19,5 +19,5 @@ export const widthAndRotateParams = () => (
 );
 
 export const allParams = () => (
-  <ChevronIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={text('Color', 'green')} solid={boolean('Solid', true)} />
+  <ChevronIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={color('Color', 'green')} solid={boolean('Solid', true)} />
 );

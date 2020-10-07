@@ -1,4 +1,5 @@
-import { Photo, Plant, Species } from '@gardn/data';
+import { Species, Environment, LifeCycle, LightSource } from './generated';
+import { DBPlant, DBPhoto, DBSpeciesLifeCycles, DBLifeCyclesEnvironments } from './db/interfaces';
 import {
   species1,
   species2,
@@ -25,37 +26,65 @@ import {
   mockLargePhoto9
 } from './photo/mocks';
 
+import {
+  mockLightSourceLEDBlue,
+  mockLightSourceLEDRed
+} from './light-source/mocks';
 
-// plant has one species (therefore has `speciesId`)
-// plant has many photo's (photo has `plantId`)
-// plant has one avatar (plant has `avatarPhotoId`)
+import {
+  mockEnvironmentSeed,
+  mockEnvironmentSprout,
+  mockEnvironmentVeg,
+  mockEnvironmentEarlyFlower,
+  mockEnvironmentLateFlower
+} from './environment/mocks';
 
-/**
- * Database Plant has properties for foreign ID keys
- */
-export interface DBPlant extends Plant {
-  speciesId?: number, // not required on User to associate data to Species
-  coverPhotoId?: number,
-  avatarPhotoId?: number // not required of User to upload avatar photo 
-}
-
-export interface DBPhoto extends Photo {
-  plantId?: number // Photo can belong to a Plant, but doesn't have too
-}
-
+import {
+  mockLifeCycleSeed,
+  mockLifeCycleGermination,
+  mockLifeCyclePlanting,
+  mockLifeCycleSprouting
+} from './life-cycle/mocks';
 
 /**
  * In-Memory DB
  */
 export interface Store {
+  // main model data
   plants: DBPlant[],
   species: Species[]
   photos: DBPhoto[],
+  environments: Environment[],
+  lifeCycles: LifeCycle[],
+  lightSources: LightSource[],
+  // many:many association tables' data
+  speciesLifeCycles: DBSpeciesLifeCycles[],
+  lifeCyclesEnvironments: DBLifeCyclesEnvironments[]
 }
 
 /**
  * DB Seeds
  */
+export const lightSourcesSeed = [
+  mockLightSourceLEDBlue,
+  mockLightSourceLEDRed
+];
+
+export const environmentsSeed = [
+  mockEnvironmentSeed,
+  mockEnvironmentSprout,
+  mockEnvironmentVeg,
+  mockEnvironmentEarlyFlower,
+  mockEnvironmentLateFlower
+];
+
+export const lifeCyclesSeed = [
+  mockLifeCycleSeed,
+  mockLifeCycleGermination,
+  mockLifeCyclePlanting,
+  mockLifeCycleSprouting
+];
+
 export const speciesSeed = [
   species1,
   species2,
@@ -115,6 +144,17 @@ export const photosSeed = [
   fakeLargePhoto7,
   fakeLargePhoto8,
   fakeLargePhoto9
+];
+
+/**
+ * Associations Seeds
+ *  many:many relationships between Models
+ */
+export const speciesLifeCyclesSeed = [
+  // 1) helper to create these data points
+  // 2) mocks (done here?)
+  // 3) data sources updated 
+  // 4) resolvers?
 ];
 
 

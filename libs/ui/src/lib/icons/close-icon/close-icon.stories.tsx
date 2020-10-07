@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { text } from '@storybook/addon-knobs';
+import { text, color } from '@storybook/addon-knobs';
 
 import CloseIcon from './close-icon';
 
@@ -19,5 +19,5 @@ export const widthAndRotateParams = () => (
 );
 
 export const allParams = () => (
-  <CloseIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={text('Color', 'green')} />
+  <CloseIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={color('Color', 'green')} />
 );

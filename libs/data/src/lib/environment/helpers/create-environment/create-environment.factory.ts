@@ -1,4 +1,4 @@
-import { Environment, LiquidUnit, TimeUnit, TemperatureUnit, HumidityUnit } from './../../../generated';
+import { Environment, LiquidUnit, TimeUnit, TemperatureUnit, HumidityUnit, ElectricalConductivityUnit } from './../../../generated';
 
 /**
  * createEnvironmentFactory() returns a createEnvironment() function with automatic ID incrementing if not overriden with optional param
@@ -28,6 +28,15 @@ export const createEnvironmentFactory =
       lightOnTimeUnit?: TimeUnit,
       lightOnTimePerTimePeriod?: number,
       lightOnTimePerTimePeriodUnit?: TimeUnit,
+      desiredPH?: number,
+      phMinimum?: number,
+      phMaximum?: number,
+      desiredElectricalConductivity?: number,
+      desiredElectricalConductivityUnit?: ElectricalConductivityUnit,
+      electricalConductivityMin?: number,
+      electricalConductivityMax?: number,
+      electricalConductivityMinUnit?: ElectricalConductivityUnit,
+      electricalConductivityMaxUnit?: ElectricalConductivityUnit,
       id?: number
     ): Environment => { 
       const nextId = typeof id === 'number' ? id : nextEnvironmentId++
@@ -56,6 +65,15 @@ export const createEnvironmentFactory =
         lightOnTime,
         lightOnTimeUnit,
         lightOnTimePerTimePeriod,
-        lightOnTimePerTimePeriodUnit
+        lightOnTimePerTimePeriodUnit,
+        desiredPH,
+        phMinimum,
+        phMaximum,
+        desiredElectricalConductivity,
+        desiredElectricalConductivityUnit,
+        electricalConductivityMin,
+        electricalConductivityMax,
+        electricalConductivityMinUnit,
+        electricalConductivityMaxUnit,
       }
     };

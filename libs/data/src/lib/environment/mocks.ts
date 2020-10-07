@@ -1,5 +1,5 @@
 import { createEnvironment } from './helpers/create-environment/create-environment';
-import { LiquidUnit, TimeUnit, TemperatureUnit, HumidityUnit } from './../generated'
+import { LiquidUnit, TimeUnit, TemperatureUnit, HumidityUnit, ElectricalConductivityUnit } from './../generated'
 
 // Seed (during germination, pre-sprouting to sprouting, plenty of water and humidity, and no light)
 export const mockEnvironmentSeed = createEnvironment(
@@ -20,7 +20,16 @@ export const mockEnvironmentSeed = createEnvironment(
   0,
   TimeUnit.Hour,
   1,
-  TimeUnit.Day
+  TimeUnit.Day,
+  undefined,
+  undefined,
+  5.2,
+  6.0,
+  undefined,
+  1.0,
+  1.4,
+  ElectricalConductivityUnit.MillisiemensPerMeter,
+  ElectricalConductivityUnit.MillisiemensPerMeter
 );
 
 // Seedling/Sprout (fragile little plant, need to slowly spread watering with increasing radius to encourage wide root growth, and light - 18/6)
@@ -42,7 +51,16 @@ export const mockEnvironmentSprout = createEnvironment(
   18,
   TimeUnit.Hour,
   1,
-  TimeUnit.Day
+  TimeUnit.Day,
+  undefined,
+  undefined,
+  6.0,
+  7.0,
+  undefined,
+  1.0,
+  1.4,
+  ElectricalConductivityUnit.MillisiemensPerMeter,
+  ElectricalConductivityUnit.MillisiemensPerMeter
 );
 
 // Veg'ing
@@ -64,7 +82,16 @@ export const mockEnvironmentVeg = createEnvironment(
   18,
   TimeUnit.Hour,
   1,
-  TimeUnit.Day
+  TimeUnit.Day,
+  7.0,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  1.0,
+  1.4,
+  ElectricalConductivityUnit.MillisiemensPerMeter,
+  ElectricalConductivityUnit.MillisiemensPerMeter
 );
 
 // Early Flower
@@ -86,7 +113,12 @@ export const mockEnvironmentEarlyFlower = createEnvironment(
   18,
   TimeUnit.Hour,
   1,
-  TimeUnit.Day
+  TimeUnit.Day,
+  7.0,
+  undefined,
+  undefined,
+  1.2,
+  ElectricalConductivityUnit.MillisiemensPerMeter
 );
 
 // Late Flower
@@ -108,5 +140,10 @@ export const mockEnvironmentLateFlower = createEnvironment(
   18,
   TimeUnit.Hour,
   1,
-  TimeUnit.Day
+  TimeUnit.Day,
+  7.0,
+  undefined,
+  undefined,
+  1.2,
+  ElectricalConductivityUnit.MillisiemensPerMeter
 );
