@@ -1,4 +1,4 @@
-import { Plant, Photo, Species, LifeCycle, Environment } from './../generated';
+import { Plant, Photo, Species, LifeCycle, Environment, LightSource } from './../generated';
 
 // plant has one species (therefore has `speciesId`)
 // plant has many photo's (photo has `plantId`)
@@ -17,6 +17,10 @@ export interface DBPhoto extends Photo {
   plantId?: Plant['id'] // Photo can belong to a Plant, but doesn't have too
 }
 
+export interface DBLifeCycle extends LifeCycle {
+  environmentId?: Environment['id']
+}
+
 // Relationship Table between Species <-> Life-Cycles
 export interface DBSpeciesLifeCycles {
   id: number,
@@ -24,9 +28,9 @@ export interface DBSpeciesLifeCycles {
   lifeCycleId: LifeCycle['id']
 }
 
-// Relationship Table between Life-Cycles <-> Environments
-export interface DBLifeCyclesEnvironments {
+// Relationship Table between Environments <-> Light-Sources
+export interface DBEnvironmentsLightSources {
   id: number,
-  lifeCycleId: LifeCycle['id'],
-  environmentId: Environment['id']
+  environmentId: Environment['id'],
+  lightSourceId: LightSource['id']
 }

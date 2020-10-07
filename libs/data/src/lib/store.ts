@@ -1,5 +1,5 @@
-import { Species, Environment, LifeCycle, LightSource } from './generated';
-import { DBPlant, DBPhoto, DBSpeciesLifeCycles, DBLifeCyclesEnvironments } from './db/interfaces';
+import { Species, Environment, LightSource } from './generated';
+import { DBPlant, DBPhoto, DBSpeciesLifeCycles, DBLifeCycle, DBEnvironmentsLightSources } from './db/interfaces';
 import {
   species1,
   species2,
@@ -55,11 +55,11 @@ export interface Store {
   species: Species[]
   photos: DBPhoto[],
   environments: Environment[],
-  lifeCycles: LifeCycle[],
+  lifeCycles: DBLifeCycle[],
   lightSources: LightSource[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
-  lifeCyclesEnvironments: DBLifeCyclesEnvironments[]
+  environmentsLightSources: DBEnvironmentsLightSources[]
 }
 
 /**
@@ -155,6 +155,10 @@ export const speciesLifeCyclesSeed = [
   // 2) mocks (done here?)
   // 3) data sources updated 
   // 4) resolvers?
+];
+
+export const environmentsLightSources = [
+
 ];
 
 
