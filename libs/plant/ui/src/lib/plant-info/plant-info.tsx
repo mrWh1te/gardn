@@ -2,10 +2,17 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import { GetPlantInfoQuery } from '@gardn/data';
-import { FlexBox, black } from '@gardn/ui';
+import { 
+  FlexBox,
+  WaterDropletIcon,
+  ThermometerIcon,
+  HumidityIcon,
+  SunIcon,
+  VialIcon,
+  BoltIcon
+} from '@gardn/ui';
 
 const StyledPlantInfo = styled.div`
-
   h3 {
     margin: 0;
   }
@@ -47,7 +54,39 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
     <StyledPlantInfo>
       <h3>{ name }</h3>
       <h6>{ subName }</h6>
-      { /* Future timeline of evenhts filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
+      {
+        plant.currentLifeCycle?.environment ? 
+          <FlexBox flexDirection={'column'}>
+            <FlexBox>
+              <WaterDropletIcon />
+              <div>{ plant.currentLifeCycle.environment.idealWaterAmount }</div>
+            </FlexBox>
+            <FlexBox>
+              <ThermometerIcon />
+              <div>{ plant.currentLifeCycle.environment.idealTemperatureMin }</div>
+            </FlexBox>
+            <FlexBox>
+              <HumidityIcon />
+              <div>{ plant.currentLifeCycle.environment.idealHumidityMin }</div>
+            </FlexBox>
+            <FlexBox>
+              <SunIcon />
+              <div>{ plant.currentLifeCycle.environment.lightOnTime }</div>
+            </FlexBox>
+            <FlexBox>
+              <VialIcon />
+              <div>{ plant.currentLifeCycle.environment.phMinimum }</div>
+            </FlexBox>
+            <FlexBox>
+              <BoltIcon />
+              <div>{ plant.currentLifeCycle.environment.desiredElectricalConductivity }</div>
+            </FlexBox>
+          </FlexBox>
+        : ''
+      }
+      
+
+      { /* Future timeline of events filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
       { /* todo depending on plant current life cycle -> show the info of that life cycle's environment */ }
     </StyledPlantInfo>
   );

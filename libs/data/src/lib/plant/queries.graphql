@@ -32,8 +32,15 @@ query getPlantInfo($id: Int!) {
   plant(id: $id) {
     id,
     name,
+    currentLifeCycle {
+      id, name, description, environment {
+        id, 
+        name,
+        ...EnvironmentConditions
+      }
+    },
     species {
-      name
+      id, name, description, sproutToHarvestInHours
     },
     dateCreated
   }

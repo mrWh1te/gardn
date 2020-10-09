@@ -74,7 +74,7 @@ export type Environment = {
   lightOnTimeUnit?: Maybe<TimeUnit>;
   lightOnTimePerTimePeriod?: Maybe<Scalars['Int']>;
   lightOnTimePerTimePeriodUnit?: Maybe<TimeUnit>;
-  lightSource?: Maybe<Array<Maybe<LightSource>>>;
+  lightSources?: Maybe<Array<Maybe<LightSource>>>;
   desiredPH?: Maybe<Scalars['Float']>;
   phMinimum?: Maybe<Scalars['Float']>;
   phMaximum?: Maybe<Scalars['Float']>;
@@ -84,6 +84,52 @@ export type Environment = {
   electricalConductivityMax?: Maybe<Scalars['Float']>;
   electricalConductivityMinUnit?: Maybe<ElectricalConductivityUnit>;
   electricalConductivityMaxUnit?: Maybe<ElectricalConductivityUnit>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  allSpecies?: Maybe<Array<Maybe<Species>>>;
+  environment?: Maybe<Environment>;
+  environments?: Maybe<Array<Maybe<Environment>>>;
+  lifeCycle?: Maybe<LifeCycle>;
+  lifeCycles?: Maybe<Array<Maybe<LifeCycle>>>;
+  lightSource?: Maybe<LightSource>;
+  lightSources?: Maybe<Array<Maybe<LightSource>>>;
+  photo?: Maybe<Photo>;
+  photos?: Maybe<Array<Maybe<Photo>>>;
+  plant?: Maybe<Plant>;
+  plants?: Maybe<Array<Maybe<Plant>>>;
+  species?: Maybe<Species>;
+};
+
+
+export type QueryEnvironmentArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryLifeCycleArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryLightSourceArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryPhotoArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryPlantArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QuerySpeciesArgs = {
+  id: Scalars['Int'];
 };
 
 export type LifeCycle = {
@@ -135,31 +181,6 @@ export type Photo = {
   dateCreated?: Maybe<Scalars['Timestamp']>;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  allSpecies?: Maybe<Array<Maybe<Species>>>;
-  photo?: Maybe<Photo>;
-  photos?: Maybe<Array<Maybe<Photo>>>;
-  plant?: Maybe<Plant>;
-  plants?: Maybe<Array<Maybe<Plant>>>;
-  species?: Maybe<Species>;
-};
-
-
-export type QueryPhotoArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type QueryPlantArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type QuerySpeciesArgs = {
-  id: Scalars['Int'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addPhoto?: Maybe<Photo>;
@@ -204,9 +225,55 @@ export type Species = {
   description?: Maybe<Scalars['String']>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
-  sproutToHarvest?: Maybe<Scalars['Int']>;
+  sproutToHarvestInHours?: Maybe<Scalars['Int']>;
   lifeCycles?: Maybe<Array<Maybe<LifeCycle>>>;
 };
+
+export type EnvironmentConditionsFragment = (
+  { __typename?: 'Environment' }
+  & Pick<Environment, 'idealWaterAmount' | 'idealWaterAmountUnit' | 'idealWaterAmountPerTimePeriod' | 'idealWaterAmountPerTimePeriodUnit' | 'idealTemperatureMin' | 'idealTemperatueMax' | 'idealTemperatureMinUnit' | 'idealTemperatureMaxUnit' | 'idealHumidityMin' | 'idealHumidityMax' | 'idealHumidityMinUnit' | 'idealHumidityMaxUnit' | 'lightOnTime' | 'lightOnTimeUnit' | 'lightOnTimePerTimePeriod' | 'lightOnTimePerTimePeriodUnit' | 'desiredPH' | 'phMinimum' | 'phMaximum' | 'desiredElectricalConductivity' | 'desiredElectricalConductivityUnit' | 'electricalConductivityMin' | 'electricalConductivityMax' | 'electricalConductivityMinUnit' | 'electricalConductivityMaxUnit'>
+  & { lightSources?: Maybe<Array<Maybe<(
+    { __typename?: 'LightSource' }
+    & LightSourceDetailsFragment
+  )>>> }
+);
+
+export type GetLifeCycleQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetLifeCycleQuery = (
+  { __typename?: 'Query' }
+  & { lifeCycle?: Maybe<(
+    { __typename?: 'LifeCycle' }
+    & Pick<LifeCycle, 'name' | 'dateCreated' | 'description'>
+    & { environment?: Maybe<(
+      { __typename?: 'Environment' }
+      & Pick<Environment, 'id' | 'name'>
+    )> }
+  )> }
+);
+
+export type GetAllLifeCyclesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllLifeCyclesQuery = (
+  { __typename?: 'Query' }
+  & { lifeCycles?: Maybe<Array<Maybe<(
+    { __typename?: 'LifeCycle' }
+    & Pick<LifeCycle, 'name' | 'dateCreated' | 'description'>
+    & { environment?: Maybe<(
+      { __typename?: 'Environment' }
+      & Pick<Environment, 'id' | 'name'>
+    )> }
+  )>>> }
+);
+
+export type LightSourceDetailsFragment = (
+  { __typename?: 'LightSource' }
+  & Pick<LightSource, 'id' | 'name' | 'description' | 'bulbType' | 'wattage' | 'lumens' | 'color'>
+);
 
 export type AddPhotoMutationVariables = Exact<{
   url: Scalars['String'];
@@ -319,9 +386,17 @@ export type GetPlantInfoQuery = (
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'dateCreated'>
-    & { species?: Maybe<(
+    & { currentLifeCycle?: Maybe<(
+      { __typename?: 'LifeCycle' }
+      & Pick<LifeCycle, 'id' | 'name' | 'description'>
+      & { environment?: Maybe<(
+        { __typename?: 'Environment' }
+        & Pick<Environment, 'id' | 'name'>
+        & EnvironmentConditionsFragment
+      )> }
+    )>, species?: Maybe<(
       { __typename?: 'Species' }
-      & Pick<Species, 'name'>
+      & Pick<Species, 'id' | 'name' | 'description' | 'sproutToHarvestInHours'>
     )> }
   )> }
 );
@@ -380,7 +455,126 @@ export type GetAllSpeciesQuery = (
   )>>> }
 );
 
+export const LightSourceDetailsFragmentDoc = gql`
+    fragment LightSourceDetails on LightSource {
+  id
+  name
+  description
+  bulbType
+  wattage
+  lumens
+  color
+}
+    `;
+export const EnvironmentConditionsFragmentDoc = gql`
+    fragment EnvironmentConditions on Environment {
+  idealWaterAmount
+  idealWaterAmountUnit
+  idealWaterAmountPerTimePeriod
+  idealWaterAmountPerTimePeriodUnit
+  idealTemperatureMin
+  idealTemperatueMax
+  idealTemperatureMinUnit
+  idealTemperatureMaxUnit
+  idealHumidityMin
+  idealHumidityMax
+  idealHumidityMinUnit
+  idealHumidityMaxUnit
+  lightOnTime
+  lightOnTimeUnit
+  lightOnTimePerTimePeriod
+  lightOnTimePerTimePeriodUnit
+  lightSources {
+    ...LightSourceDetails
+  }
+  desiredPH
+  phMinimum
+  phMaximum
+  desiredElectricalConductivity
+  desiredElectricalConductivityUnit
+  electricalConductivityMin
+  electricalConductivityMax
+  electricalConductivityMinUnit
+  electricalConductivityMaxUnit
+}
+    ${LightSourceDetailsFragmentDoc}`;
+export const GetLifeCycleDocument = gql`
+    query getLifeCycle($id: Int!) {
+  lifeCycle(id: $id) {
+    name
+    dateCreated
+    description
+    environment {
+      id
+      name
+    }
+  }
+}
+    `;
 
+/**
+ * __useGetLifeCycleQuery__
+ *
+ * To run a query within a React component, call `useGetLifeCycleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLifeCycleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLifeCycleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetLifeCycleQuery(baseOptions?: Apollo.QueryHookOptions<GetLifeCycleQuery, GetLifeCycleQueryVariables>) {
+        return Apollo.useQuery<GetLifeCycleQuery, GetLifeCycleQueryVariables>(GetLifeCycleDocument, baseOptions);
+      }
+export function useGetLifeCycleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLifeCycleQuery, GetLifeCycleQueryVariables>) {
+          return Apollo.useLazyQuery<GetLifeCycleQuery, GetLifeCycleQueryVariables>(GetLifeCycleDocument, baseOptions);
+        }
+export type GetLifeCycleQueryHookResult = ReturnType<typeof useGetLifeCycleQuery>;
+export type GetLifeCycleLazyQueryHookResult = ReturnType<typeof useGetLifeCycleLazyQuery>;
+export type GetLifeCycleQueryResult = Apollo.QueryResult<GetLifeCycleQuery, GetLifeCycleQueryVariables>;
+export const GetAllLifeCyclesDocument = gql`
+    query getAllLifeCycles {
+  lifeCycles {
+    name
+    dateCreated
+    description
+    environment {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllLifeCyclesQuery__
+ *
+ * To run a query within a React component, call `useGetAllLifeCyclesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLifeCyclesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllLifeCyclesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllLifeCyclesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllLifeCyclesQuery, GetAllLifeCyclesQueryVariables>) {
+        return Apollo.useQuery<GetAllLifeCyclesQuery, GetAllLifeCyclesQueryVariables>(GetAllLifeCyclesDocument, baseOptions);
+      }
+export function useGetAllLifeCyclesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllLifeCyclesQuery, GetAllLifeCyclesQueryVariables>) {
+          return Apollo.useLazyQuery<GetAllLifeCyclesQuery, GetAllLifeCyclesQueryVariables>(GetAllLifeCyclesDocument, baseOptions);
+        }
+export type GetAllLifeCyclesQueryHookResult = ReturnType<typeof useGetAllLifeCyclesQuery>;
+export type GetAllLifeCyclesLazyQueryHookResult = ReturnType<typeof useGetAllLifeCyclesLazyQuery>;
+export type GetAllLifeCyclesQueryResult = Apollo.QueryResult<GetAllLifeCyclesQuery, GetAllLifeCyclesQueryVariables>;
 export const AddPhotoDocument = gql`
     mutation addPhoto($url: String!, $title: String) {
   addPhoto(url: $url, title: $title) {
@@ -638,13 +832,26 @@ export const GetPlantInfoDocument = gql`
   plant(id: $id) {
     id
     name
-    species {
+    currentLifeCycle {
+      id
       name
+      description
+      environment {
+        id
+        name
+        ...EnvironmentConditions
+      }
+    }
+    species {
+      id
+      name
+      description
+      sproutToHarvestInHours
     }
     dateCreated
   }
 }
-    `;
+    ${EnvironmentConditionsFragmentDoc}`;
 
 /**
  * __useGetPlantInfoQuery__

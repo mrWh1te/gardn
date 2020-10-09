@@ -1,0 +1,31 @@
+
+fragment EnvironmentConditions on Environment {
+  idealWaterAmount
+  idealWaterAmountUnit
+  idealWaterAmountPerTimePeriod
+  idealWaterAmountPerTimePeriodUnit
+  idealTemperatureMin
+  idealTemperatueMax
+  idealTemperatureMinUnit
+  idealTemperatureMaxUnit
+  idealHumidityMin
+  idealHumidityMax
+  idealHumidityMinUnit
+  idealHumidityMaxUnit
+  lightOnTime
+  lightOnTimeUnit
+  lightOnTimePerTimePeriod
+  lightOnTimePerTimePeriodUnit
+  lightSources {
+    ...LightSourceDetails
+  }
+  desiredPH
+  phMinimum
+  phMaximum
+  desiredElectricalConductivity
+  desiredElectricalConductivityUnit
+  electricalConductivityMin
+  electricalConductivityMax
+  electricalConductivityMinUnit
+  electricalConductivityMaxUnit
+}

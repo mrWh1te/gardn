@@ -13,6 +13,10 @@ export * from './lib/icons/close-icon/close-icon';
 // new scafolding (given folder icons, no need for "-icon" in folder or file names)
 export * from './lib/icons/bolt/bolt';
 export * from './lib/icons/vial/vial';
+export * from './lib/icons/humidity/humidity';
+export * from './lib/icons/sun/sun';
+export * from './lib/icons/thermometer/thermometer';
+export * from './lib/icons/water-droplet/water-droplet';
 
 // view components
 export * from './lib/drawer-view/drawer-view';
