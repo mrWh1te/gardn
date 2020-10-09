@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { GetPlantInfoQuery } from '@gardn/data';
+import { GetPlantInfoQuery, measurementUnitToAbbreviation as abreviate } from '@gardn/data';
 import { 
   FlexBox,
   WaterDropletIcon,
@@ -16,9 +16,11 @@ const StyledPlantInfo = styled.div`
   h3 {
     margin: 0;
   }
-  h3, p {
-    text-align: right;
+  h3, p, h6 {
     padding-right: 1rem;
+  }
+  h6, p {
+    text-align: right;
   }
 `;
 
@@ -54,25 +56,25 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
   if (plant.currentLifeCycle?.environment) {
     const env = plant.currentLifeCycle.environment;
 
-    water = env.idealWaterAmount ? env.idealWaterAmount + env.idealWaterAmountUnit + ' / ' + env.idealWaterAmountPerTimePeriod + env.idealWaterAmountPerTimePeriodUnit : ''
+    water = env.idealWaterAmount ? env.idealWaterAmount + abreviate(env.idealWaterAmountUnit) + ' / ' + env.idealWaterAmountPerTimePeriod + abreviate(env.idealWaterAmountPerTimePeriodUnit) : ''
     
-    temperature = env.idealTemperatureMin ? env.idealTemperatureMin + ' ' + env.idealTemperatureMinUnit : ''
+    temperature = env.idealTemperatureMin ? env.idealTemperatureMin + ' ' + abreviate(env.idealTemperatureMinUnit) : ''
     if (env.idealTemperatureMin && env.idealTemperatueMax) {
       temperature += ' - '
     }
     if (env.idealTemperatueMax) {
-      temperature += env.idealTemperatueMax + ' ' + env.idealTemperatureMaxUnit
+      temperature += env.idealTemperatueMax + ' ' + abreviate(env.idealTemperatureMaxUnit)
     }
 
-    humidity = env.idealHumidityMin ? env.idealHumidityMin + ' ' + env.idealHumidityMinUnit : ''
+    humidity = env.idealHumidityMin ? env.idealHumidityMin + ' ' + abreviate(env.idealHumidityMinUnit) : ''
     if (env.idealHumidityMin && env.idealHumidityMax) {
       humidity += ' - '
     }
     if (env.idealHumidityMax) {
-      humidity += env.idealHumidityMax + ' ' + env.idealHumidityMaxUnit
+      humidity += env.idealHumidityMax + ' ' + abreviate(env.idealHumidityMaxUnit)
     }
 
-    light = env.lightOnTime ? env.lightOnTime + ' ' + env.lightOnTimeUnit + ' / ' + env.lightOnTimePerTimePeriod + ' ' + env.lightOnTimePerTimePeriodUnit : ''
+    light = env.lightOnTime ? env.lightOnTime + ' ' + abreviate(env.lightOnTimeUnit) + ' / ' + env.lightOnTimePerTimePeriod + ' ' + abreviate(env.lightOnTimePerTimePeriodUnit) : ''
 
     pH = env.desiredPH ? env.desiredPH : env.phMinimum ? env.phMinimum : ''
     if (env.phMinimum && env.phMaximum) {
@@ -82,12 +84,12 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
       pH += env.phMaximum
     }
 
-    electricalConductivity = env.desiredElectricalConductivity ? env.desiredElectricalConductivity + env.desiredElectricalConductivityUnit : env.electricalConductivityMin ? env.electricalConductivityMin + env.electricalConductivityMinUnit : ''
+    electricalConductivity = env.desiredElectricalConductivity ? env.desiredElectricalConductivity + abreviate(env.desiredElectricalConductivityUnit) : env.electricalConductivityMin ? env.electricalConductivityMin + abreviate(env.electricalConductivityMinUnit) : ''
     if (env.electricalConductivityMin && env.electricalConductivityMax) {
       electricalConductivity += ' - '
     }
     if (env.electricalConductivityMax) {
-      electricalConductivity += env.electricalConductivityMax + env.electricalConductivityMaxUnit
+      electricalConductivity += env.electricalConductivityMax + abreviate(env.electricalConductivityMaxUnit)
     }
 
   }
@@ -96,6 +98,7 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
     <StyledPlantInfo>
       <h3>{ name }</h3>
       <h6>{ subName }</h6>
+      <p>{ plant.currentLifeCycle?.name }</p>
       
       <FlexBox flexDirection={'column'}>
         <FlexBox>
@@ -124,8 +127,6 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
         </FlexBox>
       </FlexBox>
        
-      
-
       { /* Future timeline of events filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
       { /* todo depending on plant current life cycle -> show the info of that life cycle's environment */ }
     </StyledPlantInfo>

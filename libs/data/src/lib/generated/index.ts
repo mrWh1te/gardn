@@ -14,7 +14,7 @@ export type Scalars = {
 
 
 export enum LiquidUnit {
-  Gil = 'GIL',
+  Gill = 'GILL',
   Pint = 'PINT',
   Quart = 'QUART',
   Gallon = 'GALLON',
@@ -50,6 +50,26 @@ export enum ElectricalConductivityUnit {
   SiemensPerSquareMeterPerMole = 'SIEMENS_PER_SQUARE_METER_PER_MOLE',
   MillisiemensPerMeter = 'MILLISIEMENS_PER_METER',
   MillisiemensPerCentimeter = 'MILLISIEMENS_PER_CENTIMETER'
+}
+
+export enum LightBulbType {
+  Hid = 'HID',
+  Mh = 'MH',
+  Cmh = 'CMH',
+  Cdm = 'CDM',
+  Hps = 'HPS',
+  Led = 'LED',
+  Cfl = 'CFL',
+  Ccfl = 'CCFL'
+}
+
+export enum LightBulbColor {
+  Uva = 'UVA',
+  Blue = 'BLUE',
+  Green = 'GREEN',
+  Red = 'RED',
+  FarRed = 'FAR_RED',
+  Infrared = 'INFRARED'
 }
 
 export type Environment = {
@@ -147,31 +167,11 @@ export type LightSource = {
   dateCreated?: Maybe<Scalars['Timestamp']>;
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  bulbType?: Maybe<BulbType>;
+  bulbType?: Maybe<LightBulbType>;
   wattage?: Maybe<Scalars['Int']>;
   lumens?: Maybe<Scalars['Int']>;
-  color?: Maybe<LightColor>;
+  color?: Maybe<LightBulbColor>;
 };
-
-export enum BulbType {
-  Hid = 'HID',
-  Mh = 'MH',
-  Cmh = 'CMH',
-  Cdm = 'CDM',
-  Hps = 'HPS',
-  Led = 'LED',
-  Cfl = 'CFL',
-  Ccfl = 'CCFL'
-}
-
-export enum LightColor {
-  Uva = 'UVA',
-  Blue = 'BLUE',
-  Green = 'GREEN',
-  Red = 'RED',
-  FarRed = 'FAR_RED',
-  Infrared = 'INFRARED'
-}
 
 export type Photo = {
   __typename?: 'Photo';

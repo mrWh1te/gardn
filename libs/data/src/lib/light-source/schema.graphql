@@ -3,34 +3,14 @@ type LightSource {
   dateCreated: Timestamp
   name: String
   description: String
-  bulbType: BulbType
+  bulbType: LightBulbType
   wattage: Int
   lumens: Int
-  color: LightColor
+  color: LightBulbColor
 }
 
 type Query {
   lightSources: [LightSource]
   lightSource(id: Int!): LightSource
-}
-
-enum BulbType {
-  HID
-  MH
-  CMH
-  CDM
-  HPS
-  LED
-  CFL
-  CCFL
-}
-
-enum LightColor {
-  UVA
-  BLUE
-  GREEN
-  RED
-  FAR_RED
-  INFRARED
 }
 

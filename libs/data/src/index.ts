@@ -25,6 +25,9 @@ export * from './lib/store';
 //
 // Helpers
 
+// Enums
+export * from './lib/enums/helpers';
+
 // Plant
 export * from './lib/plant/helpers/create-plant/create-plant.factory';
 export * from './lib/plant/helpers/create-plant/create-plant';

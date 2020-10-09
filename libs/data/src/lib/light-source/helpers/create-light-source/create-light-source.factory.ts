@@ -1,4 +1,4 @@
-import { LightSource, BulbType, LightColor } from '../../../generated';
+import { LightSource, LightBulbType, LightBulbColor } from '../../../generated';
 
 /**
  * createLightSourceFactory() returns a createLightSource() function with automatic ID incrementing if not overriden with optional param
@@ -18,8 +18,8 @@ export const createLightSourceFactory =
     (
       name: string,
       description?: string,
-      bulbType?: BulbType,
-      color?: LightColor,
+      bulbType?: LightBulbType,
+      color?: LightBulbColor,
       wattage?: number,
       lumens?: number,
       id?: number

@@ -1,5 +1,5 @@
 enum LiquidUnit {
-  GIL
+  GILL
   PINT
   QUART
   GALLON
@@ -36,3 +36,24 @@ enum ElectricalConductivityUnit {
   MILLISIEMENS_PER_METER
   MILLISIEMENS_PER_CENTIMETER
 }
+
+enum LightBulbType {
+  HID
+  MH
+  CMH
+  CDM
+  HPS
+  LED
+  CFL
+  CCFL
+}
+
+enum LightBulbColor {
+  UVA
+  BLUE
+  GREEN
+  RED
+  FAR_RED
+  INFRARED
+}
+
