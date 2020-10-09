@@ -215,15 +215,6 @@ export const speciesLifeCyclesSeed = [
   // for full testing, remaining species do not have the optional data LifeCycle
 ];
 
-// 1) helper to create these data points
-// 2) mocks (done here?)
-
-// 3) data sources updated 
-// 4) resolvers?
-
-// 5) update Query for info of plant with associated data
-// 6) update info UI with all the data
-// 7) merge this PR
 
 export const environmentsLightSourcesSeed = [
   // (mockEnvironmentSeed.id)
@@ -241,8 +232,6 @@ export const store: Store = {
   plants: plantsSeed,
   species: speciesSeed,
   photos: photosSeed,
-
-  // confirm: 
   environments: environmentsSeed,
   lifeCycles: lifeCyclesSeed,
   lightSources: lightSourcesSeed,

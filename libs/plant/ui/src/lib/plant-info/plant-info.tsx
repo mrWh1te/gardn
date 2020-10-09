@@ -50,40 +50,80 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
   const name = plant.name ? plant.name : plant.species?.name ? plant.species.name : plant.id;
   const subName = plant.name && plant.species?.name ? plant.species.name : ''
 
+  let water, temperature, humidity, light, pH, electricalConductivity;
+  if (plant.currentLifeCycle?.environment) {
+    const env = plant.currentLifeCycle.environment;
+
+    water = env.idealWaterAmount ? env.idealWaterAmount + env.idealWaterAmountUnit + ' / ' + env.idealWaterAmountPerTimePeriod + env.idealWaterAmountPerTimePeriodUnit : ''
+    
+    temperature = env.idealTemperatureMin ? env.idealTemperatureMin + ' ' + env.idealTemperatureMinUnit : ''
+    if (env.idealTemperatureMin && env.idealTemperatueMax) {
+      temperature += ' - '
+    }
+    if (env.idealTemperatueMax) {
+      temperature += env.idealTemperatueMax + ' ' + env.idealTemperatureMaxUnit
+    }
+
+    humidity = env.idealHumidityMin ? env.idealHumidityMin + ' ' + env.idealHumidityMinUnit : ''
+    if (env.idealHumidityMin && env.idealHumidityMax) {
+      humidity += ' - '
+    }
+    if (env.idealHumidityMax) {
+      humidity += env.idealHumidityMax + ' ' + env.idealHumidityMaxUnit
+    }
+
+    light = env.lightOnTime ? env.lightOnTime + ' ' + env.lightOnTimeUnit + ' / ' + env.lightOnTimePerTimePeriod + ' ' + env.lightOnTimePerTimePeriodUnit : ''
+
+    pH = env.desiredPH ? env.desiredPH : env.phMinimum ? env.phMinimum : ''
+    if (env.phMinimum && env.phMaximum) {
+      pH += ' - '
+    }
+    if (env.phMaximum) {
+      pH += env.phMaximum
+    }
+
+    electricalConductivity = env.desiredElectricalConductivity ? env.desiredElectricalConductivity + env.desiredElectricalConductivityUnit : env.electricalConductivityMin ? env.electricalConductivityMin + env.electricalConductivityMinUnit : ''
+    if (env.electricalConductivityMin && env.electricalConductivityMax) {
+      electricalConductivity += ' - '
+    }
+    if (env.electricalConductivityMax) {
+      electricalConductivity += env.electricalConductivityMax + env.electricalConductivityMaxUnit
+    }
+
+  }
+
   return (
     <StyledPlantInfo>
       <h3>{ name }</h3>
       <h6>{ subName }</h6>
-      {
-        plant.currentLifeCycle?.environment ? 
-          <FlexBox flexDirection={'column'}>
-            <FlexBox>
-              <WaterDropletIcon />
-              <div>{ plant.currentLifeCycle.environment.idealWaterAmount }</div>
-            </FlexBox>
-            <FlexBox>
-              <ThermometerIcon />
-              <div>{ plant.currentLifeCycle.environment.idealTemperatureMin }</div>
-            </FlexBox>
-            <FlexBox>
-              <HumidityIcon />
-              <div>{ plant.currentLifeCycle.environment.idealHumidityMin }</div>
-            </FlexBox>
-            <FlexBox>
-              <SunIcon />
-              <div>{ plant.currentLifeCycle.environment.lightOnTime }</div>
-            </FlexBox>
-            <FlexBox>
-              <VialIcon />
-              <div>{ plant.currentLifeCycle.environment.phMinimum }</div>
-            </FlexBox>
-            <FlexBox>
-              <BoltIcon />
-              <div>{ plant.currentLifeCycle.environment.desiredElectricalConductivity }</div>
-            </FlexBox>
-          </FlexBox>
-        : ''
-      }
+      
+      <FlexBox flexDirection={'column'}>
+        <FlexBox>
+          <WaterDropletIcon />
+          <div>{ water }</div>
+        </FlexBox>
+        <FlexBox>
+          <ThermometerIcon />
+          <div>{ temperature }</div>
+        </FlexBox>
+        <FlexBox>
+          <HumidityIcon />
+          <div>{ humidity }</div>
+        </FlexBox>
+        <FlexBox>
+          <SunIcon />
+          <div>{ light }</div>
+        </FlexBox>
+        <FlexBox>
+          <VialIcon />
+          <div>{ pH }</div>
+        </FlexBox>
+        <FlexBox>
+          <BoltIcon />
+          <div>{ electricalConductivity }</div>
+        </FlexBox>
+      </FlexBox>
+       
       
 
       { /* Future timeline of events filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
