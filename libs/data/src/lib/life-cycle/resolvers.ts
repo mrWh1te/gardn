@@ -17,7 +17,7 @@ export const lifeCycleResolvers = {
   LifeCycle: {
     environment: (lifeCycle, _, { dataSources }) => {
       if (lifeCycle.environmentId) {
-        const environment = dataSources.environment.getEnvironmentById({ id: lifeCycle.environmentId });
+        const environment = dataSources.environment.getById({ id: lifeCycle.environmentId });
         return environment;
       }
 

@@ -24,7 +24,7 @@ type Environment {
   lightOnTimeUnit: TimeUnit
   lightOnTimePerTimePeriod: Int
   lightOnTimePerTimePeriodUnit: TimeUnit
-  lightSource: [LightSource]
+  lightSources: [LightSource]
 
   desiredPH: Float
   phMinimum: Float
@@ -42,3 +42,4 @@ type Query {
   environments: [Environment]
   environment(id: Int!): Environment
 }
+

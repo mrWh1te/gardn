@@ -7,11 +7,17 @@ export * from './lib/photo/resolvers';
 export * from './lib/species/resolvers';
 
 export * from './lib/life-cycle/resolvers';
+export * from './lib/environment/resolvers';
+export * from './lib/light-source/resolvers';
 
 // Data Sources
 export * from './lib/species/data-source';
 export * from './lib/photo/data-source';
 export * from './lib/plant/data-source';
+
+export * from './lib/life-cycle/data-source';
+export * from './lib/light-source/data-source';
+export * from './lib/environment/data-source';
 
 // DB Models & Seeds
 export * from './lib/store';

@@ -9,6 +9,11 @@ type LightSource {
   color: LightColor
 }
 
+type Query {
+  lightSources: [LightSource]
+  lightSource(id: Int!): LightSource
+}
+
 enum BulbType {
   HID
   MH
