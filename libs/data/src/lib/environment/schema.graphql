@@ -37,3 +37,8 @@ type Environment {
   electricalConductivityMinUnit: ElectricalConductivityUnit
   electricalConductivityMaxUnit: ElectricalConductivityUnit
 }
+
+type Query {
+  environments: [Environment]
+  environment(id: Int!): Environment
+}

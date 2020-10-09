@@ -1,5 +1,10 @@
 import { Plant, Photo, Species, LifeCycle, Environment, LightSource } from './../generated';
 
+/**
+ * These model the tables in the TBI database
+ *  They go beyond the normalized GraphQL schema with specific associations (has, many, belongs etc)
+ */
+
 // plant has one species (therefore has `speciesId`)
 // plant has many photo's (photo has `plantId`)
 // plant has one avatar (plant has `avatarPhotoId`)
@@ -24,6 +29,7 @@ export interface DBLifeCycle extends LifeCycle {
 // Relationship Table between Species <-> Life-Cycles
 export interface DBSpeciesLifeCycles {
   id: number,
+  dateCreated: number,
   speciesId: Species['id'],
   lifeCycleId: LifeCycle['id']
 }
@@ -31,6 +37,7 @@ export interface DBSpeciesLifeCycles {
 // Relationship Table between Environments <-> Light-Sources
 export interface DBEnvironmentsLightSources {
   id: number,
+  dateCreated: number,
   environmentId: Environment['id'],
   lightSourceId: LightSource['id']
 }

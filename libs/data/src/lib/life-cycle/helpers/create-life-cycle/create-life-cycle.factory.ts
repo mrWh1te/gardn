@@ -1,4 +1,4 @@
-import { LifeCycle } from '@gardn/data';
+import { LifeCycle } from './../../../generated';
 
 /**
  * createLifeCycleFactory() returns a createLifeCycle() function with automatic ID incrementing if not overriden with optional param

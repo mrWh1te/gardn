@@ -1,5 +1,11 @@
 import { Species, Environment, LightSource } from './generated';
-import { DBPlant, DBPhoto, DBSpeciesLifeCycles, DBLifeCycle, DBEnvironmentsLightSources } from './db/interfaces';
+import { 
+  DBPlant,
+  DBPhoto,
+  DBSpeciesLifeCycles,
+  DBLifeCycle,
+  DBEnvironmentsLightSources
+} from './db/interfaces';
 import {
   species1,
   species2,
@@ -40,22 +46,29 @@ import {
 } from './environment/mocks';
 
 import {
-  mockLifeCycleSeed,
-  mockLifeCycleGermination,
-  mockLifeCyclePlanting,
-  mockLifeCycleSprouting
-} from './life-cycle/mocks';
+  lifeCycleSeed,
+  lifeCycleGermination,
+  lifeCyclePlanting,
+  lifeCycleSprouting,
+  lifeCycleVeging,
+  lifeCycleEarlyFlower,
+  lifeCycleLateFlower,
+  lifeCycleHarvest
+} from './life-cycle/seed-data';
+
+import { createSpeciesLifeCycles } from './db/helpers/create-species-life-cycles/create-species-life-cycles';
+import { createEnvironmentsLightSources } from './db/helpers/create-environments-light-sources/create-environments-light-sources';
 
 /**
  * In-Memory DB
  */
 export interface Store {
   // main model data
-  plants: DBPlant[],
-  species: Species[]
   photos: DBPhoto[],
-  environments: Environment[],
+  plants: DBPlant[],
+  species: Species[],
   lifeCycles: DBLifeCycle[],
+  environments: Environment[],
   lightSources: LightSource[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
@@ -78,16 +91,52 @@ export const environmentsSeed = [
   mockEnvironmentLateFlower
 ];
 
+// plant life cycles associated with environments that detail the plant's preferred growth conditions
+const associatedLifeCycleSeed = {
+  ...lifeCycleSeed,
+  environmentId: mockEnvironmentSeed.id
+}
+const associatedLifeCycleGermination = {
+  ...lifeCycleGermination,
+  environmentId: mockEnvironmentSeed.id
+}
+const associatedLifeCyclePlanting = {
+  ...lifeCyclePlanting,
+  environmentId: mockEnvironmentSprout.id
+}
+const associatedLifeCycleSprouting = {
+  ...lifeCycleSprouting,
+  environmentId: mockEnvironmentSprout.id
+}
+const associatedLifeCycleVeging = {
+  ...lifeCycleVeging,
+  environmentId: mockEnvironmentVeg.id
+}
+const associatedLifeCycleEarlyFlower = {
+  ...lifeCycleEarlyFlower,
+  environmentId: mockEnvironmentEarlyFlower.id
+}
+const associatedLifeCycleLateFlower = {
+  ...lifeCycleLateFlower,
+  environmentId: mockEnvironmentLateFlower.id
+}
+
 export const lifeCyclesSeed = [
-  mockLifeCycleSeed,
-  mockLifeCycleGermination,
-  mockLifeCyclePlanting,
-  mockLifeCycleSprouting
+  associatedLifeCycleSeed,
+  associatedLifeCycleGermination,
+  associatedLifeCyclePlanting,
+  associatedLifeCycleSprouting,
+  associatedLifeCycleVeging,
+  associatedLifeCycleEarlyFlower,
+  associatedLifeCycleLateFlower,
+  lifeCycleHarvest // no associated environment
 ];
 
 export const speciesSeed = [
+  // have life-cycles:
   species1,
   species2,
+  // don't have life-cycles associated:
   species3,
   species4,
   species5
@@ -151,14 +200,35 @@ export const photosSeed = [
  *  many:many relationships between Models
  */
 export const speciesLifeCyclesSeed = [
-  // 1) helper to create these data points
-  // 2) mocks (done here?)
-  // 3) data sources updated 
-  // 4) resolvers?
+  // Species 1's LifeCycles
+  createSpeciesLifeCycles(species1.id, associatedLifeCycleSeed.id),
+  createSpeciesLifeCycles(species1.id, lifeCycleGermination.id),
+  createSpeciesLifeCycles(species1.id, lifeCyclePlanting.id),
+  createSpeciesLifeCycles(species1.id, lifeCycleSprouting.id),
+  // Species 2's LifeCycles
+  createSpeciesLifeCycles(species2.id, associatedLifeCycleSeed.id),
+  createSpeciesLifeCycles(species2.id, lifeCycleGermination.id),
+  createSpeciesLifeCycles(species2.id, lifeCyclePlanting.id),
+  createSpeciesLifeCycles(species2.id, lifeCycleSprouting.id),
+  // for full testing, remaining species do not have the optional data LifeCycle
 ];
 
-export const environmentsLightSources = [
+// 1) helper to create these data points
+// 2) mocks (done here?)
 
+// 3) data sources updated 
+// 4) resolvers?
+
+// 5) update Query for info of plant with associated data
+// 6) update info UI with all the data
+// 7) merge this PR
+
+export const environmentsLightSourcesSeed = [
+  // (mockEnvironmentSeed.id)
+  createEnvironmentsLightSources(mockEnvironmentSprout.id, mockLightSourceLEDBlue.id),
+  createEnvironmentsLightSources(mockEnvironmentVeg.id, mockLightSourceLEDBlue.id),
+  createEnvironmentsLightSources(mockEnvironmentEarlyFlower.id, mockLightSourceLEDRed.id),
+  createEnvironmentsLightSources(mockEnvironmentLateFlower.id, mockLightSourceLEDRed.id)
 ];
 
 
@@ -168,5 +238,13 @@ export const environmentsLightSources = [
 export const store: Store = {
   plants: plantsSeed,
   species: speciesSeed,
-  photos: photosSeed
+  photos: photosSeed,
+
+  // confirm: 
+  environments: environmentsSeed,
+  lifeCycles: lifeCyclesSeed,
+  lightSources: lightSourcesSeed,
+  // relationships (many to many)
+  speciesLifeCycles: speciesLifeCyclesSeed,
+  environmentsLightSources: environmentsLightSourcesSeed
 };

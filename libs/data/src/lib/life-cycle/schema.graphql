@@ -5,3 +5,8 @@ type LifeCycle {
   description: String
   environment: Environment
 }
+
+type Query {
+  lifeCycles: [LifeCycle]
+  lifeCycle(id: Int!): LifeCycle
+}

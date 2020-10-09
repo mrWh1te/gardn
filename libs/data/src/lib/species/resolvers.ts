@@ -17,5 +17,8 @@ export const speciesResolvers = {
   },
   Mutation: {
     addSpecies: (_, { name, description }, { dataSources }) => dataSources.species.newSpecies({name, description})
+  },
+  Species: {
+    lifeCycles: ({ id }, _, { dataSources }) => dataSources.lifeCycle.getLifeCyclesBySpeciesId({ id })
   }
 }
