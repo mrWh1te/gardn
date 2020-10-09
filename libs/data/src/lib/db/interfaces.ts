@@ -15,7 +15,8 @@ import { Plant, Photo, Species, LifeCycle, Environment, LightSource } from './..
 export interface DBPlant extends Plant {
   speciesId?: Species['id'], // not required on User to associate data to Species
   coverPhotoId?: Photo['id'],
-  avatarPhotoId?: Photo['id'] // not required of User to upload avatar photo 
+  avatarPhotoId?: Photo['id'], // not required of User to upload avatar photo 
+  currentLifeCycleId?: LifeCycle['id']
 }
 
 export interface DBPhoto extends Photo {

@@ -4,7 +4,7 @@ import { valueIsDefined } from '@gardn/helpers';
 
 export const LifeCycleDataSourceFactory = (store: Store) => ({
   // Read Data
-  getLifeCycleById({ id }: {id: number}) {
+  getById({ id }: {id: number}) {
     const lifeCycle = store.lifeCycles.find(lifeCycle => lifeCycle.id === id);
 
     if (lifeCycle) {

@@ -5,7 +5,7 @@ export const lifeCycleResolvers = {
   Query: {
     lifeCycles: (_, __, { dataSources }) => dataSources.lifeCycle.getAll(),
     lifeCycle: (_, { id }, { dataSources }) => {
-      const lifeCycle = dataSources.lifeCycle.getLifeCycleById({ id })
+      const lifeCycle = dataSources.lifeCycle.getById({ id })
 
       if (lifeCycle) {
         return lifeCycle;

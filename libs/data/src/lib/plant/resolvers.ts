@@ -43,6 +43,14 @@ export const plantResolvers = {
       }
 
       return null;
+    },
+    currentLifeCycle: (plant, _, { dataSources }) => {
+      if (plant.currentLifeCycleId) {
+        const lifeCycle = dataSources.lifeCycle.getById({ id: plant.currentLifeCycleId });
+        return lifeCycle;
+      }
+
+      return null;
     }
   },
   Mutation: {

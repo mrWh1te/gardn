@@ -145,12 +145,14 @@ export const speciesSeed = [
 const fakePlant1: DBPlant = {
   ...mockPlant1,
   coverPhotoId: mockLargePhoto1.id,
-  speciesId: species1.id
+  speciesId: species1.id,
+  currentLifeCycleId: associatedLifeCycleSeed.id
 }
 const fakePlant2: DBPlant = {
   ...mockPlant2,
   coverPhotoId: mockLargePhoto2.id,
-  speciesId: species2.id
+  speciesId: species2.id,
+  currentLifeCycleId: associatedLifeCycleSprouting.id
 }
 export const plantsSeed = [fakePlant1, fakePlant2];
 
