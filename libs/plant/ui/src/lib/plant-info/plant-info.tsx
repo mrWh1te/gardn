@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { GetPlantInfoQuery, measurementUnitToAbbreviation as abreviate } from '@gardn/data';
+import { GetPlantInfoQuery, measurementUnitToAbbreviation as abbreviate } from '@gardn/data';
 import { 
   FlexBox,
   WaterDropletIcon,
@@ -9,20 +9,39 @@ import {
   HumidityIcon,
   SunIcon,
   VialIcon,
-  BoltIcon
+  BoltIcon,
+  logoDarkGreen
 } from '@gardn/ui';
 
 const StyledPlantInfo = styled.div`
-  h3 {
-    margin: 0;
-  }
-  h3, p, h6 {
-    padding-right: 1rem;
+  h6 {
+    margin-bottom: 1rem;
   }
   h6, p {
     text-align: right;
   }
+  p {
+    font-size: .75rem;
+  }
+  .current-lifecycle-environment {
+    font-size: .8rem;
+    width: auto;
+    height: auto;
+    margin-top: .75rem;
+  }
 `;
+
+const InfoText = styled.div`
+  font-size: .8rem;
+  white-space: nowrap;
+  flex-grow: 1;
+  text-align: center;
+`;
+
+const IconContainer = styled.div`
+  width: 1rem;
+  text-align: center;
+`
 
 export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
   if (!plant) {
@@ -33,48 +52,29 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
     )
   }
 
-  // name, not species
-  // Name
-  //   -empty-
-  
-  // not have a name, not have a species
-  // ID   <-- maybe empty instead of ID?
-  //   -empty-
-  
-  // not have a name, but have a species name
-  // Species name
-  //   -empty-
-  
-  // name, AND species name
-  // Name
-  //   species
-
-  const name = plant.name ? plant.name : plant.species?.name ? plant.species.name : plant.id;
-  const subName = plant.name && plant.species?.name ? plant.species.name : ''
-
   let water, temperature, humidity, light, pH, electricalConductivity;
   if (plant.currentLifeCycle?.environment) {
     const env = plant.currentLifeCycle.environment;
 
-    water = env.idealWaterAmount ? env.idealWaterAmount + abreviate(env.idealWaterAmountUnit) + ' / ' + env.idealWaterAmountPerTimePeriod + abreviate(env.idealWaterAmountPerTimePeriodUnit) : ''
+    water = env.idealWaterAmount ? env.idealWaterAmount + abbreviate(env.idealWaterAmountUnit) + ' / ' + env.idealWaterAmountPerTimePeriod + abbreviate(env.idealWaterAmountPerTimePeriodUnit) : ''
     
-    temperature = env.idealTemperatureMin ? env.idealTemperatureMin + ' ' + abreviate(env.idealTemperatureMinUnit) : ''
+    temperature = env.idealTemperatureMin ? env.idealTemperatureMin + ' ' + abbreviate(env.idealTemperatureMinUnit) : ''
     if (env.idealTemperatureMin && env.idealTemperatueMax) {
       temperature += ' - '
     }
     if (env.idealTemperatueMax) {
-      temperature += env.idealTemperatueMax + ' ' + abreviate(env.idealTemperatureMaxUnit)
+      temperature += env.idealTemperatueMax + ' ' + abbreviate(env.idealTemperatureMaxUnit)
     }
 
-    humidity = env.idealHumidityMin ? env.idealHumidityMin + ' ' + abreviate(env.idealHumidityMinUnit) : ''
+    humidity = env.idealHumidityMin ? env.idealHumidityMin + ' ' + abbreviate(env.idealHumidityMinUnit) : ''
     if (env.idealHumidityMin && env.idealHumidityMax) {
       humidity += ' - '
     }
     if (env.idealHumidityMax) {
-      humidity += env.idealHumidityMax + ' ' + abreviate(env.idealHumidityMaxUnit)
+      humidity += env.idealHumidityMax + ' ' + abbreviate(env.idealHumidityMaxUnit)
     }
 
-    light = env.lightOnTime ? env.lightOnTime + ' ' + abreviate(env.lightOnTimeUnit) + ' / ' + env.lightOnTimePerTimePeriod + ' ' + abreviate(env.lightOnTimePerTimePeriodUnit) : ''
+    light = typeof env.lightOnTime !== undefined ? env.lightOnTime + ' ' + abbreviate(env.lightOnTimeUnit) + ' / ' + env.lightOnTimePerTimePeriod + ' ' + abbreviate(env.lightOnTimePerTimePeriodUnit) : ''
 
     pH = env.desiredPH ? env.desiredPH : env.phMinimum ? env.phMinimum : ''
     if (env.phMinimum && env.phMaximum) {
@@ -83,49 +83,63 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
     if (env.phMaximum) {
       pH += env.phMaximum
     }
+    if (pH !== '') {
+      pH += ' pH';
+    }
 
-    electricalConductivity = env.desiredElectricalConductivity ? env.desiredElectricalConductivity + abreviate(env.desiredElectricalConductivityUnit) : env.electricalConductivityMin ? env.electricalConductivityMin + abreviate(env.electricalConductivityMinUnit) : ''
+    electricalConductivity = env.desiredElectricalConductivity ? env.desiredElectricalConductivity + abbreviate(env.desiredElectricalConductivityUnit) : env.electricalConductivityMin ? env.electricalConductivityMin + abbreviate(env.electricalConductivityMinUnit) : ''
     if (env.electricalConductivityMin && env.electricalConductivityMax) {
       electricalConductivity += ' - '
     }
     if (env.electricalConductivityMax) {
-      electricalConductivity += env.electricalConductivityMax + abreviate(env.electricalConductivityMaxUnit)
+      electricalConductivity += env.electricalConductivityMax + abbreviate(env.electricalConductivityMaxUnit)
     }
 
   }
 
   return (
     <StyledPlantInfo>
-      <h3>{ name }</h3>
-      <h6>{ subName }</h6>
+      { plant.species?.name ? <h6>{ plant.species.name }</h6> : '' }
       <p>{ plant.currentLifeCycle?.name }</p>
       
-      <FlexBox flexDirection={'column'}>
-        <FlexBox>
-          <WaterDropletIcon />
-          <div>{ water }</div>
-        </FlexBox>
-        <FlexBox>
-          <ThermometerIcon />
-          <div>{ temperature }</div>
-        </FlexBox>
-        <FlexBox>
-          <HumidityIcon />
-          <div>{ humidity }</div>
-        </FlexBox>
-        <FlexBox>
-          <SunIcon />
-          <div>{ light }</div>
-        </FlexBox>
-        <FlexBox>
-          <VialIcon />
-          <div>{ pH }</div>
-        </FlexBox>
-        <FlexBox>
-          <BoltIcon />
-          <div>{ electricalConductivity }</div>
-        </FlexBox>
+      <FlexBox justifyContent={'space-between'}>
+        <article>
+          TBI Plant Events: Life Cycle
+        </article>
+        <article style={{flexGrow: .1}}>
+          <FlexBox flexDirection={'column'} className="current-lifecycle-environment">
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ water }</InfoText>
+              <WaterDropletIcon color={logoDarkGreen} width={'.95rem'} />
+            </FlexBox>
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ temperature }</InfoText>
+              <IconContainer>
+                <ThermometerIcon color={logoDarkGreen} width={'.8rem'} />
+              </IconContainer>
+            </FlexBox>
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ humidity }</InfoText>
+              <HumidityIcon color={logoDarkGreen} />
+            </FlexBox>
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ light }</InfoText>
+              <SunIcon primaryColor={logoDarkGreen} />
+            </FlexBox>
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ pH }</InfoText>
+              <VialIcon primaryColor={logoDarkGreen} />
+            </FlexBox>
+            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+              <InfoText>{ electricalConductivity }</InfoText>
+              <IconContainer>
+                <BoltIcon color={logoDarkGreen} width={'.8rem'} />
+              </IconContainer>
+            </FlexBox>
+          </FlexBox>
+        </article>
       </FlexBox>
+      
        
       { /* Future timeline of events filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
       { /* todo depending on plant current life cycle -> show the info of that life cycle's environment */ }
