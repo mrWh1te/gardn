@@ -24,22 +24,32 @@ In `./apps/gardn` is a React based web app.
 
 ### Data
 
-In `./libs/data` is a library that focuses on main project data from models to client app GraphQL operations that retrieve, create or change data. It exports auto-generated code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library.
+In `./libs/data` is a library that focuses on main project data from models to client app GraphQL operations that retrieve, create or change data. It exports auto-generated code (TypeScript types for models and custom React hooks for the Queries & Mutations) based on the Schema and the Operations & Mutations of this library. It includes mock and seed data, data-sources for resolving Object type fields, resolvers and more. Basically, everything for the API to glue together and some front end queries and types for the client apps to consume.
 
 ```typescript
 import { Plant } from '@gardn/data'; // auto-generated TypeScript type called Plant
                                      // built from the GraphQL type called Plant
 ```
 
+Some models have a DB* alternative like `DBPlant` which represents a typed version specific to the Database. It may include associations like (has one, has many, belongs to, many to many). `Plant` is the normalized version consumed from the GraphQL API. In some cases, there isn't a need for a DB* alternative, which then the usual type suffices.
+
 ### UI
 
 In `./libs/ui` is a library of common UI components.
 
 ```typescript
-import { Button } from '@gardn/ui';
+import { Logo, SeedlingIcon } from '@gardn/ui';
 ```
 
 This library has a dedicated Storybook app. Run it with `nx run ui:storybook`. The stories use the [CSF format](https://storybook.js.org/docs/react/api/csf), which can be reused in unit-tests like for the Card component in this library.
+
+### Helpers
+
+In `./libs/helpers` is a library of pure functions that do not depend on any other libs.
+
+```typescript
+import { valueIsDefined } from '@gardn/helpers';
+```
 
 ### Layout
 
@@ -81,14 +91,6 @@ In `./libs/plant/view` is a dedicated View components library for the Plant feat
 import { PlantPage } from '@gardn/plant/view';
 ```
 
-#### Plant: Helpers
-
-In `./libs/plant/helpers` is a dedicated library to functions that facilitate with the plant feature from creating, mapping data to DOM operations, anything Plant related.
-
-```typescript
-import { createPlantFactory, mockPlant1 } from '@gardn/plant/helpers';
-```
-
 ### Plants
 In `./libs/plants` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Plants feature.
 
@@ -113,6 +115,16 @@ In `./libs/plants/ui` is a dedicated UI components library for the Plants featur
 
 ```typescript
 import { PlantsList } from '@gardn/plants/ui';
+```
+
+### Photo
+In `./libs/photo` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Photo feature.
+
+#### Photo: UI
+In `./libs/photo/ui` is a dedicated UI components library for the Photo feature. These may or may not build on the components from the main UI library.
+
+```typescript
+import { PhotosGrid } from '@gardn/photo/ui';
 ```
 
 ### Container
