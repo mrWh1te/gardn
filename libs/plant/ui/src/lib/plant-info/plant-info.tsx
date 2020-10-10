@@ -108,29 +108,29 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
         </article>
         <article style={{flexGrow: .1}}>
           <FlexBox flexDirection={'column'} className="current-lifecycle-environment">
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ water }</InfoText>
               <WaterDropletIcon color={logoDarkGreen} width={'.95rem'} />
             </FlexBox>
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ temperature }</InfoText>
               <IconContainer>
                 <ThermometerIcon color={logoDarkGreen} width={'.8rem'} />
               </IconContainer>
             </FlexBox>
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ humidity }</InfoText>
               <HumidityIcon color={logoDarkGreen} />
             </FlexBox>
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ light }</InfoText>
               <SunIcon primaryColor={logoDarkGreen} />
             </FlexBox>
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ pH }</InfoText>
               <VialIcon primaryColor={logoDarkGreen} />
             </FlexBox>
-            <FlexBox justifyContent={'space-between'} style={{marginBottom: '.25rem'}}>
+            <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
               <InfoText>{ electricalConductivity }</InfoText>
               <IconContainer>
                 <BoltIcon color={logoDarkGreen} width={'.8rem'} />
