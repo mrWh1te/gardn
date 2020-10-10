@@ -1,0 +1,5 @@
+mutation addPhoto($url: String!, $title: String) {
+  addPhoto(url: $url, title: $title) {
+    id, url, title, dateCreated
+  }
+}

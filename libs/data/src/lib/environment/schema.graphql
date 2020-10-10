@@ -1,0 +1,44 @@
+type Environment {
+  id: Int!
+  dateCreated: Timestamp
+
+  name: String!
+  description: String
+
+  idealWaterAmount: Float
+  idealWaterAmountUnit: LiquidUnit
+  idealWaterAmountPerTimePeriod: Int
+  idealWaterAmountPerTimePeriodUnit: TimeUnit
+
+  idealTemperatureMin: Float
+  idealTemperatueMax: Float
+  idealTemperatureMinUnit: TemperatureUnit
+  idealTemperatureMaxUnit: TemperatureUnit
+
+  idealHumidityMin: Float
+  idealHumidityMax: Float
+  idealHumidityMinUnit: HumidityUnit
+  idealHumidityMaxUnit: HumidityUnit
+
+  lightOnTime: Int
+  lightOnTimeUnit: TimeUnit
+  lightOnTimePerTimePeriod: Int
+  lightOnTimePerTimePeriodUnit: TimeUnit
+  lightSources: [LightSource]
+
+  desiredPH: Float
+  phMinimum: Float
+  phMaximum: Float
+
+  desiredElectricalConductivity: Float
+  desiredElectricalConductivityUnit: ElectricalConductivityUnit
+  electricalConductivityMin: Float
+  electricalConductivityMax: Float
+  electricalConductivityMinUnit: ElectricalConductivityUnit
+  electricalConductivityMaxUnit: ElectricalConductivityUnit
+}
+
+type Query {
+  environments: [Environment]
+  environment(id: Int!): Environment
+}

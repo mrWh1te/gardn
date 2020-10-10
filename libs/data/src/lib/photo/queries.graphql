@@ -1,0 +1,18 @@
+query getPhotos {
+  photos {
+    id,
+    url,
+    title,
+    dateCreated
+  }
+}
+
+query getPhoto($id: Int!) {
+  photo(id: $id) {
+    id,
+    url,
+    title,
+    dateCreated
+  }
+}
+

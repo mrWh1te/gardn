@@ -1,0 +1,5 @@
+mutation addSpecies($name: String!, $description: String) {
+  addSpecies(name: $name, description: $description) {
+    id, name, description
+  }
+}

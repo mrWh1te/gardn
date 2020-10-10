@@ -1,14 +1,12 @@
-import { createPlant, mockPlant1, mockPlant2 } from '@gardn/plant/helpers';
-
 /**
  * Data is stored in memory for development
  * @param plants 
  */
-export const plantResolversFactory = (plants = [mockPlant1, mockPlant2]) => ({
+export const plantResolvers = {
   Query: {
-    plants: () => plants,
-    plant: (parent, args) => {
-      const plant = plants.find(plant => plant.id === args.id);
+    plants: (_, __, { dataSources }) => dataSources.plant.getPlants(),
+    plant: (_, { id }, { dataSources }) => {
+      const plant = dataSources.plant.getPlantById({ id })
 
       if (plant) {
         return plant;
@@ -17,12 +15,45 @@ export const plantResolversFactory = (plants = [mockPlant1, mockPlant2]) => ({
       return new Error('Plant not found')
     }
   },
-  Mutation: {
-    addPlant: (parent, args) => {
-      const newPlant = createPlant(args.name)
-      plants.push(newPlant)
+  Plant: {
+    avatar: (plant, _, { dataSources }) => {
+      if (plant.avatarPhotoId) {
+        const avatar = dataSources.photo.getPhotoById({ id: plant.avatarPhotoId });
+        return avatar;
+      }
 
-      return newPlant
+      return null;
+    },
+    coverPhoto: (plant, _, { dataSources }) => {
+      if (plant.coverPhotoId) {
+        const coverPhoto = dataSources.photo.getPhotoById({ id: plant.coverPhotoId });
+        return coverPhoto;
+      }
+
+      return null;
+    },
+    photos: (plant, _, { dataSources }) => {
+      const photos = dataSources.photo.getPhotosByPlantId({ id: plant.id });
+      return photos;
+    },
+    species: (plant, _, { dataSources }) => {
+      if (plant.speciesId) {
+        const species = dataSources.species.getSpeciesById({ id: plant.speciesId })
+        return species;
+      }
+
+      return null;
+    },
+    currentLifeCycle: (plant, _, { dataSources }) => {
+      if (plant.currentLifeCycleId) {
+        const lifeCycle = dataSources.lifeCycle.getById({ id: plant.currentLifeCycleId });
+        return lifeCycle;
+      }
+
+      return null;
     }
+  },
+  Mutation: {
+    addPlant: (_, { name }, { dataSources }) => dataSources.plant.newPlant({name})
   }
-})
+}

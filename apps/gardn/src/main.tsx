@@ -25,7 +25,9 @@ const theme = createMuiTheme({
       dark: green[700],
     },
   },
-
+  // zIndex: {
+  //   drawer: 1000
+  // } // did not work, value stayed at 1300 (docs https://material-ui.com/customization/z-index/ say should be 1200).. maybe bug? try again in future
 });
 
 const client = new ApolloClient({

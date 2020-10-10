@@ -18,7 +18,7 @@ export const ActionButton = (props: ActionButtonProps) => {
       direction={'up'}
       open={props.open}
       onClick={props.toggleMenu(!props.open)}
-      style={{position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 10000}}
+      style={{position: 'fixed', right: '1rem', bottom: '2.5rem'}}
     >
       {/* {actions.map((action) => (
         <SpeedDialAction

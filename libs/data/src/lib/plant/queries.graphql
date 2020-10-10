@@ -6,7 +6,50 @@ query getPlants {
 
 query getPlant($id: Int!) {
   plant(id: $id) {
-    name
+    name,
+    species {
+      name
+    },
+    dateCreated,
+    photos {
+      url, title
+    },
+    coverPhoto {
+      url
+    }
   }
 }
 
+query getPlantCoverPhoto($id: Int!) {
+  plant(id: $id) {
+    coverPhoto {
+      url
+    }
+  }
+}
+
+query getPlantInfo($id: Int!) {
+  plant(id: $id) {
+    id,
+    name,
+    currentLifeCycle {
+      id, name, description, environment {
+        id, 
+        name,
+        ...EnvironmentConditions
+      }
+    },
+    species {
+      id, name, description, sproutToHarvestInHours
+    },
+    dateCreated
+  }
+}
+
+query getPlantPhotos($id: Int!) {
+  plant(id: $id) {
+    photos {
+      id, url, title, dateCreated
+    }
+  }
+}

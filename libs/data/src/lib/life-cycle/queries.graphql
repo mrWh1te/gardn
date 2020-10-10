@@ -1,0 +1,21 @@
+query getLifeCycle($id: Int!) {
+  lifeCycle(id: $id) {
+    name,
+    dateCreated,
+    description,
+    environment {
+      id, name
+    }
+  }
+}
+
+query getAllLifeCycles {
+  lifeCycles {
+    name,
+    dateCreated,
+    description,
+    environment {
+      id, name
+    }
+  }
+}

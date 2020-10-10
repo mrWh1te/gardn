@@ -1,0 +1,16 @@
+type LightSource {
+  id: Int!
+  dateCreated: Timestamp
+  name: String
+  description: String
+  bulbType: LightBulbType
+  wattage: Int
+  lumens: Int
+  color: LightBulbColor
+}
+
+type Query {
+  lightSources: [LightSource]
+  lightSource(id: Int!): LightSource
+}
+

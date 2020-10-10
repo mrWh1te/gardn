@@ -1,0 +1,12 @@
+type LifeCycle {
+  id: Int!
+  name: String!
+  dateCreated: Timestamp
+  description: String
+  environment: Environment
+}
+
+type Query {
+  lifeCycles: [LifeCycle]
+  lifeCycle(id: Int!): LifeCycle
+}

@@ -1,0 +1,11 @@
+query getSpecies($id: Int!) {
+  species(id: $id) {
+    name, description
+  }
+}
+
+query getAllSpecies {
+  allSpecies {
+    id, name
+  }
+}

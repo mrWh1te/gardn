@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { text } from '@storybook/addon-knobs';
+import { text, color } from '@storybook/addon-knobs';
 
 import SeedlingIcon from './seedling-icon';
 
@@ -19,5 +19,5 @@ export const widthAndRotateParams = () => (
 );
 
 export const allParams = () => (
-  <SeedlingIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} primaryColor={text('Primary Color', 'green')} secondaryColor={text('Secondary Color', 'green')} />
+  <SeedlingIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} primaryColor={color('Primary Color', 'green')} secondaryColor={color('Secondary Color', 'green')} />
 );

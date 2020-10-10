@@ -1,0 +1,9 @@
+fragment LightSourceDetails on LightSource {
+  id
+  name
+  description
+  bulbType
+  wattage
+  lumens
+  color
+}

@@ -3,14 +3,10 @@ import Drawer from '@material-ui/core/Drawer';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import styled from '@emotion/styled';
+import { PlantDrawer } from '@gardn/plant/view';
+import { white } from '@gardn/ui';
 
 import ActionButton from '../action-button/action-button';
-
-/* eslint-disable-next-line */
-export interface ActionMenuProps {}
-
-const StyledActionMenu = styled.section``;
 
 // TODO add tests
 
@@ -24,20 +20,26 @@ const StyledActionMenu = styled.section``;
  * 
  * @param props 
  */
-export const ActionMenu = (props: ActionMenuProps) => {
+export const ActionMenu = () => {
   const [menuOpenStatus, setMenuOpenStatus] = React.useState(false);
 
   const toggleDrawer = (newOpenStatus: boolean) => (event) => {
     setMenuOpenStatus(newOpenStatus);
   };
 
+  const style: React.CSSProperties = {
+    backgroundColor: white,
+    borderTopLeftRadius: '.5rem',
+    borderTopRightRadius: '.5rem',
+  }
+
   return (
     <>
+      {/* todo ActionButton disabled when a particular page route of routes is active */}
       <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
-      <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)}>
-        Page dependent actions, ie if on a Plant page: water, temperature reading, re-pot, etc
-
-        <Route path="/plant/:id" component={() => <div>Plant page drawer view</div>} />
+      <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
+        PaperProps={{ elevation: 0, style, square: false }} style={{zIndex: 1000}}>
+        <Route path="/plant/:id" component={PlantDrawer} />
       </Drawer>
     </>
   );

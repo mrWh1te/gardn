@@ -1,0 +1,20 @@
+type Species {
+  id: Int!
+  dateCreated: Timestamp
+  name: String!
+  description: String
+  coverPhoto: Photo
+  avatar: Photo
+
+  sproutToHarvestInHours: Int
+  lifeCycles: [LifeCycle]
+}
+
+type Query {
+  species(id: Int!): Species
+  allSpecies: [Species]
+}
+
+type Mutation {
+  addSpecies(name: String!, description: String): Species
+}

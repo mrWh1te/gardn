@@ -1,14 +1,32 @@
-import { IResolvers } from 'graphql-tools';
+import { TimestampResolver } from 'graphql-scalars';
 
-import { plantResolversFactory } from '@gardn/data'
+import { 
+  plantResolvers,
+  photoResolvers,
+  speciesResolvers,
+  lifeCycleResolvers,
+  environmentResolvers,
+  lightSourceResolvers
+} from '@gardn/data';
 
-const plantResolvers = plantResolversFactory()
-
-export const resolvers: IResolvers = {
+export const resolvers: any = {
   Query: {
-    ...plantResolvers.Query
+    ...photoResolvers.Query,
+    ...plantResolvers.Query,
+    ...speciesResolvers.Query,
+    ...lifeCycleResolvers.Query,
+    ...environmentResolvers.Query,
+    ...lightSourceResolvers.Query
   },
   Mutation: {
-    ...plantResolvers.Mutation
-  }
+    ...photoResolvers.Mutation,
+    ...plantResolvers.Mutation,
+    ...speciesResolvers.Mutation
+  },
+  Plant: plantResolvers.Plant,
+  Species: speciesResolvers.Species,
+  LifeCycle: lifeCycleResolvers.LifeCycle,
+  Environment: environmentResolvers.Environment,
+  // Custom Scalars
+  Timestamp: TimestampResolver
 };

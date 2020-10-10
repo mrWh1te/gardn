@@ -1,6 +1,13 @@
 type Plant {
   id: Int!
   name: String
+  species: Species
+  dateCreated: Timestamp
+  photos: [Photo]
+  coverPhoto: Photo
+  avatar: Photo
+
+  currentLifeCycle: LifeCycle
 }
 
 type Query {

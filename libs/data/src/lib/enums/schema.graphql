@@ -1,0 +1,59 @@
+enum LiquidUnit {
+  GILL
+  PINT
+  QUART
+  GALLON
+  MILLILITER
+  LITER
+  KILOLITER
+}
+
+enum TimeUnit {
+  SECOND
+  MINUTE
+  HOUR
+  DAY
+  WEEK
+  MONTH
+  YEAR
+  DECADE
+  CENTURY
+}
+
+enum TemperatureUnit {
+  FAHRENHEIT
+  CELSIUS
+}
+
+enum HumidityUnit {
+  GRAMS_PER_CUBIC_METER
+  GRAMS_PER_KILOGRAM
+  PERCENTAGE
+}
+
+enum ElectricalConductivityUnit {
+  SIEMENS_PER_SQUARE_METER_PER_MOLE
+  MILLISIEMENS_PER_METER
+  MILLISIEMENS_PER_CENTIMETER
+}
+
+enum LightBulbType {
+  HID
+  MH
+  CMH
+  CDM
+  HPS
+  LED
+  CFL
+  CCFL
+}
+
+enum LightBulbColor {
+  UVA
+  BLUE
+  GREEN
+  RED
+  FAR_RED
+  INFRARED
+}
+
