@@ -1,6 +1,7 @@
-type LightSource {
+type LightSource implements BaseDbModel {
   id: Int!
-  dateCreated: Timestamp
+  dateCreated: Timestamp!
+  
   name: String
   description: String
   bulbType: LightBulbType

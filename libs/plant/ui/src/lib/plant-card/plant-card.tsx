@@ -2,11 +2,11 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 
 import styled from '@emotion/styled';
-import { Plant } from '@gardn/data';
+import { GetPlantsQuery } from '@gardn/data';
 
 /* eslint-disable-next-line */
 export interface PlantCardProps {
-  plant: Plant
+  plant: GetPlantsQuery['plants'][number]
 }
 
 const InnerPlantCard = styled.div`

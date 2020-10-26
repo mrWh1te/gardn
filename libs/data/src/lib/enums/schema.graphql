@@ -1,3 +1,10 @@
+enum EventType {
+  WATER
+  LIGHT
+  HUMIDITY_READING
+  TEMPERATURE_READING
+}
+
 enum LiquidUnit {
   GILL
   PINT

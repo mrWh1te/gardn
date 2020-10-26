@@ -1,4 +1,4 @@
-import { createPlant } from './helpers/create-plant/create-plant';
+import { createPlant } from './helpers/create-plant';
 
-export const mockPlant1 = createPlant('Charlie');
-export const mockPlant2 = createPlant();
+export const mockPlant1 = createPlant({name: 'Jane'});
+export const mockPlant2 = createPlant({name: 'John'});

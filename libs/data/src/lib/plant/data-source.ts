@@ -1,4 +1,4 @@
-import { createPlant } from './helpers/create-plant/create-plant';
+import { createPlant } from './helpers/create-plant';
 import { Store } from './../store';
 
 export const plantDataSourceFactory = (store: Store) => ({
@@ -17,7 +17,7 @@ export const plantDataSourceFactory = (store: Store) => ({
   },
   // Create Data
   newPlant({ name }: {name: string}) {
-    const aNewPlant = createPlant(name);
+    const aNewPlant = createPlant({name});
     store.plants.push(aNewPlant);
 
     return aNewPlant;

@@ -1,7 +1,9 @@
+import { Resolvers } from './../generated';
+
 /**
  * Data is stored in memory for development
  */
-export const environmentResolvers = {
+export const environmentResolvers: Resolvers = {
   Query: {
     environments: (_, __, { dataSources }) => dataSources.environment.getAll(),
     environment: (_, { id }, { dataSources }) => {

@@ -46,6 +46,18 @@ query getPlantInfo($id: Int!) {
   }
 }
 
+query getPlantEvents($id: Int!) {
+  plant(id: $id) {
+    events {
+      id, dateCreated, type, data {
+        ... on WaterEventData {
+         	amount, amountUnit, temperature, temperatureUnit, eventTime 
+        }
+      }
+    }
+  }
+}
+
 query getPlantPhotos($id: Int!) {
   plant(id: $id) {
     photos {

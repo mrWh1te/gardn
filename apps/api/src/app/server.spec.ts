@@ -9,6 +9,18 @@ describe('Server', () => {
 
   let api:any; 
 
+  /**
+   * Plant.name in GQL obj type schema is nullable, therefore if undefined, it's returned as null
+   * @param name 
+   */
+  const getObjectTypeFieldNameValue = (name?: string): string | null => {
+    if (name) {
+      return name
+    }
+
+    return null
+  }
+
   beforeAll(() => {
     api = App.server.listen({ port });
   })
@@ -32,8 +44,8 @@ describe('Server', () => {
     expect(result).toEqual({ 
       data: { 
         plants: [
-          {"__typename": "Plant", name: mockPlant1.name},
-          {"__typename": "Plant", name: mockPlant2.name}
+          {"__typename": "Plant", name: getObjectTypeFieldNameValue(mockPlant1.name)},
+          {"__typename": "Plant", name: getObjectTypeFieldNameValue(mockPlant2.name)}
         ]
       },
       loading: false,

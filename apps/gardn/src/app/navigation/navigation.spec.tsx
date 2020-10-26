@@ -4,13 +4,13 @@ import { render } from '@testing-library/react';
 import Navigation from './navigation';
 
 jest.mock('react-router-dom', () => {
-  const originalModule = jest.requireActual('@apollo/client')
+  const originalModule = jest.requireActual('react-router-dom')
 
   return {
     __esModule: true,
     ...originalModule,
     // Route: () => <div></div>,
-    Link: () => <div></div>
+    NavLink: (props) => <div>{props.children}</div>
   }
 })
 

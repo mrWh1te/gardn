@@ -1,0 +1,19 @@
+union EventTarget = Plant
+union EventData = WaterEventData
+
+type Event implements BaseDbModel {
+  id: Int!
+  dateCreated: Timestamp!
+  
+  type: EventType!
+
+  data: EventData
+
+  targets: [EventTarget]
+}
+
+type Query {
+  event(eventDataId: Int!, eventType: EventType!): Event
+}
+
+

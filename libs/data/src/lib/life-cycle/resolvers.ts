@@ -1,7 +1,9 @@
+import { Resolvers } from './../generated';
+
 /**
  * Data is stored in memory for development
  */
-export const lifeCycleResolvers = {
+export const lifeCycleResolvers: Resolvers = {
   Query: {
     lifeCycles: (_, __, { dataSources }) => dataSources.lifeCycle.getAll(),
     lifeCycle: (_, { id }, { dataSources }) => {
@@ -16,8 +18,8 @@ export const lifeCycleResolvers = {
   },
   LifeCycle: {
     environment: (lifeCycle, _, { dataSources }) => {
-      if (lifeCycle.environmentId) {
-        const environment = dataSources.environment.getById({ id: lifeCycle.environmentId });
+      if (lifeCycle['environmentId']) { // environmentId not on LifeCycle obj type, but in parent record data (frm db record)
+        const environment = dataSources.environment.getById({ id: lifeCycle['environmentId'] });
         return environment;
       }
 

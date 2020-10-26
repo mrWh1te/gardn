@@ -1,8 +1,9 @@
-type Photo {
+type Photo implements BaseDbModel {
   id: Int!
+  dateCreated: Timestamp!
+
   url: String!
   title: String
-  dateCreated: Timestamp 
 }
 
 type Query {

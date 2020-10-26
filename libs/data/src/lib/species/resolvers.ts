@@ -1,8 +1,10 @@
+import { Resolvers } from './../generated';
+
 /**
  * Data is stored in memory for development
  * @param plants 
  */
-export const speciesResolvers = {
+export const speciesResolvers: Resolvers = {
   Query: {
     species: (_, { id }, { dataSources }) => {
       const oneSpecies = dataSources.species.getSpeciesById({ id });

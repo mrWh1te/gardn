@@ -1,4 +1,6 @@
-export const photoResolvers = {
+import { Resolvers } from './../generated';
+
+export const photoResolvers: Resolvers = {
   Query: {
     photos: (_, __, { dataSources }) => dataSources.photo.getAllPhotos(),
     photo: (_, { id }, { dataSources }) => {

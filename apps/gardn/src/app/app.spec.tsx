@@ -20,13 +20,14 @@ import App from './app';
 // })
 
 jest.mock('react-router-dom', () => {
-  const originalModule = jest.requireActual('@apollo/client')
+  const originalModule = jest.requireActual('react-router-dom')
 
   return {
     __esModule: true,
     ...originalModule,
     Route: () => <div></div>,
-    Link: () => <div></div>
+    Link: (props) => <div>{props.children}</div>,
+    NavLink: (props) => <div>{props.children}</div>
   }
 })
 
@@ -40,7 +41,6 @@ describe('App', () => {
 
   // Clean up
   afterAll(async() => {
-    // jest.unmock('@apollo/client')
     jest.unmock('react-router-dom');
   })
 

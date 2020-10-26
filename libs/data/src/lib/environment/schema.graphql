@@ -1,6 +1,6 @@
-type Environment {
+type Environment implements BaseDbModel {
   id: Int!
-  dateCreated: Timestamp
+  dateCreated: Timestamp!
 
   name: String!
   description: String

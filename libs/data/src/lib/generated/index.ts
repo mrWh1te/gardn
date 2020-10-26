@@ -1,7 +1,10 @@
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,6 +15,13 @@ export type Scalars = {
   Timestamp: any;
 };
 
+
+export enum EventType {
+  Water = 'WATER',
+  Light = 'LIGHT',
+  HumidityReading = 'HUMIDITY_READING',
+  TemperatureReading = 'TEMPERATURE_READING'
+}
 
 export enum LiquidUnit {
   Gill = 'GILL',
@@ -72,10 +82,10 @@ export enum LightBulbColor {
   Infrared = 'INFRARED'
 }
 
-export type Environment = {
+export type Environment = BaseDbModel & {
   __typename?: 'Environment';
   id: Scalars['Int'];
-  dateCreated?: Maybe<Scalars['Timestamp']>;
+  dateCreated: Scalars['Timestamp'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   idealWaterAmount?: Maybe<Scalars['Float']>;
@@ -111,6 +121,7 @@ export type Query = {
   allSpecies?: Maybe<Array<Maybe<Species>>>;
   environment?: Maybe<Environment>;
   environments?: Maybe<Array<Maybe<Environment>>>;
+  event?: Maybe<Event>;
   lifeCycle?: Maybe<LifeCycle>;
   lifeCycles?: Maybe<Array<Maybe<LifeCycle>>>;
   lightSource?: Maybe<LightSource>;
@@ -125,6 +136,12 @@ export type Query = {
 
 export type QueryEnvironmentArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryEventArgs = {
+  eventDataId: Scalars['Int'];
+  eventType: EventType;
 };
 
 
@@ -152,19 +169,52 @@ export type QuerySpeciesArgs = {
   id: Scalars['Int'];
 };
 
-export type LifeCycle = {
+export enum EventTargetType {
+  Plant = 'PLANT'
+}
+
+export type WaterEventData = BaseDbModel & {
+  __typename?: 'WaterEventData';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  amount?: Maybe<Scalars['Float']>;
+  amountUnit?: Maybe<LiquidUnit>;
+  temperature?: Maybe<Scalars['Float']>;
+  temperatureUnit?: Maybe<TemperatureUnit>;
+  eventTime?: Maybe<Scalars['Timestamp']>;
+};
+
+export type EventTarget = Plant;
+
+export type EventData = WaterEventData;
+
+export type Event = BaseDbModel & {
+  __typename?: 'Event';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  type: EventType;
+  data?: Maybe<EventData>;
+  targets?: Maybe<Array<Maybe<EventTarget>>>;
+};
+
+export type BaseDbModel = {
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+};
+
+export type LifeCycle = BaseDbModel & {
   __typename?: 'LifeCycle';
   id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
   name: Scalars['String'];
-  dateCreated?: Maybe<Scalars['Timestamp']>;
   description?: Maybe<Scalars['String']>;
   environment?: Maybe<Environment>;
 };
 
-export type LightSource = {
+export type LightSource = BaseDbModel & {
   __typename?: 'LightSource';
   id: Scalars['Int'];
-  dateCreated?: Maybe<Scalars['Timestamp']>;
+  dateCreated: Scalars['Timestamp'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   bulbType?: Maybe<LightBulbType>;
@@ -173,12 +223,12 @@ export type LightSource = {
   color?: Maybe<LightBulbColor>;
 };
 
-export type Photo = {
+export type Photo = BaseDbModel & {
   __typename?: 'Photo';
   id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
   url: Scalars['String'];
   title?: Maybe<Scalars['String']>;
-  dateCreated?: Maybe<Scalars['Timestamp']>;
 };
 
 export type Mutation = {
@@ -205,22 +255,23 @@ export type MutationAddSpeciesArgs = {
   description?: Maybe<Scalars['String']>;
 };
 
-export type Plant = {
+export type Plant = BaseDbModel & {
   __typename?: 'Plant';
   id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
   name?: Maybe<Scalars['String']>;
   species?: Maybe<Species>;
-  dateCreated?: Maybe<Scalars['Timestamp']>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
   currentLifeCycle?: Maybe<LifeCycle>;
+  events?: Maybe<Array<Maybe<Event>>>;
 };
 
-export type Species = {
+export type Species = BaseDbModel & {
   __typename?: 'Species';
   id: Scalars['Int'];
-  dateCreated?: Maybe<Scalars['Timestamp']>;
+  dateCreated: Scalars['Timestamp'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   coverPhoto?: Maybe<Photo>;
@@ -398,6 +449,26 @@ export type GetPlantInfoQuery = (
       { __typename?: 'Species' }
       & Pick<Species, 'id' | 'name' | 'description' | 'sproutToHarvestInHours'>
     )> }
+  )> }
+);
+
+export type GetPlantEventsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPlantEventsQuery = (
+  { __typename?: 'Query' }
+  & { plant?: Maybe<(
+    { __typename?: 'Plant' }
+    & { events?: Maybe<Array<Maybe<(
+      { __typename?: 'Event' }
+      & Pick<Event, 'id' | 'dateCreated' | 'type'>
+      & { data?: Maybe<(
+        { __typename?: 'WaterEventData' }
+        & Pick<WaterEventData, 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit' | 'eventTime'>
+      )> }
+    )>>> }
   )> }
 );
 
@@ -878,6 +949,52 @@ export function useGetPlantInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetPlantInfoQueryHookResult = ReturnType<typeof useGetPlantInfoQuery>;
 export type GetPlantInfoLazyQueryHookResult = ReturnType<typeof useGetPlantInfoLazyQuery>;
 export type GetPlantInfoQueryResult = Apollo.QueryResult<GetPlantInfoQuery, GetPlantInfoQueryVariables>;
+export const GetPlantEventsDocument = gql`
+    query getPlantEvents($id: Int!) {
+  plant(id: $id) {
+    events {
+      id
+      dateCreated
+      type
+      data {
+        ... on WaterEventData {
+          amount
+          amountUnit
+          temperature
+          temperatureUnit
+          eventTime
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlantEventsQuery__
+ *
+ * To run a query within a React component, call `useGetPlantEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantEventsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlantEventsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantEventsQuery, GetPlantEventsQueryVariables>) {
+        return Apollo.useQuery<GetPlantEventsQuery, GetPlantEventsQueryVariables>(GetPlantEventsDocument, baseOptions);
+      }
+export function useGetPlantEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantEventsQuery, GetPlantEventsQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantEventsQuery, GetPlantEventsQueryVariables>(GetPlantEventsDocument, baseOptions);
+        }
+export type GetPlantEventsQueryHookResult = ReturnType<typeof useGetPlantEventsQuery>;
+export type GetPlantEventsLazyQueryHookResult = ReturnType<typeof useGetPlantEventsLazyQuery>;
+export type GetPlantEventsQueryResult = Apollo.QueryResult<GetPlantEventsQuery, GetPlantEventsQueryVariables>;
 export const GetPlantPhotosDocument = gql`
     query getPlantPhotos($id: Int!) {
   plant(id: $id) {
@@ -1018,3 +1135,303 @@ export function useGetAllSpeciesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetAllSpeciesQueryHookResult = ReturnType<typeof useGetAllSpeciesQuery>;
 export type GetAllSpeciesLazyQueryHookResult = ReturnType<typeof useGetAllSpeciesLazyQuery>;
 export type GetAllSpeciesQueryResult = Apollo.QueryResult<GetAllSpeciesQuery, GetAllSpeciesQueryVariables>;
+
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+
+export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  selectionSet: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+}
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+}
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Timestamp: ResolverTypeWrapper<Scalars['Timestamp']>;
+  EventType: EventType;
+  LiquidUnit: LiquidUnit;
+  TimeUnit: TimeUnit;
+  TemperatureUnit: TemperatureUnit;
+  HumidityUnit: HumidityUnit;
+  ElectricalConductivityUnit: ElectricalConductivityUnit;
+  LightBulbType: LightBulbType;
+  LightBulbColor: LightBulbColor;
+  Environment: ResolverTypeWrapper<Environment>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  Query: ResolverTypeWrapper<{}>;
+  EventTargetType: EventTargetType;
+  WaterEventData: ResolverTypeWrapper<WaterEventData>;
+  EventTarget: ResolversTypes['Plant'];
+  EventData: ResolversTypes['WaterEventData'];
+  Event: ResolverTypeWrapper<Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversTypes['EventTarget']>>> }>;
+  BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['WaterEventData'] | ResolversTypes['Event'] | ResolversTypes['LifeCycle'] | ResolversTypes['LightSource'] | ResolversTypes['Photo'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
+  LifeCycle: ResolverTypeWrapper<LifeCycle>;
+  LightSource: ResolverTypeWrapper<LightSource>;
+  Photo: ResolverTypeWrapper<Photo>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Plant: ResolverTypeWrapper<Plant>;
+  Species: ResolverTypeWrapper<Species>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  Timestamp: Scalars['Timestamp'];
+  Environment: Environment;
+  Int: Scalars['Int'];
+  String: Scalars['String'];
+  Float: Scalars['Float'];
+  Query: {};
+  WaterEventData: WaterEventData;
+  EventTarget: ResolversParentTypes['Plant'];
+  EventData: ResolversParentTypes['WaterEventData'];
+  Event: Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversParentTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversParentTypes['EventTarget']>>> };
+  BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['WaterEventData'] | ResolversParentTypes['Event'] | ResolversParentTypes['LifeCycle'] | ResolversParentTypes['LightSource'] | ResolversParentTypes['Photo'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
+  LifeCycle: LifeCycle;
+  LightSource: LightSource;
+  Photo: Photo;
+  Mutation: {};
+  Plant: Plant;
+  Species: Species;
+  Boolean: Scalars['Boolean'];
+};
+
+export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
+  name: 'Timestamp';
+}
+
+export type EnvironmentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Environment'] = ResolversParentTypes['Environment']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  idealWaterAmount?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  idealWaterAmountUnit?: Resolver<Maybe<ResolversTypes['LiquidUnit']>, ParentType, ContextType>;
+  idealWaterAmountPerTimePeriod?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  idealWaterAmountPerTimePeriodUnit?: Resolver<Maybe<ResolversTypes['TimeUnit']>, ParentType, ContextType>;
+  idealTemperatureMin?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  idealTemperatueMax?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  idealTemperatureMinUnit?: Resolver<Maybe<ResolversTypes['TemperatureUnit']>, ParentType, ContextType>;
+  idealTemperatureMaxUnit?: Resolver<Maybe<ResolversTypes['TemperatureUnit']>, ParentType, ContextType>;
+  idealHumidityMin?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  idealHumidityMax?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  idealHumidityMinUnit?: Resolver<Maybe<ResolversTypes['HumidityUnit']>, ParentType, ContextType>;
+  idealHumidityMaxUnit?: Resolver<Maybe<ResolversTypes['HumidityUnit']>, ParentType, ContextType>;
+  lightOnTime?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  lightOnTimeUnit?: Resolver<Maybe<ResolversTypes['TimeUnit']>, ParentType, ContextType>;
+  lightOnTimePerTimePeriod?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  lightOnTimePerTimePeriodUnit?: Resolver<Maybe<ResolversTypes['TimeUnit']>, ParentType, ContextType>;
+  lightSources?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightSource']>>>, ParentType, ContextType>;
+  desiredPH?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  phMinimum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  phMaximum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  desiredElectricalConductivity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  desiredElectricalConductivityUnit?: Resolver<Maybe<ResolversTypes['ElectricalConductivityUnit']>, ParentType, ContextType>;
+  electricalConductivityMin?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  electricalConductivityMax?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  electricalConductivityMinUnit?: Resolver<Maybe<ResolversTypes['ElectricalConductivityUnit']>, ParentType, ContextType>;
+  electricalConductivityMaxUnit?: Resolver<Maybe<ResolversTypes['ElectricalConductivityUnit']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  allSpecies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Species']>>>, ParentType, ContextType>;
+  environment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType, RequireFields<QueryEnvironmentArgs, 'id'>>;
+  environments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Environment']>>>, ParentType, ContextType>;
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryEventArgs, 'eventDataId' | 'eventType'>>;
+  lifeCycle?: Resolver<Maybe<ResolversTypes['LifeCycle']>, ParentType, ContextType, RequireFields<QueryLifeCycleArgs, 'id'>>;
+  lifeCycles?: Resolver<Maybe<Array<Maybe<ResolversTypes['LifeCycle']>>>, ParentType, ContextType>;
+  lightSource?: Resolver<Maybe<ResolversTypes['LightSource']>, ParentType, ContextType, RequireFields<QueryLightSourceArgs, 'id'>>;
+  lightSources?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightSource']>>>, ParentType, ContextType>;
+  photo?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType, RequireFields<QueryPhotoArgs, 'id'>>;
+  photos?: Resolver<Maybe<Array<Maybe<ResolversTypes['Photo']>>>, ParentType, ContextType>;
+  plant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<QueryPlantArgs, 'id'>>;
+  plants?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plant']>>>, ParentType, ContextType>;
+  species?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType, RequireFields<QuerySpeciesArgs, 'id'>>;
+};
+
+export type WaterEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['WaterEventData'] = ResolversParentTypes['WaterEventData']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  amount?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  amountUnit?: Resolver<Maybe<ResolversTypes['LiquidUnit']>, ParentType, ContextType>;
+  temperature?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  temperatureUnit?: Resolver<Maybe<ResolversTypes['TemperatureUnit']>, ParentType, ContextType>;
+  eventTime?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EventTargetResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventTarget'] = ResolversParentTypes['EventTarget']> = {
+  __resolveType: TypeResolveFn<'Plant', ParentType, ContextType>;
+};
+
+export type EventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventData'] = ResolversParentTypes['EventData']> = {
+  __resolveType: TypeResolveFn<'WaterEventData', ParentType, ContextType>;
+};
+
+export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['EventType'], ParentType, ContextType>;
+  data?: Resolver<Maybe<ResolversTypes['EventData']>, ParentType, ContextType>;
+  targets?: Resolver<Maybe<Array<Maybe<ResolversTypes['EventTarget']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BaseDbModelResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseDbModel'] = ResolversParentTypes['BaseDbModel']> = {
+  __resolveType: TypeResolveFn<'Environment' | 'WaterEventData' | 'Event' | 'LifeCycle' | 'LightSource' | 'Photo' | 'Plant' | 'Species', ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+};
+
+export type LifeCycleResolvers<ContextType = any, ParentType extends ResolversParentTypes['LifeCycle'] = ResolversParentTypes['LifeCycle']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  environment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LightSourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['LightSource'] = ResolversParentTypes['LightSource']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  bulbType?: Resolver<Maybe<ResolversTypes['LightBulbType']>, ParentType, ContextType>;
+  wattage?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  lumens?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  color?: Resolver<Maybe<ResolversTypes['LightBulbColor']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PhotoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Photo'] = ResolversParentTypes['Photo']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addPhoto?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType, RequireFields<MutationAddPhotoArgs, never>>;
+  addPlant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<MutationAddPlantArgs, never>>;
+  addSpecies?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType, RequireFields<MutationAddSpeciesArgs, 'name'>>;
+};
+
+export type PlantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plant'] = ResolversParentTypes['Plant']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  species?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType>;
+  photos?: Resolver<Maybe<Array<Maybe<ResolversTypes['Photo']>>>, ParentType, ContextType>;
+  coverPhoto?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
+  currentLifeCycle?: Resolver<Maybe<ResolversTypes['LifeCycle']>, ParentType, ContextType>;
+  events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SpeciesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Species'] = ResolversParentTypes['Species']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  coverPhoto?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
+  sproutToHarvestInHours?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  lifeCycles?: Resolver<Maybe<Array<Maybe<ResolversTypes['LifeCycle']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Resolvers<ContextType = any> = {
+  Timestamp?: GraphQLScalarType;
+  Environment?: EnvironmentResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  WaterEventData?: WaterEventDataResolvers<ContextType>;
+  EventTarget?: EventTargetResolvers<ContextType>;
+  EventData?: EventDataResolvers<ContextType>;
+  Event?: EventResolvers<ContextType>;
+  BaseDbModel?: BaseDbModelResolvers<ContextType>;
+  LifeCycle?: LifeCycleResolvers<ContextType>;
+  LightSource?: LightSourceResolvers<ContextType>;
+  Photo?: PhotoResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Plant?: PlantResolvers<ContextType>;
+  Species?: SpeciesResolvers<ContextType>;
+};
+
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+ */
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;

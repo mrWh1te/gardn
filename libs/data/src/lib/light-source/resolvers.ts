@@ -1,7 +1,9 @@
+import { Resolvers } from './../generated';
+
 /**
  * Data is stored in memory for development
  */
-export const lightSourceResolvers = {
+export const lightSourceResolvers: Resolvers = {
   Query: {
     lightSources: (_, __, { dataSources }) => dataSources.lightSource.getAll(),
     lightSource: (_, { id }, { dataSources }) => {

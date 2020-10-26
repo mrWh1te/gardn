@@ -1,0 +1,4 @@
+interface BaseDbModel {
+  id: Int!
+  dateCreated: Timestamp!
+}

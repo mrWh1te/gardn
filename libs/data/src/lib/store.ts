@@ -1,11 +1,15 @@
-import { Species, Environment, LightSource } from './generated';
-import { 
-  DBPlant,
-  DBPhoto,
-  DBSpeciesLifeCycles,
-  DBLifeCycle,
-  DBEnvironmentsLightSources
-} from './db/interfaces';
+// Noramlized GQL Types
+import { Species, Environment, LightSource, WaterEventData, EventType, EventTargetType } from './generated';
+
+// Database Models
+import { DBPlant } from './plant/interfaces';
+import { DBPhoto } from './photo/interfaces';
+import { DBLifeCycle } from './life-cycle/interfaces';
+import { DBSpeciesLifeCycles } from './species/interfaces';
+import { DBEnvironmentsLightSources } from './environment/interfaces';
+import { DBEventsTargets } from './event/events-targets/interface';
+
+// Mocks & Seeds for in-memory DB
 import {
   species1,
   species2,
@@ -56,8 +60,15 @@ import {
   lifeCycleHarvest
 } from './life-cycle/seed-data';
 
-import { createSpeciesLifeCycles } from './db/helpers/create-species-life-cycles/create-species-life-cycles';
-import { createEnvironmentsLightSources } from './db/helpers/create-environments-light-sources/create-environments-light-sources';
+import { 
+  mockDBWaterEventData1,
+  mockDBWaterEventData2
+} from './event/events/water/mocks';
+
+// Helpers
+import { createSpeciesLifeCycles } from './species/helpers/create-species-life-cycles';
+import { createEnvironmentsLightSources } from './environment/helpers/create-environments-light-sources';
+import { createDBEventsTargets } from './event/events-targets/helpers/create-db-events-targets';
 
 /**
  * In-Memory DB
@@ -70,9 +81,11 @@ export interface Store {
   lifeCycles: DBLifeCycle[],
   environments: Environment[],
   lightSources: LightSource[],
+  waterEventsData: WaterEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
-  environmentsLightSources: DBEnvironmentsLightSources[]
+  environmentsLightSources: DBEnvironmentsLightSources[],
+  eventsTargets: DBEventsTargets[]
 }
 
 /**
@@ -197,31 +210,95 @@ export const photosSeed = [
   fakeLargePhoto9
 ];
 
+export const waterEventsDataSeed = [
+  mockDBWaterEventData1,
+  mockDBWaterEventData2
+];
+
 /**
  * Associations Seeds
  *  many:many relationships between Models
  */
 export const speciesLifeCyclesSeed = [
   // Species 1's LifeCycles
-  createSpeciesLifeCycles(species1.id, associatedLifeCycleSeed.id),
-  createSpeciesLifeCycles(species1.id, lifeCycleGermination.id),
-  createSpeciesLifeCycles(species1.id, lifeCyclePlanting.id),
-  createSpeciesLifeCycles(species1.id, lifeCycleSprouting.id),
+  createSpeciesLifeCycles({
+    speciesId: species1.id,
+    lifeCycleId: associatedLifeCycleSeed.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species1.id,
+    lifeCycleId: lifeCycleGermination.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species1.id,
+    lifeCycleId: lifeCyclePlanting.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species1.id,
+    lifeCycleId: lifeCycleSprouting.id
+  }),
   // Species 2's LifeCycles
-  createSpeciesLifeCycles(species2.id, associatedLifeCycleSeed.id),
-  createSpeciesLifeCycles(species2.id, lifeCycleGermination.id),
-  createSpeciesLifeCycles(species2.id, lifeCyclePlanting.id),
-  createSpeciesLifeCycles(species2.id, lifeCycleSprouting.id),
+  createSpeciesLifeCycles({
+    speciesId: species2.id,
+    lifeCycleId: associatedLifeCycleSeed.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species2.id,
+    lifeCycleId: lifeCycleGermination.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species2.id,
+    lifeCycleId: lifeCyclePlanting.id
+  }),
+  createSpeciesLifeCycles({
+    speciesId: species2.id,
+    lifeCycleId: lifeCycleSprouting.id
+  }),
   // for full testing, remaining species do not have the optional data LifeCycle
 ];
 
 
 export const environmentsLightSourcesSeed = [
   // (mockEnvironmentSeed.id)
-  createEnvironmentsLightSources(mockEnvironmentSprout.id, mockLightSourceLEDBlue.id),
-  createEnvironmentsLightSources(mockEnvironmentVeg.id, mockLightSourceLEDBlue.id),
-  createEnvironmentsLightSources(mockEnvironmentEarlyFlower.id, mockLightSourceLEDRed.id),
-  createEnvironmentsLightSources(mockEnvironmentLateFlower.id, mockLightSourceLEDRed.id)
+  createEnvironmentsLightSources({
+    environmentId: mockEnvironmentSprout.id,
+    lightSourceId: mockLightSourceLEDBlue.id
+  }),
+  createEnvironmentsLightSources({
+    environmentId: mockEnvironmentVeg.id,
+    lightSourceId: mockLightSourceLEDBlue.id
+  }),
+  createEnvironmentsLightSources({
+    environmentId: mockEnvironmentEarlyFlower.id,
+    lightSourceId: mockLightSourceLEDRed.id
+  }),
+  createEnvironmentsLightSources({
+    environmentId: mockEnvironmentLateFlower.id,
+    lightSourceId: mockLightSourceLEDRed.id
+  })
+];
+
+export const eventsTargetsSeed = [
+  // 1 watering event, 2 targets
+  createDBEventsTargets({
+    eventType: EventType.Water,
+    eventDataId: mockDBWaterEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.Water,
+    eventDataId: mockDBWaterEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[1].id
+  }),
+  // 1 watering event, 1 target
+  createDBEventsTargets({
+    eventType: EventType.Water,
+    eventDataId: mockDBWaterEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
 ];
 
 
@@ -235,7 +312,9 @@ export const store: Store = {
   environments: environmentsSeed,
   lifeCycles: lifeCyclesSeed,
   lightSources: lightSourcesSeed,
+  waterEventsData: waterEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
-  environmentsLightSources: environmentsLightSourcesSeed
+  environmentsLightSources: environmentsLightSourcesSeed,
+  eventsTargets: eventsTargetsSeed
 };

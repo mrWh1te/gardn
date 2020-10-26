@@ -1,7 +1,8 @@
-type LifeCycle {
+type LifeCycle implements BaseDbModel {
   id: Int!
+  dateCreated: Timestamp!
+  
   name: String!
-  dateCreated: Timestamp
   description: String
   environment: Environment
 }

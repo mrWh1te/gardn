@@ -1,13 +1,15 @@
-type Plant {
+type Plant implements BaseDbModel {
   id: Int!
+  dateCreated: Timestamp!
+  
   name: String
   species: Species
-  dateCreated: Timestamp
   photos: [Photo]
   coverPhoto: Photo
   avatar: Photo
-
   currentLifeCycle: LifeCycle
+
+  events: [Event]
 }
 
 type Query {

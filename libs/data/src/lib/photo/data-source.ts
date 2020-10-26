@@ -1,4 +1,4 @@
-import { createPhoto } from './helpers/create-photo/create-photo';
+import { createPhoto } from './helpers/create-photo';
 import { QueryPhotoArgs, MutationAddPhotoArgs } from './../generated';
 
 import { Store } from './../store';
@@ -16,7 +16,7 @@ export const photoDataSourceFactory = (store: Store) => ({
   },
   // Create Data
   addPhoto({ url, title }: MutationAddPhotoArgs) {
-    const newPhoto = createPhoto(url, title);
+    const newPhoto = createPhoto({url, title});
     store.photos.push(newPhoto);
 
     return newPhoto;

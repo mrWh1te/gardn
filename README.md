@@ -51,14 +51,6 @@ In `./libs/helpers` is a library of pure functions that do not depend on any oth
 import { valueIsDefined } from '@gardn/helpers';
 ```
 
-### Layout
-
-In `./libs/layout` is a library of common Layout components.
-
-```typescript
-import { Header, Navigation, Logo } from '@gardn/layout';
-```
-
 ### Utility
 
 In `./libs/utility` is a library of common components.
@@ -81,14 +73,14 @@ import { Plant } from '@gardn/plant/smart';
 In `./libs/plant/ui` is a dedicated UI components library for the Plant feature. These may or may not build on the components from the main UI library.
 
 ```typescript
-import { PlantCard } from '@gardn/plant/ui';
+import { PlantInfo } from '@gardn/plant/ui';
 ```
 
 #### Plant: View
 In `./libs/plant/view` is a dedicated View components library for the Plant feature (pages, parts of pages). These may or may not build on the components from the smart & UI libraries.
 
 ```typescript
-import { PlantPage } from '@gardn/plant/view';
+import { PlantDrawer } from '@gardn/plant/view';
 ```
 
 ### Plants
@@ -192,7 +184,6 @@ Current unit-tests:
  - run `nx test api` for nodejs graphql server
  - run `nx test data` for main data library
  - run `nx test ui` for main ui library
- - run `nx test layout` for main layout library
  - run `nx test utility` for utility components library
  - run `nx test plant-view` for domain plant's view library
  - run `nx test plant-smart` for domain plant's smart library

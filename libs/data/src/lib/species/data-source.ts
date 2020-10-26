@@ -1,4 +1,4 @@
-import { createSpecies } from './helpers/create-species/create-species';
+import { createSpecies } from './helpers/create-species';
 import { Store } from './../store';
 
 export const speciesDataSourceFactory = (store: Store) => ({
@@ -10,7 +10,7 @@ export const speciesDataSourceFactory = (store: Store) => ({
   },
   // Create Data
   newSpecies({ name, description }: {name: string, description?: string}) {
-    const aNewSpecies = createSpecies(name, description);
+    const aNewSpecies = createSpecies({name, description});
     store.species.push(aNewSpecies);
 
     return aNewSpecies;

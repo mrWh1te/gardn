@@ -1,4 +1,4 @@
-import { createEnvironment } from './helpers/create-environment/create-environment';
+import { createEnvironment } from './helpers/create-environment/index';
 import { LiquidUnit, TimeUnit, TemperatureUnit, HumidityUnit, ElectricalConductivityUnit, Environment } from './../generated'
 
 const mockEnvironmentSeedConditions: Partial<Environment> = {
@@ -31,9 +31,11 @@ const mockEnvironmentSeedConditions: Partial<Environment> = {
 
 // Seed (during germination, pre-sprouting to sprouting, plenty of water and humidity, and no light)
 export const mockEnvironmentSeed = createEnvironment(
-  'Rain Forest',
-  'A warm, humid, dark climate with plenty of rain',
-  mockEnvironmentSeedConditions
+  {
+    name: 'Rain Forest',
+    description: 'A warm, humid, dark climate with plenty of rain',
+    ...mockEnvironmentSeedConditions
+  }
 );
 
 const mockEnvironmentSproutConditions: Partial<Environment> = {
@@ -65,9 +67,11 @@ const mockEnvironmentSproutConditions: Partial<Environment> = {
 
 // Seedling/Sprout (fragile little plant, need to slowly spread watering with increasing radius to encourage wide root growth, and light - 18/6)
 export const mockEnvironmentSprout = createEnvironment(
-  'Forest',
-  'A warm, humid climate with a light cycle and plenty of rain',
-  mockEnvironmentSproutConditions
+  {
+    name: 'Forest',
+    description: 'A warm, humid climate with a light cycle and plenty of rain',
+    ...mockEnvironmentSproutConditions
+  }
 );
 
 const mockEnvironmentVegingConditions: Partial<Environment> = {
@@ -98,11 +102,11 @@ const mockEnvironmentVegingConditions: Partial<Environment> = {
 }
 
 // Veg'ing
-export const mockEnvironmentVeg = createEnvironment(
-  'Late Spring',
-  'A slightly humid climate with enough warm heat, rain and sunshine to encourage plant growth',
-  mockEnvironmentVegingConditions
-);
+export const mockEnvironmentVeg = createEnvironment({
+  name: 'Late Spring',
+  description: 'A slightly humid climate with enough warm heat, rain and sunshine to encourage plant growth',
+  ...mockEnvironmentVegingConditions
+});
 
 const mockEnvironmentEarlyFlowerConditions: Partial<Environment> = {
   idealWaterAmount: 50,
@@ -129,11 +133,11 @@ const mockEnvironmentEarlyFlowerConditions: Partial<Environment> = {
 }
 
 // Early Flower
-export const mockEnvironmentEarlyFlower = createEnvironment(
-  'Early Spring',
-  'A warming climate with soft conditions',
-  mockEnvironmentEarlyFlowerConditions
-);
+export const mockEnvironmentEarlyFlower = createEnvironment({
+  name: 'Early Spring',
+  description: 'A warming climate with soft conditions',
+  ...mockEnvironmentEarlyFlowerConditions
+});
 
 const mockEnvironmentLateFlowerConditions: Partial<Environment> = {
   idealWaterAmount: 50,
@@ -160,8 +164,8 @@ const mockEnvironmentLateFlowerConditions: Partial<Environment> = {
 }
 
 // Late Flower
-export const mockEnvironmentLateFlower = createEnvironment(
-  'After Winter\'s Last Frost',
-  'A neutral warming climate with softest conditions to let plant complete flowering',
-  mockEnvironmentLateFlowerConditions
-);
+export const mockEnvironmentLateFlower = createEnvironment({
+  name: 'After Winter\'s Last Frost',
+  description: 'A neutral warming climate with softest conditions to let plant complete flowering',
+  ...mockEnvironmentLateFlowerConditions
+});

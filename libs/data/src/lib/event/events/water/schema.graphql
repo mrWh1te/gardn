@@ -1,0 +1,12 @@
+type WaterEventData implements BaseDbModel {
+  id: Int!
+  dateCreated: Timestamp!
+
+  amount: Float
+  amountUnit: LiquidUnit
+
+  temperature: Float
+  temperatureUnit: TemperatureUnit
+
+  eventTime: Timestamp
+}
