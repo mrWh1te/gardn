@@ -119,28 +119,6 @@ In `./libs/photo/ui` is a dedicated UI components library for the Photo feature.
 import { PhotosGrid } from '@gardn/photo/ui';
 ```
 
-### Container
-In `./libs/container` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Container feature. A container, in gardn, is a physical box that can contain plants from seeds to soil.
-
-#### Container: UI
-
-In `./libs/container/ui` is a library of container UI components.
-
-```typescript
-import { ContainerCard } from '@gardn/container/ui';
-```
-
-### Containers
-In `./libs/containers` is a domain folder (DDD) for libraries such as Smart Components, UI Components, View Components, Helpers, View-Models, etc related to the project's Containers feature.
-
-#### Containers: UI
-
-In `./libs/containesr/ui` is a library of containers UI components like a list of Containers.
-
-```typescript
-import { ContainersList } from '@gardn/containers/ui';
-```
-
 ## Development servers
 
 Run `nx serve api` for lifting the GraphQL API. Navigate to http://localhost:3333/graphql. The GraphQL playground will be accessible there. The API will automatically reload if you change any of the source files.
