@@ -4,9 +4,6 @@ import { Route } from 'react-router-dom';
 import { PlantView } from '@gardn/plant/view';
 import { PlantsView } from '@gardn/plants/view';
 
-import { ContainerCard } from '@gardn/container/ui';
-import { ContainersList } from '@gardn/containers/ui';
-
 import { ActionMenu } from '@gardn/layout'; // todo move * into new librar(y|ies) & delete layout library
 import { Header } from '@gardn/ui';
 
@@ -27,8 +24,6 @@ export const App = () => (
     />
     <Route path="/plants" component={PlantsView} />
     <Route path="/plant/:id" component={PlantView} />
-    <Route path="/containers" component={ContainersList} />
-    <Route path="/container" component={ContainerCard} />
   </>
 );
 

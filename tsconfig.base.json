@@ -19,8 +19,6 @@
       "@gardn/data": ["libs/data/src/index.ts"],
       "@gardn/plant/ui": ["libs/plant/ui/src/index.ts"],
       "@gardn/ui": ["libs/ui/src/index.ts"],
-      "@gardn/container/ui": ["libs/container/ui/src/index.ts"],
-      "@gardn/containers/ui": ["libs/containers/ui/src/index.ts"],
       "@gardn/plant/helpers": ["libs/plant/helpers/src/index.ts"],
       "@gardn/plants/ui": ["libs/plants/ui/src/index.ts"],
       "@gardn/plants/smart": ["libs/plants/smart/src/index.ts"],

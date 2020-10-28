@@ -283,58 +283,6 @@
         }
       }
     },
-    "container-ui": {
-      "root": "libs/container/ui",
-      "sourceRoot": "libs/container/ui/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/container/ui/tsconfig.lib.json",
-              "libs/container/ui/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/container/ui/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/container/ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "containers-ui": {
-      "root": "libs/containers/ui",
-      "sourceRoot": "libs/containers/ui/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/containers/ui/tsconfig.lib.json",
-              "libs/containers/ui/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/containers/ui/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/containers/ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "plant-helpers": {
       "root": "libs/plant/helpers",
       "sourceRoot": "libs/plant/helpers/src",
