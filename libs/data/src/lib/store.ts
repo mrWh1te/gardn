@@ -69,6 +69,8 @@ import {
 import { createSpeciesLifeCycles } from './species/helpers/create-species-life-cycles';
 import { createEnvironmentsLightSources } from './environment/helpers/create-environments-light-sources';
 import { createDBEventsTargets } from './event/events-targets/helpers/create-db-events-targets';
+import { DBLifeCycleEventData } from './event/events/life-cycle/interface';
+import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/create-db-life-cycle-event-data';
 
 /**
  * In-Memory DB
@@ -81,7 +83,9 @@ export interface Store {
   lifeCycles: DBLifeCycle[],
   environments: Environment[],
   lightSources: LightSource[],
+  // event data
   waterEventsData: WaterEventData[],
+  lifeCycleEventsData: DBLifeCycleEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
   environmentsLightSources: DBEnvironmentsLightSources[],
@@ -257,6 +261,40 @@ export const speciesLifeCyclesSeed = [
   // for full testing, remaining species do not have the optional data LifeCycle
 ];
 
+// Life Cycle change Events
+const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
+  previousLifeCycleId: lifeCycleSeed.id,
+  nextLifeCycleId: lifeCycleGermination.id,
+  eventTime: new Date().getTime()
+});
+const mockLifeCycleEventsData2 = createDBLifeCycleEventData({
+  previousLifeCycleId: lifeCycleGermination.id,
+  nextLifeCycleId: lifeCyclePlanting.id,
+  eventTime: new Date().getTime() + (24 * 60 * 60 * 1000) // 1 day later
+});
+const mockLifeCycleEventsData3 = createDBLifeCycleEventData({
+  previousLifeCycleId: lifeCyclePlanting.id,
+  nextLifeCycleId: lifeCycleSprouting.id,
+  eventTime: new Date().getTime() + (5 * 24 * 60 * 60 * 1000) // 5 days later (4 from planting)
+});
+
+const mockLifeCycleEventsData10 = createDBLifeCycleEventData({
+  previousLifeCycleId: lifeCycleSeed.id,
+  nextLifeCycleId: lifeCyclePlanting.id,
+  eventTime: new Date().getTime()
+});
+const mockLifeCycleEventsData11 = createDBLifeCycleEventData({
+  previousLifeCycleId: lifeCyclePlanting.id,
+  nextLifeCycleId: lifeCycleSprouting.id,
+  eventTime: new Date().getTime() + (7 * 24 * 60 * 60 * 1000) // 1 week later from event 10
+});
+const lifeCycleEventsDataSeed = [
+  mockLifeCycleEventsData1,
+  mockLifeCycleEventsData2,
+  mockLifeCycleEventsData3,
+  mockLifeCycleEventsData10,
+  mockLifeCycleEventsData11
+];
 
 export const environmentsLightSourcesSeed = [
   // (mockEnvironmentSeed.id)
@@ -279,6 +317,7 @@ export const environmentsLightSourcesSeed = [
 ];
 
 export const eventsTargetsSeed = [
+  //
   // 1 watering event, 2 targets
   createDBEventsTargets({
     eventType: EventType.Water,
@@ -299,6 +338,38 @@ export const eventsTargetsSeed = [
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
+  //
+  // 3 life-cycle change events, 1 target (1 plant)
+  createDBEventsTargets({
+    eventType: EventType.LifeCycleChange,
+    eventDataId: mockLifeCycleEventsData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.LifeCycleChange,
+    eventDataId: mockLifeCycleEventsData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.LifeCycleChange,
+    eventDataId: mockLifeCycleEventsData3.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.LifeCycleChange,
+    eventDataId: mockLifeCycleEventsData10.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[1].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.LifeCycleChange,
+    eventDataId: mockLifeCycleEventsData11.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[1].id
+  }),
 ];
 
 
@@ -312,7 +383,9 @@ export const store: Store = {
   environments: environmentsSeed,
   lifeCycles: lifeCyclesSeed,
   lightSources: lightSourcesSeed,
+  // event data
   waterEventsData: waterEventsDataSeed,
+  lifeCycleEventsData: lifeCycleEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
   environmentsLightSources: environmentsLightSourcesSeed,

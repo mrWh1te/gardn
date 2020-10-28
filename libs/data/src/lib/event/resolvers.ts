@@ -1,6 +1,7 @@
-import { BaseDbModel, EventTargetType, EventType, Resolvers } from '../generated';
+import { BaseEventData, EventTargetType, EventType, Resolvers } from '../generated';
 import { eventDataToEvent } from './helpers/event-data-to-event';
-// import { eventsTargetsRecordToEvent } from './helpers/events-targets-record-to-event';
+import { eventDataTypeResolver } from './helpers/event-data-type-resolver';
+import { eventsTargetsRecordToEvent } from './helpers/events-targets-record-to-event';
 
 /**
  * Data is stored in memory for development
@@ -11,20 +12,33 @@ export const eventResolvers: Resolvers = {
       if (eventDataId && eventType) {
         switch(eventType) {
           case EventType.Water:
-            // cast WaterEventData -> Event
             return eventDataToEvent(dataSources.waterEventData.byId({id: eventDataId }), EventType.Water);
+          case EventType.LifeCycleChange:
+            return eventDataToEvent(dataSources.lifeCycleEventData.byId({id: eventDataId }), EventType.Water);
         }
       }
 
       throw new Error('Event Query - Not Enough Params')
+    },
+    events: (_, { eventTargetId, eventTargetType, eventType }, { dataSources }) => {
+      // get events for a target
+      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
+
+      // 1. get EventsTargets' records for target, convert into Event's
+        // note EventsTargets.id !== Event.id, instead EventsTargets.eventDataId = Event.id
+      let events = eventsTargetsRecords.map(eventsTargetsRecord => eventsTargetsRecordToEvent(eventsTargetsRecord))
+
+      // 2. (optional) filter events by eventType if provided
+      if (eventType) {
+        events = events.filter(event => event.type === eventType)
+      }
+      
+      return events;
     }
   },
   Event: {
-    targets: ({ id }, _, { dataSources }) => {
-      const { eventDataId } = dataSources.eventsTargets.byId({ id }) // for now, in order to keep a cleaner normalized gql object type for Event, let's grab the record again
-                                                                     // even though this field from the db record should be in the parent param (1st param)
-
-      const eventsTargetsWithMatchingEventDataId = dataSources.eventsTargets.filterByEventDataId({eventDataId})
+    targets: ({ id, type }, _, { dataSources }) => {
+      const eventsTargetsWithMatchingEventDataId = dataSources.eventsTargets.byEventDataIdAndEventType({eventDataId: id, eventType: type})
 
       const targets = eventsTargetsWithMatchingEventDataId.map(eventTargetRecord => {
         switch (eventTargetRecord.eventTargetType) {
@@ -35,14 +49,15 @@ export const eventResolvers: Resolvers = {
 
       return targets;
     },
-    data: ({ id }, _, { dataSources }) => {
-      const { eventDataId, eventType } = dataSources.eventsTargets.byId({ id })
+    data: ({ id, type }, _, { dataSources }) => {
+      let record: BaseEventData
 
-      let record: BaseDbModel
-
-      switch(eventType) {
+      switch(type) {
         case EventType.Water:
-          record = dataSources.waterEventData.byId({id: eventDataId})
+          record = dataSources.waterEventData.byId({id})
+          break;
+        case EventType.LifeCycleChange:
+          record = dataSources.lifeCycleEventData.byId({id})
           break;
       }
 
@@ -59,9 +74,10 @@ export const eventResolvers: Resolvers = {
     }
   },
   EventData: {
-    __resolveType() {
-      return 'WaterEventData';
-    }
+    __resolveType: eventDataTypeResolver
+  },
+  BaseEventData: {
+    __resolveType: eventDataTypeResolver
   }
 }
 

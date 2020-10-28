@@ -1,0 +1,9 @@
+type LifeCycleEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  previousLifeCycle: LifeCycle
+  nextLifeCycle: LifeCycle
+
+  eventTime: Timestamp!
+}

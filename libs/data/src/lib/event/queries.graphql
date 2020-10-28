@@ -1,0 +1,30 @@
+query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $eventType: EventType) {
+  events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, eventType: $eventType) {
+    id, type, data {
+      ... on WaterEventData {
+        amount, amountUnit, temperature, temperatureUnit, eventTime 
+      }
+      ... on LifeCycleEventData {
+        eventTime, previousLifeCycle {
+          id, name, description
+        }, nextLifeCycle {
+          id, name, description
+        }
+      }
+    }
+  }
+}
+
+query getPlantLifeCycleEvents($plantId: Int!) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: LIFE_CYCLE_CHANGE) {
+    id, type, data {
+      ... on LifeCycleEventData {
+        eventTime, previousLifeCycle {
+          id, name, description
+        }, nextLifeCycle {
+          id, name, description
+        }
+      }
+    }
+  }
+}

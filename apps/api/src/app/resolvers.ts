@@ -8,6 +8,7 @@ import {
   environmentResolvers,
   lightSourceResolvers,
   eventResolvers,
+  lifeCycleEventDataResolvers,
   Resolvers
 } from '@gardn/data';
 
@@ -34,17 +35,23 @@ export const resolvers: Resolvers = {
   Event: eventResolvers.Event,
   EventTarget: eventResolvers.EventTarget,
   EventData: eventResolvers.EventData,
+  LifeCycleEventData: lifeCycleEventDataResolvers.LifeCycleEventData,
   // Custom Scalars
   Timestamp: TimestampResolver,
-  // JSON: JSONResolver,
-  // BaseDBModel interface
+  // Base interfaces
+  Node: {
+    __resolveType(){
+      return 'Event';
+    },
+  },
   BaseDbModel: {
-    __resolveType(modelInstance){
-      if(modelInstance['__typename']){
-        return modelInstance['__typename']
+    __resolveType(obj){
+      if(obj['__typename']){
+        return obj['__typename']
       }
 
       return null;
     },
-  }
+  },
+  BaseEventData: eventResolvers.BaseEventData
 };

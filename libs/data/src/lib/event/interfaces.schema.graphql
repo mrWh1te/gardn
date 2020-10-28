@@ -1,0 +1,5 @@
+interface BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+  eventTime: Timestamp!
+}

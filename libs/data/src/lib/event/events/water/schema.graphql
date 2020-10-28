@@ -1,4 +1,4 @@
-type WaterEventData implements BaseDbModel {
+type WaterEventData implements BaseEventData {
   id: Int!
   dateCreated: Timestamp!
 
@@ -8,5 +8,5 @@ type WaterEventData implements BaseDbModel {
   temperature: Float
   temperatureUnit: TemperatureUnit
 
-  eventTime: Timestamp
+  eventTime: Timestamp!
 }

@@ -1,9 +1,8 @@
 union EventTarget = Plant
-union EventData = WaterEventData
+union EventData = WaterEventData | LifeCycleEventData
 
-type Event implements BaseDbModel {
+type Event implements Node {
   id: Int!
-  dateCreated: Timestamp!
   
   type: EventType!
 
@@ -14,6 +13,7 @@ type Event implements BaseDbModel {
 
 type Query {
   event(eventDataId: Int!, eventType: EventType!): Event
+  events(eventTargetId: Int!, eventTargetType: EventTargetType!, eventType: EventType): [Event]
 }
 
 

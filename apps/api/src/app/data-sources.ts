@@ -7,6 +7,7 @@ import {
   EnvironmentDataSourceFactory,
   WaterEventDataDataSourceFactory,
   EventsTargetsDataSourceFactory,
+  LifeCycleEventDataDataSourceFactory,
   store
 } from '@gardn/data';
 
@@ -21,5 +22,6 @@ export const dataSources = (): any => ({
   lightSource: lightSourceDataSourceFactory(store),
   environment: EnvironmentDataSourceFactory(store),
   waterEventData: WaterEventDataDataSourceFactory(store),
+  lifeCycleEventData: LifeCycleEventDataDataSourceFactory(store),
   eventsTargets: EventsTargetsDataSourceFactory(store)
 });

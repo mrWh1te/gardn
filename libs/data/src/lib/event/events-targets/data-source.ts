@@ -2,6 +2,8 @@ import { Store } from './../../store';
 import { BaseDbModel, EventTargetType } from '../../generated';
 import { DBEventsTargets } from './../events-targets/interface';
 import { createDBEventsTargets } from './helpers/create-db-events-targets';
+import { filterEventsTargetsByTargetType } from './helpers/filter-events-targets-by-target-type';
+import { filterEventsTargetsByTargetId } from './helpers/filter-events-targets-by-target-id';
 
 /**
  * EventsTargetsDataSourceFactory DataSource Factory
@@ -29,14 +31,16 @@ export const EventsTargetsDataSourceFactory = (store: Store) => ({
 
     return eventsTargetsRecord;
   },
-  filterByEventDataId({ eventDataId }: Pick<DBEventsTargets, 'eventDataId'>) {
-    return store.eventsTargets.filter(eventsTargetsInstance => eventsTargetsInstance.eventDataId === eventDataId)
-  },
-  filterByPlantId({ eventTargetId }: Pick<DBEventsTargets, 'eventTargetId'>) {
-    return store.eventsTargets
-      .filter(eventsTargetsInstance => eventsTargetsInstance.eventTargetType === EventTargetType.Plant)
-      .filter(eventsTargetsInstance => eventsTargetsInstance.eventTargetId === eventTargetId)
-  },
+  filterByTargetTypeAndTargetId: ({ eventTargetId, eventTargetType }: Pick<DBEventsTargets, 'eventTargetType' | 'eventTargetId'>) =>
+    store.eventsTargets
+      .filter(filterEventsTargetsByTargetType(eventTargetType))
+      .filter(filterEventsTargetsByTargetId(eventTargetId))
+  ,
+  filterByPlantId: ({ eventTargetId }: Pick<DBEventsTargets, 'eventTargetId'>) =>
+    store.eventsTargets
+      .filter(filterEventsTargetsByTargetType(EventTargetType.Plant))
+      .filter(filterEventsTargetsByTargetId(eventTargetId))
+  ,
   // Create Data
   new(eventsTargetsData: Omit<DBEventsTargets, keyof BaseDbModel>) {
     const newEventsTargetsRecord = createDBEventsTargets(eventsTargetsData);

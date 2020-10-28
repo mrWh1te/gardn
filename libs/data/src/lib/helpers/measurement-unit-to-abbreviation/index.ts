@@ -1,4 +1,4 @@
-import { TimeUnit, LiquidUnit, TemperatureUnit, HumidityUnit, ElectricalConductivityUnit } from '../generated';
+import { TimeUnit, LiquidUnit, TemperatureUnit, HumidityUnit, ElectricalConductivityUnit } from './../../generated';
 
 export const measurementUnitToAbbreviation = (unit: TimeUnit | LiquidUnit | TemperatureUnit | HumidityUnit | ElectricalConductivityUnit): string => {
   if(!unit) {
