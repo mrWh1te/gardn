@@ -283,32 +283,6 @@
         }
       }
     },
-    "plant-helpers": {
-      "root": "libs/plant/helpers",
-      "sourceRoot": "libs/plant/helpers/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/plant/helpers/tsconfig.lib.json",
-              "libs/plant/helpers/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/plant/helpers/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/plant/helpers/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "plants-ui": {
       "root": "libs/plants/ui",
       "sourceRoot": "libs/plants/ui/src",
@@ -382,32 +356,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/plant/view/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "photo-helpers": {
-      "root": "libs/photo/helpers",
-      "sourceRoot": "libs/photo/helpers/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/photo/helpers/tsconfig.lib.json",
-              "libs/photo/helpers/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/photo/helpers/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/photo/helpers/jest.config.js",
             "passWithNoTests": true
           }
         }
