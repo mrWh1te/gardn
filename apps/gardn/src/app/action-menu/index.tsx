@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 import { PlantDrawer } from '@gardn/plant/view';
 import { white } from '@gardn/ui';
 
-import ActionButton from '../action-button/action-button';
+import ActionButton from './../action-button';
 
 // TODO add tests
 

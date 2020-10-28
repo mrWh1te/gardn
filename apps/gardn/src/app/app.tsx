@@ -3,11 +3,10 @@ import { Route } from 'react-router-dom';
 
 import { PlantView } from '@gardn/plant/view';
 import { PlantsView } from '@gardn/plants/view';
-
-import { ActionMenu } from '@gardn/layout'; // todo move * into new librar(y|ies) & delete layout library
 import { Header } from '@gardn/ui';
 
 import { Navigation } from './navigation/navigation';
+import { ActionMenu } from './action-menu';
 
 export const App = () => (
   <>
@@ -15,7 +14,7 @@ export const App = () => (
       <Navigation />
     </Header>
 
-    <ActionMenu /> { /* todo move ActionMenu into another library, maybe Event:Smart ? Utility? */ }
+    <ActionMenu />
 
     <Route
       path="/"

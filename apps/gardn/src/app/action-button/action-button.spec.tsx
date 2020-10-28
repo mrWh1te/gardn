@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import ActionButton from './action-button';
+import ActionButton from './';
 
 describe('ActionButton', () => {
   it('should render successfully', () => {

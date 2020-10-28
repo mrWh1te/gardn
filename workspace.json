@@ -387,32 +387,6 @@
         }
       }
     },
-    "layout": {
-      "root": "libs/layout",
-      "sourceRoot": "libs/layout/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/layout/tsconfig.lib.json",
-              "libs/layout/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/layout/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/layout/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "photo-helpers": {
       "root": "libs/photo/helpers",
       "sourceRoot": "libs/photo/helpers/src",
