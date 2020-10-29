@@ -1,0 +1,9 @@
+type HumidityEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  humidity: Float
+  humidityUnit: HumidityUnit
+
+  eventTime: Timestamp!
+}

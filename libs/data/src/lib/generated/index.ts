@@ -182,6 +182,15 @@ export enum EventTargetType {
   Plant = 'PLANT'
 }
 
+export type HumidityEventData = BaseEventData & {
+  __typename?: 'HumidityEventData';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  humidity?: Maybe<Scalars['Float']>;
+  humidityUnit?: Maybe<HumidityUnit>;
+  eventTime: Scalars['Timestamp'];
+};
+
 export type LifeCycleEventData = BaseEventData & {
   __typename?: 'LifeCycleEventData';
   id: Scalars['Int'];
@@ -219,7 +228,7 @@ export type BaseEventData = {
 
 export type EventTarget = Plant;
 
-export type EventData = WaterEventData | LifeCycleEventData | TemperatureEventData;
+export type EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData;
 
 export type Event = Node & {
   __typename?: 'Event';
@@ -339,7 +348,7 @@ export type GetTargetEventsQuery = (
     & Pick<Event, 'id' | 'type'>
     & { data?: Maybe<(
       { __typename?: 'WaterEventData' }
-      & Pick<WaterEventData, 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit' | 'eventTime'>
+      & Pick<WaterEventData, 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
     ) | (
       { __typename?: 'LifeCycleEventData' }
       & Pick<LifeCycleEventData, 'eventTime'>
@@ -353,6 +362,9 @@ export type GetTargetEventsQuery = (
     ) | (
       { __typename?: 'TemperatureEventData' }
       & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
+    ) | (
+      { __typename?: 'HumidityEventData' }
+      & Pick<HumidityEventData, 'eventTime' | 'humidity' | 'humidityUnit'>
     )> }
   )>>> }
 );
@@ -377,7 +389,7 @@ export type GetPlantLifeCycleEventsQuery = (
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
-    ) | { __typename?: 'TemperatureEventData' }> }
+    ) | { __typename?: 'TemperatureEventData' } | { __typename?: 'HumidityEventData' }> }
   )>>> }
 );
 
@@ -558,7 +570,7 @@ export type GetPlantEventsQuery = (
       & Pick<Event, 'id' | 'type'>
       & { data?: Maybe<(
         { __typename?: 'WaterEventData' }
-        & Pick<WaterEventData, 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit' | 'eventTime'>
+        & Pick<WaterEventData, 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
       ) | (
         { __typename?: 'LifeCycleEventData' }
         & Pick<LifeCycleEventData, 'eventTime'>
@@ -572,6 +584,9 @@ export type GetPlantEventsQuery = (
       ) | (
         { __typename?: 'TemperatureEventData' }
         & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
+      ) | (
+        { __typename?: 'HumidityEventData' }
+        & Pick<HumidityEventData, 'eventTime' | 'humidity' | 'humidityUnit'>
       )> }
     )>>> }
   )> }
@@ -680,15 +695,16 @@ export const GetTargetEventsDocument = gql`
     id
     type
     data {
+      ... on BaseEventData {
+        eventTime
+      }
       ... on WaterEventData {
         amount
         amountUnit
         temperature
         temperatureUnit
-        eventTime
       }
       ... on LifeCycleEventData {
-        eventTime
         previousLifeCycle {
           id
           name
@@ -701,9 +717,12 @@ export const GetTargetEventsDocument = gql`
         }
       }
       ... on TemperatureEventData {
-        eventTime
         temperature
         temperatureUnit
+      }
+      ... on HumidityEventData {
+        humidity
+        humidityUnit
       }
     }
   }
@@ -1173,15 +1192,16 @@ export const GetPlantEventsDocument = gql`
       id
       type
       data {
+        ... on BaseEventData {
+          eventTime
+        }
         ... on WaterEventData {
           amount
           amountUnit
           temperature
           temperatureUnit
-          eventTime
         }
         ... on LifeCycleEventData {
-          eventTime
           previousLifeCycle {
             id
             name
@@ -1194,9 +1214,12 @@ export const GetPlantEventsDocument = gql`
           }
         }
         ... on TemperatureEventData {
-          eventTime
           temperature
           temperatureUnit
+        }
+        ... on HumidityEventData {
+          humidity
+          humidityUnit
         }
       }
     }
@@ -1462,12 +1485,13 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']>;
   Query: ResolverTypeWrapper<{}>;
   EventTargetType: EventTargetType;
+  HumidityEventData: ResolverTypeWrapper<HumidityEventData>;
   LifeCycleEventData: ResolverTypeWrapper<LifeCycleEventData>;
   TemperatureEventData: ResolverTypeWrapper<TemperatureEventData>;
   WaterEventData: ResolverTypeWrapper<WaterEventData>;
-  BaseEventData: ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['WaterEventData'];
+  BaseEventData: ResolversTypes['HumidityEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['WaterEventData'];
   EventTarget: ResolversTypes['Plant'];
-  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'];
+  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['HumidityEventData'];
   Event: ResolverTypeWrapper<Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversTypes['EventTarget']>>> }>;
   Node: ResolversTypes['Event'];
   BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LifeCycle'] | ResolversTypes['LightSource'] | ResolversTypes['Photo'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
@@ -1488,12 +1512,13 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Float: Scalars['Float'];
   Query: {};
+  HumidityEventData: HumidityEventData;
   LifeCycleEventData: LifeCycleEventData;
   TemperatureEventData: TemperatureEventData;
   WaterEventData: WaterEventData;
-  BaseEventData: ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['WaterEventData'];
+  BaseEventData: ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['WaterEventData'];
   EventTarget: ResolversParentTypes['Plant'];
-  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'];
+  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['HumidityEventData'];
   Event: Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversParentTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversParentTypes['EventTarget']>>> };
   Node: ResolversParentTypes['Event'];
   BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LifeCycle'] | ResolversParentTypes['LightSource'] | ResolversParentTypes['Photo'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
@@ -1561,6 +1586,15 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   species?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType, RequireFields<QuerySpeciesArgs, 'id'>>;
 };
 
+export type HumidityEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['HumidityEventData'] = ResolversParentTypes['HumidityEventData']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  humidity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  humidityUnit?: Resolver<Maybe<ResolversTypes['HumidityUnit']>, ParentType, ContextType>;
+  eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LifeCycleEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['LifeCycleEventData'] = ResolversParentTypes['LifeCycleEventData']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1591,7 +1625,7 @@ export type WaterEventDataResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type BaseEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseEventData'] = ResolversParentTypes['BaseEventData']> = {
-  __resolveType: TypeResolveFn<'LifeCycleEventData' | 'TemperatureEventData' | 'WaterEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'HumidityEventData' | 'LifeCycleEventData' | 'TemperatureEventData' | 'WaterEventData', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1602,7 +1636,7 @@ export type EventTargetResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type EventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventData'] = ResolversParentTypes['EventData']> = {
-  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData' | 'TemperatureEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData' | 'TemperatureEventData' | 'HumidityEventData', ParentType, ContextType>;
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
@@ -1688,6 +1722,7 @@ export type Resolvers<ContextType = any> = {
   Timestamp?: GraphQLScalarType;
   Environment?: EnvironmentResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  HumidityEventData?: HumidityEventDataResolvers<ContextType>;
   LifeCycleEventData?: LifeCycleEventDataResolvers<ContextType>;
   TemperatureEventData?: TemperatureEventDataResolvers<ContextType>;
   WaterEventData?: WaterEventDataResolvers<ContextType>;

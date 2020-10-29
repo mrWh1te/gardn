@@ -17,6 +17,8 @@ export const eventResolvers: Resolvers = {
             return eventDataToEvent(dataSources.lifeCycleEventData.byId({id: eventDataId }), EventType.Water);
           case EventType.TemperatureReading:
             return eventDataToEvent(dataSources.temperatureEventData.byId({id: eventDataId }), EventType.TemperatureReading);
+          case EventType.HumidityReading:
+            return eventDataToEvent(dataSources.humidityEventData.byId({id: eventDataId }), EventType.HumidityReading);
         }
       }
 
@@ -63,6 +65,9 @@ export const eventResolvers: Resolvers = {
           break;
         case EventType.TemperatureReading:
           record = dataSources.temperatureEventData.byId({id})
+          break;
+        case EventType.HumidityReading:
+          record = dataSources.humidityEventData.byId({id})
           break;
       }
 

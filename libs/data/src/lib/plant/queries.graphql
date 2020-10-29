@@ -50,18 +50,24 @@ query getPlantEvents($id: Int!) {
   plant(id: $id) {
     events {
       id, type, data {
+        ... on BaseEventData {
+          eventTime
+        }
         ... on WaterEventData {
-         	amount, amountUnit, temperature, temperatureUnit, eventTime 
+         	amount, amountUnit, temperature, temperatureUnit
         }
         ... on LifeCycleEventData {
-          eventTime, previousLifeCycle {
+          previousLifeCycle {
             id, name, description
           }, nextLifeCycle {
             id, name, description
           }
         }
         ... on TemperatureEventData {
-          eventTime, temperature, temperatureUnit
+          temperature, temperatureUnit
+        }
+        ... on HumidityEventData {
+          humidity, humidityUnit
         }
       }
     }

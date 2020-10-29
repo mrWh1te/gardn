@@ -9,6 +9,10 @@ export const eventDataTypeResolver: Resolvers['EventData']['__resolveType'] = (o
     return 'TemperatureEventData';
   }
 
+  if (obj['humidity'] || obj['humidityUnit']) {
+    return 'HumidityEventData';
+  }
+
   if (obj['previousLifeCycleId'] || obj['nextLifeCycleId']) {
     return 'LifeCycleEventData';
   }
