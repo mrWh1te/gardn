@@ -1,0 +1,9 @@
+type ECEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  electricalConductivity: Float
+  electricalConductivityUnit: ElectricalConductivityUnit
+
+  eventTime: Timestamp!
+}

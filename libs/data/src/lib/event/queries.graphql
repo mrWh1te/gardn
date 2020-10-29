@@ -23,6 +23,9 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
       ... on PHEventData {
         pH
       }
+      ... on ECEventData {
+        electricalConductivity, electricalConductivityUnit
+      }
     }
   }
 }

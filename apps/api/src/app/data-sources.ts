@@ -11,6 +11,7 @@ import {
   TemperatureEventDataDataSourceFactory,
   HumidityEventDataDataSourceFactory,
   PHEventDataDataSourceFactory,
+  ECEventDataDataSourceFactory,
   store,
 } from '@gardn/data';
 
@@ -29,5 +30,6 @@ export const dataSources = (): any => ({
   lifeCycleEventData: LifeCycleEventDataDataSourceFactory(store),
   temperatureEventData: TemperatureEventDataDataSourceFactory(store),
   humidityEventData: HumidityEventDataDataSourceFactory(store),
-  pHEventData: PHEventDataDataSourceFactory(store)
+  pHEventData: PHEventDataDataSourceFactory(store),
+  eCEventData: ECEventDataDataSourceFactory(store)
 });

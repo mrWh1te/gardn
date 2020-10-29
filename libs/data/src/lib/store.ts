@@ -8,7 +8,8 @@ import {
   EventTargetType,
   TemperatureEventData,
   HumidityEventData,
-  PhEventData
+  PhEventData,
+  EcEventData
 } from './generated';
 
 // Database Models
@@ -84,6 +85,7 @@ import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/cr
 import { mockDBTemperatureEventData1, mockDBTemperatureEventData2 } from './event/events/temperature/mocks';
 import { mockDBHumidityEventData1, mockDBHumidityEventData2 } from './event/events/humidity/mocks';
 import { mockDBpHEventData1, mockDBpHEventData2 } from './event/events/ph/mocks';
+import { mockDBECEventData1, mockDBECEventData2 } from './event/events/ec/mocks';
 
 /**
  * In-Memory DB
@@ -102,6 +104,7 @@ export interface Store {
   temperatureEventsData: TemperatureEventData[],
   humidityEventsData: HumidityEventData[],
   pHEventsData: PhEventData[],
+  eCEventsData: EcEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
   environmentsLightSources: DBEnvironmentsLightSources[],
@@ -295,6 +298,12 @@ const pHEventsDataSeed = [
   mockDBpHEventData2
 ]
 
+// EC reading Events
+const eCEventsDataSeed = [
+  mockDBECEventData1,
+  mockDBECEventData2
+]
+
 // Life Cycle change Events
 const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
   previousLifeCycleId: lifeCycleSeed.id,
@@ -433,7 +442,7 @@ export const eventsTargetsSeed = [
     eventTargetId: plantsSeed[0].id
   }),
   //
-  // 1 pH readings, 1 target (1 plant)
+  // 2 pH readings, 1 target (1 plant)
   createDBEventsTargets({
     eventType: EventType.PhReading,
     eventDataId: mockDBpHEventData1.id,
@@ -443,6 +452,20 @@ export const eventsTargetsSeed = [
   createDBEventsTargets({
     eventType: EventType.PhReading,
     eventDataId: mockDBpHEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  //
+  // 2 EC readings, 1 target (1 plant)
+  createDBEventsTargets({
+    eventType: EventType.EcReading,
+    eventDataId: mockDBECEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.EcReading,
+    eventDataId: mockDBECEventData2.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   })
@@ -465,6 +488,7 @@ export const store: Store = {
   temperatureEventsData: temperatureEventsDataSeed,
   humidityEventsData: humidityEventsDataSeed,
   pHEventsData: pHEventsDataSeed,
+  eCEventsData: eCEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
   environmentsLightSources: environmentsLightSourcesSeed,

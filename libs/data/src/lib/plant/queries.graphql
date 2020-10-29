@@ -72,6 +72,9 @@ query getPlantEvents($id: Int!) {
         ... on PHEventData {
           pH
         }
+        ... on ECEventData {
+          electricalConductivity, electricalConductivityUnit
+        }
       }
     }
   }

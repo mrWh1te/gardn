@@ -17,6 +17,10 @@ export const eventDataTypeResolver: Resolvers['EventData']['__resolveType'] = (o
     return 'PHEventData'
   }
 
+  if (obj['electricalConductivity'] || obj['electricalConductivityUnit']) {
+    return 'ECEventData'
+  }
+
   if (obj['previousLifeCycleId'] || obj['nextLifeCycleId']) {
     return 'LifeCycleEventData';
   }
