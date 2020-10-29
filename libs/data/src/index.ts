@@ -22,8 +22,8 @@ export * from './lib/event/events/water/data-source';
 export * from './lib/event/events-targets/data-source';
 export * from './lib/event/events/life-cycle/data-source';
 export * from './lib/event/events/temperature/data-source';
-
 export * from './lib/event/events/humidity/data-source';
+export * from './lib/event/events/ph/data-source';
 
 // Create Model Instance methods
 export * from './lib/plant/helpers/create-plant';

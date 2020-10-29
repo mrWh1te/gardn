@@ -13,6 +13,10 @@ export const eventDataTypeResolver: Resolvers['EventData']['__resolveType'] = (o
     return 'HumidityEventData';
   }
 
+  if (obj['pH']) {
+    return 'PHEventData'
+  }
+
   if (obj['previousLifeCycleId'] || obj['nextLifeCycleId']) {
     return 'LifeCycleEventData';
   }

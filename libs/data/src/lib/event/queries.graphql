@@ -20,6 +20,9 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
       ... on HumidityEventData {
         humidity, humidityUnit
       }
+      ... on PHEventData {
+        pH
+      }
     }
   }
 }

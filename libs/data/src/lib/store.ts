@@ -7,7 +7,8 @@ import {
   EventType,
   EventTargetType,
   TemperatureEventData,
-  HumidityEventData
+  HumidityEventData,
+  PhEventData
 } from './generated';
 
 // Database Models
@@ -82,6 +83,7 @@ import { DBLifeCycleEventData } from './event/events/life-cycle/interface';
 import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/create-db-life-cycle-event-data';
 import { mockDBTemperatureEventData1, mockDBTemperatureEventData2 } from './event/events/temperature/mocks';
 import { mockDBHumidityEventData1, mockDBHumidityEventData2 } from './event/events/humidity/mocks';
+import { mockDBpHEventData1, mockDBpHEventData2 } from './event/events/ph/mocks';
 
 /**
  * In-Memory DB
@@ -99,6 +101,7 @@ export interface Store {
   lifeCycleEventsData: DBLifeCycleEventData[],
   temperatureEventsData: TemperatureEventData[],
   humidityEventsData: HumidityEventData[],
+  pHEventsData: PhEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
   environmentsLightSources: DBEnvironmentsLightSources[],
@@ -286,6 +289,12 @@ const humidityEventsDataSeed = [
   mockDBHumidityEventData2
 ]
 
+// pH reading Events
+const pHEventsDataSeed = [
+  mockDBpHEventData1,
+  mockDBpHEventData2
+]
+
 // Life Cycle change Events
 const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
   previousLifeCycleId: lifeCycleSeed.id,
@@ -423,6 +432,20 @@ export const eventsTargetsSeed = [
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
+  //
+  // 1 pH readings, 1 target (1 plant)
+  createDBEventsTargets({
+    eventType: EventType.PhReading,
+    eventDataId: mockDBpHEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.PhReading,
+    eventDataId: mockDBpHEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  })
 ];
 
 
@@ -441,6 +464,7 @@ export const store: Store = {
   lifeCycleEventsData: lifeCycleEventsDataSeed,
   temperatureEventsData: temperatureEventsDataSeed,
   humidityEventsData: humidityEventsDataSeed,
+  pHEventsData: pHEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
   environmentsLightSources: environmentsLightSourcesSeed,

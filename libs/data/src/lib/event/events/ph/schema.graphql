@@ -1,0 +1,8 @@
+type PHEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  pH: Float
+
+  eventTime: Timestamp!
+}
