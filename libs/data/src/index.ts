@@ -9,7 +9,6 @@ export * from './lib/life-cycle/resolvers';
 export * from './lib/environment/resolvers';
 export * from './lib/light-source/resolvers';
 export * from './lib/event/resolvers';
-
 export * from './lib/event/events/life-cycle/resolvers';
 
 // Data Sources
@@ -21,8 +20,9 @@ export * from './lib/light-source/data-source';
 export * from './lib/environment/data-source';
 export * from './lib/event/events/water/data-source';
 export * from './lib/event/events-targets/data-source';
-
 export * from './lib/event/events/life-cycle/data-source';
+
+export * from './lib/event/events/temperature/data-source';
 
 // Create Model Instance methods
 export * from './lib/plant/helpers/create-plant';

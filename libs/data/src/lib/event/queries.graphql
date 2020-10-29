@@ -11,6 +11,9 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
           id, name, description
         }
       }
+      ... on TemperatureEventData {
+        eventTime, temperature, temperatureUnit
+      }
     }
   }
 }

@@ -60,6 +60,9 @@ query getPlantEvents($id: Int!) {
             id, name, description
           }
         }
+        ... on TemperatureEventData {
+          eventTime, temperature, temperatureUnit
+        }
       }
     }
   }

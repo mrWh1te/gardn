@@ -1,5 +1,5 @@
 // Noramlized GQL Types
-import { Species, Environment, LightSource, WaterEventData, EventType, EventTargetType } from './generated';
+import { Species, Environment, LightSource, WaterEventData, EventType, EventTargetType, TemperatureEventData } from './generated';
 
 // Database Models
 import { DBPlant } from './plant/interfaces';
@@ -71,6 +71,7 @@ import { createEnvironmentsLightSources } from './environment/helpers/create-env
 import { createDBEventsTargets } from './event/events-targets/helpers/create-db-events-targets';
 import { DBLifeCycleEventData } from './event/events/life-cycle/interface';
 import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/create-db-life-cycle-event-data';
+import { mockDBTemperatureEventData1, mockDBTemperatureEventData2 } from './event/events/temperature/mocks';
 
 /**
  * In-Memory DB
@@ -86,6 +87,7 @@ export interface Store {
   // event data
   waterEventsData: WaterEventData[],
   lifeCycleEventsData: DBLifeCycleEventData[],
+  temperatureEventsData: TemperatureEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
   environmentsLightSources: DBEnvironmentsLightSources[],
@@ -261,6 +263,12 @@ export const speciesLifeCyclesSeed = [
   // for full testing, remaining species do not have the optional data LifeCycle
 ];
 
+// Temperature reading Events
+const temperatureEventsDataSeed = [
+  mockDBTemperatureEventData1,
+  mockDBTemperatureEventData2
+]
+
 // Life Cycle change Events
 const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
   previousLifeCycleId: lifeCycleSeed.id,
@@ -370,6 +378,20 @@ export const eventsTargetsSeed = [
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[1].id
   }),
+  //
+  // 2 temperature readings, 1 target (1 plant)
+  createDBEventsTargets({
+    eventType: EventType.TemperatureReading,
+    eventDataId: mockDBTemperatureEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.TemperatureReading,
+    eventDataId: mockDBTemperatureEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
 ];
 
 
@@ -386,6 +408,7 @@ export const store: Store = {
   // event data
   waterEventsData: waterEventsDataSeed,
   lifeCycleEventsData: lifeCycleEventsDataSeed,
+  temperatureEventsData: temperatureEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
   environmentsLightSources: environmentsLightSourcesSeed,

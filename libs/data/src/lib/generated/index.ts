@@ -191,6 +191,15 @@ export type LifeCycleEventData = BaseEventData & {
   eventTime: Scalars['Timestamp'];
 };
 
+export type TemperatureEventData = BaseEventData & {
+  __typename?: 'TemperatureEventData';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  temperature?: Maybe<Scalars['Float']>;
+  temperatureUnit?: Maybe<TemperatureUnit>;
+  eventTime: Scalars['Timestamp'];
+};
+
 export type WaterEventData = BaseEventData & {
   __typename?: 'WaterEventData';
   id: Scalars['Int'];
@@ -210,7 +219,7 @@ export type BaseEventData = {
 
 export type EventTarget = Plant;
 
-export type EventData = WaterEventData | LifeCycleEventData;
+export type EventData = WaterEventData | LifeCycleEventData | TemperatureEventData;
 
 export type Event = Node & {
   __typename?: 'Event';
@@ -341,6 +350,9 @@ export type GetTargetEventsQuery = (
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
+    ) | (
+      { __typename?: 'TemperatureEventData' }
+      & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
     )> }
   )>>> }
 );
@@ -365,7 +377,7 @@ export type GetPlantLifeCycleEventsQuery = (
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
-    )> }
+    ) | { __typename?: 'TemperatureEventData' }> }
   )>>> }
 );
 
@@ -557,6 +569,9 @@ export type GetPlantEventsQuery = (
           { __typename?: 'LifeCycle' }
           & Pick<LifeCycle, 'id' | 'name' | 'description'>
         )> }
+      ) | (
+        { __typename?: 'TemperatureEventData' }
+        & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
       )> }
     )>>> }
   )> }
@@ -684,6 +699,11 @@ export const GetTargetEventsDocument = gql`
           name
           description
         }
+      }
+      ... on TemperatureEventData {
+        eventTime
+        temperature
+        temperatureUnit
       }
     }
   }
@@ -1173,6 +1193,11 @@ export const GetPlantEventsDocument = gql`
             description
           }
         }
+        ... on TemperatureEventData {
+          eventTime
+          temperature
+          temperatureUnit
+        }
       }
     }
   }
@@ -1438,10 +1463,11 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   EventTargetType: EventTargetType;
   LifeCycleEventData: ResolverTypeWrapper<LifeCycleEventData>;
+  TemperatureEventData: ResolverTypeWrapper<TemperatureEventData>;
   WaterEventData: ResolverTypeWrapper<WaterEventData>;
-  BaseEventData: ResolversTypes['LifeCycleEventData'] | ResolversTypes['WaterEventData'];
+  BaseEventData: ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['WaterEventData'];
   EventTarget: ResolversTypes['Plant'];
-  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'];
+  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'];
   Event: ResolverTypeWrapper<Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversTypes['EventTarget']>>> }>;
   Node: ResolversTypes['Event'];
   BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LifeCycle'] | ResolversTypes['LightSource'] | ResolversTypes['Photo'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
@@ -1463,10 +1489,11 @@ export type ResolversParentTypes = {
   Float: Scalars['Float'];
   Query: {};
   LifeCycleEventData: LifeCycleEventData;
+  TemperatureEventData: TemperatureEventData;
   WaterEventData: WaterEventData;
-  BaseEventData: ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['WaterEventData'];
+  BaseEventData: ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['WaterEventData'];
   EventTarget: ResolversParentTypes['Plant'];
-  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'];
+  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'];
   Event: Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversParentTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversParentTypes['EventTarget']>>> };
   Node: ResolversParentTypes['Event'];
   BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LifeCycle'] | ResolversParentTypes['LightSource'] | ResolversParentTypes['Photo'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
@@ -1543,6 +1570,15 @@ export type LifeCycleEventDataResolvers<ContextType = any, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type TemperatureEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['TemperatureEventData'] = ResolversParentTypes['TemperatureEventData']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  temperature?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  temperatureUnit?: Resolver<Maybe<ResolversTypes['TemperatureUnit']>, ParentType, ContextType>;
+  eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type WaterEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['WaterEventData'] = ResolversParentTypes['WaterEventData']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1555,7 +1591,7 @@ export type WaterEventDataResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type BaseEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseEventData'] = ResolversParentTypes['BaseEventData']> = {
-  __resolveType: TypeResolveFn<'LifeCycleEventData' | 'WaterEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'LifeCycleEventData' | 'TemperatureEventData' | 'WaterEventData', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1566,7 +1602,7 @@ export type EventTargetResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type EventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventData'] = ResolversParentTypes['EventData']> = {
-  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData' | 'TemperatureEventData', ParentType, ContextType>;
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
@@ -1653,6 +1689,7 @@ export type Resolvers<ContextType = any> = {
   Environment?: EnvironmentResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   LifeCycleEventData?: LifeCycleEventDataResolvers<ContextType>;
+  TemperatureEventData?: TemperatureEventDataResolvers<ContextType>;
   WaterEventData?: WaterEventDataResolvers<ContextType>;
   BaseEventData?: BaseEventDataResolvers<ContextType>;
   EventTarget?: EventTargetResolvers<ContextType>;

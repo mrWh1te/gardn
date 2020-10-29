@@ -1,0 +1,9 @@
+type TemperatureEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  temperature: Float
+  temperatureUnit: TemperatureUnit
+
+  eventTime: Timestamp!
+}
