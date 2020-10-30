@@ -6,7 +6,7 @@ import {
   speciesResolvers,
   lifeCycleResolvers,
   environmentResolvers,
-  lightSourceResolvers,
+  lightBulbTemplateResolvers,
   eventResolvers,
   lifeCycleEventDataResolvers,
   Resolvers
@@ -19,7 +19,7 @@ export const resolvers: Resolvers = {
     ...speciesResolvers.Query,
     ...lifeCycleResolvers.Query,
     ...environmentResolvers.Query,
-    ...lightSourceResolvers.Query,
+    ...lightBulbTemplateResolvers.Query,
     ...eventResolvers.Query,
   },
   Mutation: {

@@ -26,6 +26,9 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
       ... on ECEventData {
         electricalConductivity, electricalConductivityUnit
       }
+      ... on LightEventData {
+        lightOn, color, lumens, wattage, bulbType
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Environment, LightSource, BaseDbModel } from './../generated';
+import { Environment, LightBulbTemplate, BaseDbModel } from './../generated';
 
 /**
  * These model the tables in the TBI database
@@ -10,8 +10,8 @@ import { Environment, LightSource, BaseDbModel } from './../generated';
 // Many:Many Tables
 //
 
-// Relationship Table between Environments <-> Light-Sources
-export interface DBEnvironmentsLightSources extends BaseDbModel {
+// Relationship Table between Environments <-> Light-Bulb-Templates
+export interface DBEnvironmentsLightBulbTemplates extends BaseDbModel {
   environmentId: Environment['id'],
-  lightSourceId: LightSource['id']
+  lightBulbTemplateId: LightBulbTemplate['id']
 }

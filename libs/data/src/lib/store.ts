@@ -2,14 +2,15 @@
 import { 
   Species,
   Environment,
-  LightSource,
+  LightBulbTemplate,
   WaterEventData,
   EventType,
   EventTargetType,
   TemperatureEventData,
   HumidityEventData,
   PhEventData,
-  EcEventData
+  EcEventData,
+  LightEventData
 } from './generated';
 
 // Database Models
@@ -17,7 +18,7 @@ import { DBPlant } from './plant/interfaces';
 import { DBPhoto } from './photo/interfaces';
 import { DBLifeCycle } from './life-cycle/interfaces';
 import { DBSpeciesLifeCycles } from './species/interfaces';
-import { DBEnvironmentsLightSources } from './environment/interfaces';
+import { DBEnvironmentsLightBulbTemplates } from './environment/interfaces';
 import { DBEventsTargets } from './event/events-targets/interface';
 
 // Mocks & Seeds for in-memory DB
@@ -48,9 +49,9 @@ import {
 } from './photo/mocks';
 
 import {
-  mockLightSourceLEDBlue,
-  mockLightSourceLEDRed
-} from './light-source/mocks';
+  mockLightBulbTemplateLEDBlue,
+  mockLightBulbTemplateLEDRed
+} from './light-bulb-template/mocks';
 
 import {
   mockEnvironmentSeed,
@@ -78,7 +79,7 @@ import {
 
 // Helpers
 import { createSpeciesLifeCycles } from './species/helpers/create-species-life-cycles';
-import { createEnvironmentsLightSources } from './environment/helpers/create-environments-light-sources';
+import { createEnvironmentsLightBulbTemplates } from './environment/helpers/create-environments-light-bulb-templates';
 import { createDBEventsTargets } from './event/events-targets/helpers/create-db-events-targets';
 import { DBLifeCycleEventData } from './event/events/life-cycle/interface';
 import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/create-db-life-cycle-event-data';
@@ -86,6 +87,7 @@ import { mockDBTemperatureEventData1, mockDBTemperatureEventData2 } from './even
 import { mockDBHumidityEventData1, mockDBHumidityEventData2 } from './event/events/humidity/mocks';
 import { mockDBpHEventData1, mockDBpHEventData2 } from './event/events/ph/mocks';
 import { mockDBECEventData1, mockDBECEventData2 } from './event/events/ec/mocks';
+import { mockDBLightEventData1, mockDBLightEventData2 } from './event/events/light/mocks';
 
 /**
  * In-Memory DB
@@ -97,7 +99,7 @@ export interface Store {
   species: Species[],
   lifeCycles: DBLifeCycle[],
   environments: Environment[],
-  lightSources: LightSource[],
+  lightBulbTemplates: LightBulbTemplate[],
   // event data
   waterEventsData: WaterEventData[],
   lifeCycleEventsData: DBLifeCycleEventData[],
@@ -105,9 +107,10 @@ export interface Store {
   humidityEventsData: HumidityEventData[],
   pHEventsData: PhEventData[],
   eCEventsData: EcEventData[],
+  lightEventsData: LightEventData[],
   // many:many association tables' data
   speciesLifeCycles: DBSpeciesLifeCycles[],
-  environmentsLightSources: DBEnvironmentsLightSources[],
+  environmentsLightBulbTemplates: DBEnvironmentsLightBulbTemplates[],
   eventsTargets: DBEventsTargets[]
 }
 
@@ -115,8 +118,8 @@ export interface Store {
  * DB Seeds
  */
 export const lightSourcesSeed = [
-  mockLightSourceLEDBlue,
-  mockLightSourceLEDRed
+  mockLightBulbTemplateLEDBlue,
+  mockLightBulbTemplateLEDRed
 ];
 
 export const environmentsSeed = [
@@ -304,6 +307,12 @@ const eCEventsDataSeed = [
   mockDBECEventData2
 ]
 
+// Light change Events
+const lightEventsDataSeed = [
+  mockDBLightEventData1,
+  mockDBLightEventData2
+]
+
 // Life Cycle change Events
 const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
   previousLifeCycleId: lifeCycleSeed.id,
@@ -339,23 +348,23 @@ const lifeCycleEventsDataSeed = [
   mockLifeCycleEventsData11
 ];
 
-export const environmentsLightSourcesSeed = [
+export const environmentsLightBulbTemplatesSeed = [
   // (mockEnvironmentSeed.id)
-  createEnvironmentsLightSources({
+  createEnvironmentsLightBulbTemplates({
     environmentId: mockEnvironmentSprout.id,
-    lightSourceId: mockLightSourceLEDBlue.id
+    lightBulbTemplateId: mockLightBulbTemplateLEDBlue.id
   }),
-  createEnvironmentsLightSources({
+  createEnvironmentsLightBulbTemplates({
     environmentId: mockEnvironmentVeg.id,
-    lightSourceId: mockLightSourceLEDBlue.id
+    lightBulbTemplateId: mockLightBulbTemplateLEDBlue.id
   }),
-  createEnvironmentsLightSources({
+  createEnvironmentsLightBulbTemplates({
     environmentId: mockEnvironmentEarlyFlower.id,
-    lightSourceId: mockLightSourceLEDRed.id
+    lightBulbTemplateId: mockLightBulbTemplateLEDRed.id
   }),
-  createEnvironmentsLightSources({
+  createEnvironmentsLightBulbTemplates({
     environmentId: mockEnvironmentLateFlower.id,
-    lightSourceId: mockLightSourceLEDRed.id
+    lightBulbTemplateId: mockLightBulbTemplateLEDRed.id
   })
 ];
 
@@ -468,7 +477,21 @@ export const eventsTargetsSeed = [
     eventDataId: mockDBECEventData2.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
-  })
+  }),
+  //
+  // 2 Light changes, 1 target (1 plant)
+  createDBEventsTargets({
+    eventType: EventType.LightChange,
+    eventDataId: mockDBLightEventData1.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
+  createDBEventsTargets({
+    eventType: EventType.LightChange,
+    eventDataId: mockDBLightEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[0].id
+  }),
 ];
 
 
@@ -481,7 +504,7 @@ export const store: Store = {
   photos: photosSeed,
   environments: environmentsSeed,
   lifeCycles: lifeCyclesSeed,
-  lightSources: lightSourcesSeed,
+  lightBulbTemplates: lightSourcesSeed,
   // event data
   waterEventsData: waterEventsDataSeed,
   lifeCycleEventsData: lifeCycleEventsDataSeed,
@@ -489,8 +512,9 @@ export const store: Store = {
   humidityEventsData: humidityEventsDataSeed,
   pHEventsData: pHEventsDataSeed,
   eCEventsData: eCEventsDataSeed,
+  lightEventsData: lightEventsDataSeed,
   // relationships (many to many)
   speciesLifeCycles: speciesLifeCyclesSeed,
-  environmentsLightSources: environmentsLightSourcesSeed,
+  environmentsLightBulbTemplates: environmentsLightBulbTemplatesSeed,
   eventsTargets: eventsTargetsSeed
 };

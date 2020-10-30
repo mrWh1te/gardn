@@ -16,8 +16,8 @@ fragment EnvironmentConditions on Environment {
   lightOnTimeUnit
   lightOnTimePerTimePeriod
   lightOnTimePerTimePeriodUnit
-  lightSources {
-    ...LightSourceDetails
+  lightBulbTemplates {
+    ...LightBulbTemplateDetails
   }
   desiredPH
   phMinimum

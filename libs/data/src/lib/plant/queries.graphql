@@ -75,6 +75,9 @@ query getPlantEvents($id: Int!) {
         ... on ECEventData {
           electricalConductivity, electricalConductivityUnit
         }
+        ... on LightEventData {
+          lightOn, color, lumens, wattage, bulbType
+        }
       }
     }
   }

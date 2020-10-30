@@ -1,5 +1,5 @@
 union EventTarget = Plant
-union EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData | PHEventData | ECEventData
+union EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData | PHEventData | ECEventData | LightEventData
 
 type Event implements Node {
   id: Int!

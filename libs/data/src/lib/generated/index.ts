@@ -97,7 +97,7 @@ export type Environment = BaseDbModel & {
   lightOnTimeUnit?: Maybe<TimeUnit>;
   lightOnTimePerTimePeriod?: Maybe<Scalars['Int']>;
   lightOnTimePerTimePeriodUnit?: Maybe<TimeUnit>;
-  lightSources?: Maybe<Array<Maybe<LightSource>>>;
+  lightBulbTemplates?: Maybe<Array<Maybe<LightBulbTemplate>>>;
   desiredPH?: Maybe<Scalars['Float']>;
   phMinimum?: Maybe<Scalars['Float']>;
   phMaximum?: Maybe<Scalars['Float']>;
@@ -118,8 +118,8 @@ export type Query = {
   events?: Maybe<Array<Maybe<Event>>>;
   lifeCycle?: Maybe<LifeCycle>;
   lifeCycles?: Maybe<Array<Maybe<LifeCycle>>>;
-  lightSource?: Maybe<LightSource>;
-  lightSources?: Maybe<Array<Maybe<LightSource>>>;
+  lightBulbTemplate?: Maybe<LightBulbTemplate>;
+  lightBulbTemplates?: Maybe<Array<Maybe<LightBulbTemplate>>>;
   photo?: Maybe<Photo>;
   photos?: Maybe<Array<Maybe<Photo>>>;
   plant?: Maybe<Plant>;
@@ -151,7 +151,7 @@ export type QueryLifeCycleArgs = {
 };
 
 
-export type QueryLightSourceArgs = {
+export type QueryLightBulbTemplateArgs = {
   id: Scalars['Int'];
 };
 
@@ -181,7 +181,8 @@ export enum EventType {
   TemperatureReading = 'TEMPERATURE_READING',
   PhReading = 'PH_READING',
   EcReading = 'EC_READING',
-  LifeCycleChange = 'LIFE_CYCLE_CHANGE'
+  LifeCycleChange = 'LIFE_CYCLE_CHANGE',
+  LightChange = 'LIGHT_CHANGE'
 }
 
 export type EcEventData = BaseEventData & {
@@ -208,6 +209,18 @@ export type LifeCycleEventData = BaseEventData & {
   dateCreated: Scalars['Timestamp'];
   previousLifeCycle?: Maybe<LifeCycle>;
   nextLifeCycle?: Maybe<LifeCycle>;
+  eventTime: Scalars['Timestamp'];
+};
+
+export type LightEventData = BaseEventData & {
+  __typename?: 'LightEventData';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  lightOn?: Maybe<Scalars['Boolean']>;
+  bulbType?: Maybe<LightBulbType>;
+  wattage?: Maybe<Scalars['Float']>;
+  lumens?: Maybe<Scalars['Float']>;
+  color?: Maybe<LightBulbColor>;
   eventTime: Scalars['Timestamp'];
 };
 
@@ -247,7 +260,7 @@ export type BaseEventData = {
 
 export type EventTarget = Plant;
 
-export type EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData | PhEventData | EcEventData;
+export type EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData | PhEventData | EcEventData | LightEventData;
 
 export type Event = Node & {
   __typename?: 'Event';
@@ -275,15 +288,15 @@ export type LifeCycle = BaseDbModel & {
   environment?: Maybe<Environment>;
 };
 
-export type LightSource = BaseDbModel & {
-  __typename?: 'LightSource';
+export type LightBulbTemplate = BaseDbModel & {
+  __typename?: 'LightBulbTemplate';
   id: Scalars['Int'];
   dateCreated: Scalars['Timestamp'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   bulbType?: Maybe<LightBulbType>;
-  wattage?: Maybe<Scalars['Int']>;
-  lumens?: Maybe<Scalars['Int']>;
+  wattage?: Maybe<Scalars['Float']>;
+  lumens?: Maybe<Scalars['Float']>;
   color?: Maybe<LightBulbColor>;
 };
 
@@ -347,9 +360,9 @@ export type Species = BaseDbModel & {
 export type EnvironmentConditionsFragment = (
   { __typename?: 'Environment' }
   & Pick<Environment, 'idealWaterAmount' | 'idealWaterAmountUnit' | 'idealWaterAmountPerTimePeriod' | 'idealWaterAmountPerTimePeriodUnit' | 'idealTemperatureMin' | 'idealTemperatueMax' | 'idealTemperatureMinUnit' | 'idealTemperatureMaxUnit' | 'idealHumidityMin' | 'idealHumidityMax' | 'idealHumidityMinUnit' | 'idealHumidityMaxUnit' | 'lightOnTime' | 'lightOnTimeUnit' | 'lightOnTimePerTimePeriod' | 'lightOnTimePerTimePeriodUnit' | 'desiredPH' | 'phMinimum' | 'phMaximum' | 'desiredElectricalConductivity' | 'desiredElectricalConductivityUnit' | 'electricalConductivityMin' | 'electricalConductivityMax' | 'electricalConductivityMinUnit' | 'electricalConductivityMaxUnit'>
-  & { lightSources?: Maybe<Array<Maybe<(
-    { __typename?: 'LightSource' }
-    & LightSourceDetailsFragment
+  & { lightBulbTemplates?: Maybe<Array<Maybe<(
+    { __typename?: 'LightBulbTemplate' }
+    & LightBulbTemplateDetailsFragment
   )>>> }
 );
 
@@ -390,6 +403,9 @@ export type GetTargetEventsQuery = (
     ) | (
       { __typename?: 'ECEventData' }
       & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
+    ) | (
+      { __typename?: 'LightEventData' }
+      & Pick<LightEventData, 'eventTime'>
     )> }
   )>>> }
 );
@@ -414,7 +430,7 @@ export type GetPlantLifeCycleEventsQuery = (
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
-    ) | { __typename?: 'TemperatureEventData' } | { __typename?: 'HumidityEventData' } | { __typename?: 'PHEventData' } | { __typename?: 'ECEventData' }> }
+    ) | { __typename?: 'TemperatureEventData' } | { __typename?: 'HumidityEventData' } | { __typename?: 'PHEventData' } | { __typename?: 'ECEventData' } | { __typename?: 'LightEventData' }> }
   )>>> }
 );
 
@@ -450,9 +466,9 @@ export type GetAllLifeCyclesQuery = (
   )>>> }
 );
 
-export type LightSourceDetailsFragment = (
-  { __typename?: 'LightSource' }
-  & Pick<LightSource, 'id' | 'name' | 'description' | 'bulbType' | 'wattage' | 'lumens' | 'color'>
+export type LightBulbTemplateDetailsFragment = (
+  { __typename?: 'LightBulbTemplate' }
+  & Pick<LightBulbTemplate, 'id' | 'name' | 'description' | 'bulbType' | 'wattage' | 'lumens' | 'color'>
 );
 
 export type AddPhotoMutationVariables = Exact<{
@@ -618,6 +634,9 @@ export type GetPlantEventsQuery = (
       ) | (
         { __typename?: 'ECEventData' }
         & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
+      ) | (
+        { __typename?: 'LightEventData' }
+        & Pick<LightEventData, 'eventTime'>
       )> }
     )>>> }
   )> }
@@ -677,8 +696,8 @@ export type GetAllSpeciesQuery = (
   )>>> }
 );
 
-export const LightSourceDetailsFragmentDoc = gql`
-    fragment LightSourceDetails on LightSource {
+export const LightBulbTemplateDetailsFragmentDoc = gql`
+    fragment LightBulbTemplateDetails on LightBulbTemplate {
   id
   name
   description
@@ -706,8 +725,8 @@ export const EnvironmentConditionsFragmentDoc = gql`
   lightOnTimeUnit
   lightOnTimePerTimePeriod
   lightOnTimePerTimePeriodUnit
-  lightSources {
-    ...LightSourceDetails
+  lightBulbTemplates {
+    ...LightBulbTemplateDetails
   }
   desiredPH
   phMinimum
@@ -719,7 +738,7 @@ export const EnvironmentConditionsFragmentDoc = gql`
   electricalConductivityMinUnit
   electricalConductivityMaxUnit
 }
-    ${LightSourceDetailsFragmentDoc}`;
+    ${LightBulbTemplateDetailsFragmentDoc}`;
 export const GetTargetEventsDocument = gql`
     query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $eventType: EventType) {
   events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, eventType: $eventType) {
@@ -1533,22 +1552,23 @@ export type ResolversTypes = {
   ECEventData: ResolverTypeWrapper<EcEventData>;
   HumidityEventData: ResolverTypeWrapper<HumidityEventData>;
   LifeCycleEventData: ResolverTypeWrapper<LifeCycleEventData>;
+  LightEventData: ResolverTypeWrapper<LightEventData>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   PHEventData: ResolverTypeWrapper<PhEventData>;
   TemperatureEventData: ResolverTypeWrapper<TemperatureEventData>;
   WaterEventData: ResolverTypeWrapper<WaterEventData>;
-  BaseEventData: ResolversTypes['ECEventData'] | ResolversTypes['HumidityEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['PHEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['WaterEventData'];
+  BaseEventData: ResolversTypes['ECEventData'] | ResolversTypes['HumidityEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['LightEventData'] | ResolversTypes['PHEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['WaterEventData'];
   EventTarget: ResolversTypes['Plant'];
-  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['HumidityEventData'] | ResolversTypes['PHEventData'] | ResolversTypes['ECEventData'];
+  EventData: ResolversTypes['WaterEventData'] | ResolversTypes['LifeCycleEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['HumidityEventData'] | ResolversTypes['PHEventData'] | ResolversTypes['ECEventData'] | ResolversTypes['LightEventData'];
   Event: ResolverTypeWrapper<Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversTypes['EventTarget']>>> }>;
   Node: ResolversTypes['Event'];
-  BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LifeCycle'] | ResolversTypes['LightSource'] | ResolversTypes['Photo'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
+  BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LifeCycle'] | ResolversTypes['LightBulbTemplate'] | ResolversTypes['Photo'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
   LifeCycle: ResolverTypeWrapper<LifeCycle>;
-  LightSource: ResolverTypeWrapper<LightSource>;
+  LightBulbTemplate: ResolverTypeWrapper<LightBulbTemplate>;
   Photo: ResolverTypeWrapper<Photo>;
   Mutation: ResolverTypeWrapper<{}>;
   Plant: ResolverTypeWrapper<Plant>;
   Species: ResolverTypeWrapper<Species>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1562,22 +1582,23 @@ export type ResolversParentTypes = {
   ECEventData: EcEventData;
   HumidityEventData: HumidityEventData;
   LifeCycleEventData: LifeCycleEventData;
+  LightEventData: LightEventData;
+  Boolean: Scalars['Boolean'];
   PHEventData: PhEventData;
   TemperatureEventData: TemperatureEventData;
   WaterEventData: WaterEventData;
-  BaseEventData: ResolversParentTypes['ECEventData'] | ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['PHEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['WaterEventData'];
+  BaseEventData: ResolversParentTypes['ECEventData'] | ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['LightEventData'] | ResolversParentTypes['PHEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['WaterEventData'];
   EventTarget: ResolversParentTypes['Plant'];
-  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['PHEventData'] | ResolversParentTypes['ECEventData'];
+  EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['LifeCycleEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['PHEventData'] | ResolversParentTypes['ECEventData'] | ResolversParentTypes['LightEventData'];
   Event: Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversParentTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversParentTypes['EventTarget']>>> };
   Node: ResolversParentTypes['Event'];
-  BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LifeCycle'] | ResolversParentTypes['LightSource'] | ResolversParentTypes['Photo'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
+  BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LifeCycle'] | ResolversParentTypes['LightBulbTemplate'] | ResolversParentTypes['Photo'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
   LifeCycle: LifeCycle;
-  LightSource: LightSource;
+  LightBulbTemplate: LightBulbTemplate;
   Photo: Photo;
   Mutation: {};
   Plant: Plant;
   Species: Species;
-  Boolean: Scalars['Boolean'];
 };
 
 export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
@@ -1605,7 +1626,7 @@ export type EnvironmentResolvers<ContextType = any, ParentType extends Resolvers
   lightOnTimeUnit?: Resolver<Maybe<ResolversTypes['TimeUnit']>, ParentType, ContextType>;
   lightOnTimePerTimePeriod?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   lightOnTimePerTimePeriodUnit?: Resolver<Maybe<ResolversTypes['TimeUnit']>, ParentType, ContextType>;
-  lightSources?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightSource']>>>, ParentType, ContextType>;
+  lightBulbTemplates?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightBulbTemplate']>>>, ParentType, ContextType>;
   desiredPH?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   phMinimum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   phMaximum?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
@@ -1626,8 +1647,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType, RequireFields<QueryEventsArgs, 'eventTargetId' | 'eventTargetType'>>;
   lifeCycle?: Resolver<Maybe<ResolversTypes['LifeCycle']>, ParentType, ContextType, RequireFields<QueryLifeCycleArgs, 'id'>>;
   lifeCycles?: Resolver<Maybe<Array<Maybe<ResolversTypes['LifeCycle']>>>, ParentType, ContextType>;
-  lightSource?: Resolver<Maybe<ResolversTypes['LightSource']>, ParentType, ContextType, RequireFields<QueryLightSourceArgs, 'id'>>;
-  lightSources?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightSource']>>>, ParentType, ContextType>;
+  lightBulbTemplate?: Resolver<Maybe<ResolversTypes['LightBulbTemplate']>, ParentType, ContextType, RequireFields<QueryLightBulbTemplateArgs, 'id'>>;
+  lightBulbTemplates?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightBulbTemplate']>>>, ParentType, ContextType>;
   photo?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType, RequireFields<QueryPhotoArgs, 'id'>>;
   photos?: Resolver<Maybe<Array<Maybe<ResolversTypes['Photo']>>>, ParentType, ContextType>;
   plant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<QueryPlantArgs, 'id'>>;
@@ -1662,6 +1683,18 @@ export type LifeCycleEventDataResolvers<ContextType = any, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LightEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['LightEventData'] = ResolversParentTypes['LightEventData']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  lightOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  bulbType?: Resolver<Maybe<ResolversTypes['LightBulbType']>, ParentType, ContextType>;
+  wattage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  lumens?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  color?: Resolver<Maybe<ResolversTypes['LightBulbColor']>, ParentType, ContextType>;
+  eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PhEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['PHEventData'] = ResolversParentTypes['PHEventData']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1691,7 +1724,7 @@ export type WaterEventDataResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type BaseEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseEventData'] = ResolversParentTypes['BaseEventData']> = {
-  __resolveType: TypeResolveFn<'ECEventData' | 'HumidityEventData' | 'LifeCycleEventData' | 'PHEventData' | 'TemperatureEventData' | 'WaterEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'ECEventData' | 'HumidityEventData' | 'LifeCycleEventData' | 'LightEventData' | 'PHEventData' | 'TemperatureEventData' | 'WaterEventData', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -1702,7 +1735,7 @@ export type EventTargetResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type EventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventData'] = ResolversParentTypes['EventData']> = {
-  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData' | 'TemperatureEventData' | 'HumidityEventData' | 'PHEventData' | 'ECEventData', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'WaterEventData' | 'LifeCycleEventData' | 'TemperatureEventData' | 'HumidityEventData' | 'PHEventData' | 'ECEventData' | 'LightEventData', ParentType, ContextType>;
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
@@ -1719,7 +1752,7 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type BaseDbModelResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseDbModel'] = ResolversParentTypes['BaseDbModel']> = {
-  __resolveType: TypeResolveFn<'Environment' | 'LifeCycle' | 'LightSource' | 'Photo' | 'Plant' | 'Species', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Environment' | 'LifeCycle' | 'LightBulbTemplate' | 'Photo' | 'Plant' | 'Species', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
 };
@@ -1733,14 +1766,14 @@ export type LifeCycleResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type LightSourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['LightSource'] = ResolversParentTypes['LightSource']> = {
+export type LightBulbTemplateResolvers<ContextType = any, ParentType extends ResolversParentTypes['LightBulbTemplate'] = ResolversParentTypes['LightBulbTemplate']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   bulbType?: Resolver<Maybe<ResolversTypes['LightBulbType']>, ParentType, ContextType>;
-  wattage?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  lumens?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  wattage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  lumens?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   color?: Resolver<Maybe<ResolversTypes['LightBulbColor']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1791,6 +1824,7 @@ export type Resolvers<ContextType = any> = {
   ECEventData?: EcEventDataResolvers<ContextType>;
   HumidityEventData?: HumidityEventDataResolvers<ContextType>;
   LifeCycleEventData?: LifeCycleEventDataResolvers<ContextType>;
+  LightEventData?: LightEventDataResolvers<ContextType>;
   PHEventData?: PhEventDataResolvers<ContextType>;
   TemperatureEventData?: TemperatureEventDataResolvers<ContextType>;
   WaterEventData?: WaterEventDataResolvers<ContextType>;
@@ -1801,7 +1835,7 @@ export type Resolvers<ContextType = any> = {
   Node?: NodeResolvers<ContextType>;
   BaseDbModel?: BaseDbModelResolvers<ContextType>;
   LifeCycle?: LifeCycleResolvers<ContextType>;
-  LightSource?: LightSourceResolvers<ContextType>;
+  LightBulbTemplate?: LightBulbTemplateResolvers<ContextType>;
   Photo?: PhotoResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Plant?: PlantResolvers<ContextType>;

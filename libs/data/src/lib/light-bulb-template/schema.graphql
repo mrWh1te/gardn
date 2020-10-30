@@ -1,0 +1,17 @@
+type LightBulbTemplate implements BaseDbModel {
+  id: Int!
+  dateCreated: Timestamp!
+  
+  name: String
+  description: String
+  bulbType: LightBulbType
+  wattage: Float
+  lumens: Float
+  color: LightBulbColor
+}
+
+type Query {
+  lightBulbTemplates: [LightBulbTemplate]
+  lightBulbTemplate(id: Int!): LightBulbTemplate
+}
+

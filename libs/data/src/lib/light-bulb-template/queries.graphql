@@ -1,4 +1,4 @@
-fragment LightSourceDetails on LightSource {
+fragment LightBulbTemplateDetails on LightBulbTemplate {
   id
   name
   description

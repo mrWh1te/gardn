@@ -17,10 +17,10 @@ export const environmentResolvers: Resolvers = {
     }
   },
   Environment: {
-    lightSources: ({ id }, _, { dataSources }) => {
-      const lightSources = dataSources.lightSource.getLightSourcesByEnvironmentId({ id });
+    lightBulbTemplates: ({ id }, _, { dataSources }) => {
+      const lightBulbTemplates = dataSources.lightBulbTemplate.filterByEnvironmentId({ id });
 
-      return lightSources;
+      return lightBulbTemplates;
     }
   }
 }

@@ -3,7 +3,7 @@ import {
   plantDataSourceFactory,
   speciesDataSourceFactory,
   LifeCycleDataSourceFactory,
-  lightSourceDataSourceFactory,
+  lightBulbTemplateDataSourceFactory,
   EnvironmentDataSourceFactory,
   EventsTargetsDataSourceFactory,
   WaterEventDataDataSourceFactory,
@@ -12,6 +12,7 @@ import {
   HumidityEventDataDataSourceFactory,
   PHEventDataDataSourceFactory,
   ECEventDataDataSourceFactory,
+  LightEventDataDataSourceFactory,
   store,
 } from '@gardn/data';
 
@@ -23,7 +24,7 @@ export const dataSources = (): any => ({
   species: speciesDataSourceFactory(store),
   photo: photoDataSourceFactory(store),
   lifeCycle: LifeCycleDataSourceFactory(store),
-  lightSource: lightSourceDataSourceFactory(store),
+  lightBulbTemplate: lightBulbTemplateDataSourceFactory(store),
   environment: EnvironmentDataSourceFactory(store),
   eventsTargets: EventsTargetsDataSourceFactory(store),
   waterEventData: WaterEventDataDataSourceFactory(store),
@@ -31,5 +32,6 @@ export const dataSources = (): any => ({
   temperatureEventData: TemperatureEventDataDataSourceFactory(store),
   humidityEventData: HumidityEventDataDataSourceFactory(store),
   pHEventData: PHEventDataDataSourceFactory(store),
-  eCEventData: ECEventDataDataSourceFactory(store)
+  eCEventData: ECEventDataDataSourceFactory(store),
+  lightEventData: LightEventDataDataSourceFactory(store)
 });

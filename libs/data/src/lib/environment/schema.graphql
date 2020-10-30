@@ -24,7 +24,7 @@ type Environment implements BaseDbModel {
   lightOnTimeUnit: TimeUnit
   lightOnTimePerTimePeriod: Int
   lightOnTimePerTimePeriodUnit: TimeUnit
-  lightSources: [LightSource]
+  lightBulbTemplates: [LightBulbTemplate]
 
   desiredPH: Float
   phMinimum: Float

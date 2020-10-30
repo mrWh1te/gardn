@@ -1,0 +1,12 @@
+type LightEventData implements BaseEventData {
+  id: Int!
+  dateCreated: Timestamp!
+
+  lightOn: Boolean
+  bulbType: LightBulbType
+  wattage: Float
+  lumens: Float
+  color: LightBulbColor
+
+  eventTime: Timestamp!
+}

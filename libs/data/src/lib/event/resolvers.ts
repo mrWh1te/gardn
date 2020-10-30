@@ -14,15 +14,17 @@ export const eventResolvers: Resolvers = {
           case EventType.Water:
             return eventDataToEvent(dataSources.waterEventData.byId({id: eventDataId }), EventType.Water);
           case EventType.LifeCycleChange:
-            return eventDataToEvent(dataSources.lifeCycleEventData.byId({id: eventDataId }), EventType.Water);
+            return eventDataToEvent(dataSources.lifeCycleEventData.byId({id: eventDataId }), EventType.LifeCycleChange);
           case EventType.TemperatureReading:
             return eventDataToEvent(dataSources.temperatureEventData.byId({id: eventDataId }), EventType.TemperatureReading);
           case EventType.HumidityReading:
             return eventDataToEvent(dataSources.humidityEventData.byId({id: eventDataId }), EventType.HumidityReading);
           case EventType.PhReading:
             return eventDataToEvent(dataSources.pHEventData.byId({id: eventDataId }), EventType.PhReading);
-          case EventType.PhReading:
-            return eventDataToEvent(dataSources.eCEventData.byId({id: eventDataId }), EventType.PhReading);
+          case EventType.EcReading:
+            return eventDataToEvent(dataSources.eCEventData.byId({id: eventDataId }), EventType.EcReading);
+          case EventType.LightChange:
+            return eventDataToEvent(dataSources.lightEventData.byId({id: eventDataId }), EventType.LightChange);
         }
       }
 
@@ -78,6 +80,9 @@ export const eventResolvers: Resolvers = {
           break;
         case EventType.EcReading:
           record = dataSources.eCEventData.byId({id})
+          break;
+        case EventType.LightChange:
+          record = dataSources.lightEventData.byId({id})
           break;
       }
 

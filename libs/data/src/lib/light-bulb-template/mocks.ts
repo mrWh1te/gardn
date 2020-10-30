@@ -1,7 +1,7 @@
-import { createLightSource } from './helpers/create-light-source';
+import { createLightBulbTemplate } from './helpers/create-light-bulb-template';
 import { LightBulbType, LightBulbColor } from './../generated';
 
-export const mockLightSourceLEDBlue = createLightSource({
+export const mockLightBulbTemplateLEDBlue = createLightBulbTemplate({
   name: 'Product Name',
   description: 'Product bulb description',
   bulbType: LightBulbType.Led,
@@ -10,7 +10,7 @@ export const mockLightSourceLEDBlue = createLightSource({
   lumens: 4400
 });
 
-export const mockLightSourceLEDRed = createLightSource({
+export const mockLightBulbTemplateLEDRed = createLightBulbTemplate({
   name: 'Product Name',
   description: 'Product bulb description',
   bulbType: LightBulbType.Led,
