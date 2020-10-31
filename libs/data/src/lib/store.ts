@@ -117,7 +117,7 @@ export interface Store {
 /**
  * DB Seeds
  */
-export const lightSourcesSeed = [
+export const lightBulbTemplatesSeed = [
   mockLightBulbTemplateLEDBlue,
   mockLightBulbTemplateLEDRed
 ];
@@ -185,7 +185,7 @@ const fakePlant1: DBPlant = {
   ...mockPlant1,
   coverPhotoId: mockLargePhoto1.id,
   speciesId: species1.id,
-  currentLifeCycleId: associatedLifeCycleSeed.id
+  currentLifeCycleId: associatedLifeCycleSprouting.id
 }
 const fakePlant2: DBPlant = {
   ...mockPlant2,
@@ -504,7 +504,7 @@ export const store: Store = {
   photos: photosSeed,
   environments: environmentsSeed,
   lifeCycles: lifeCyclesSeed,
-  lightBulbTemplates: lightSourcesSeed,
+  lightBulbTemplates: lightBulbTemplatesSeed,
   // event data
   waterEventsData: waterEventsDataSeed,
   lifeCycleEventsData: lifeCycleEventsDataSeed,

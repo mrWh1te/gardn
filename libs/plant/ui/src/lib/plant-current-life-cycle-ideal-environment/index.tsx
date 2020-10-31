@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { GetPlantInfoQuery, measurementUnitToAbbreviation as abbreviate } from '@gardn/data';
+import { GetPlantCurrentLifeCycleEnvironmentQuery, measurementUnitToAbbreviation as abbreviate } from '@gardn/data';
 import { 
   FlexBox,
   WaterDropletIcon,
@@ -14,14 +14,9 @@ import {
 } from '@gardn/ui';
 
 const StyledPlantInfo = styled.div`
-  h6 {
-    margin-bottom: 1rem;
-  }
-  h6, p {
-    text-align: right;
-  }
   p {
-    font-size: .75rem;
+    font-size: .9rem;
+    text-align: right;
   }
   .current-lifecycle-environment {
     font-size: .8rem;
@@ -43,7 +38,7 @@ const IconContainer = styled.div`
   text-align: center;
 `
 
-export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
+export const PlantCurrentLifeCycleIdealEnvironment = ({ plant }: GetPlantCurrentLifeCycleEnvironmentQuery) => {
   if (!plant) {
     return (
       <FlexBox>
@@ -94,18 +89,11 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
     if (env.electricalConductivityMax) {
       electricalConductivity += env.electricalConductivityMax + abbreviate(env.electricalConductivityMaxUnit)
     }
-
   }
 
   return (
     <StyledPlantInfo>
-      { plant.species?.name ? <h6>{ plant.species.name }</h6> : '' }
-      <p>{ plant.currentLifeCycle?.name }</p>
-      
-      <FlexBox justifyContent={'space-between'}>
-        <article>
-          TBI Plant Events: Life Cycle
-        </article>
+      <FlexBox justifyContent={'flex-end'}>
         <article style={{flexGrow: .1}}>
           <FlexBox flexDirection={'column'} className="current-lifecycle-environment">
             <FlexBox justifyContent={'space-between'} style={{height: '1.9rem'}}>
@@ -139,12 +127,8 @@ export const PlantInfo = ({ plant }: GetPlantInfoQuery) => {
           </FlexBox>
         </article>
       </FlexBox>
-      
-       
-      { /* Future timeline of events filter by life cycle changes with most recent event at top and first event at bottom (vertical scroll as needed) */ }
-      { /* todo depending on plant current life cycle -> show the info of that life cycle's environment */ }
     </StyledPlantInfo>
   );
 };
 
-export default PlantInfo;
+export default PlantCurrentLifeCycleIdealEnvironment;

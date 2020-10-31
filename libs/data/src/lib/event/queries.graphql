@@ -36,9 +36,11 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
 query getPlantLifeCycleEvents($plantId: Int!) {
   events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: LIFE_CYCLE_CHANGE) {
     id, type, data {
+      ... on BaseEventData {
+        eventTime
+      }
       ... on LifeCycleEventData {
-        eventTime,
-        previousLifeCycle {
+        eventTime, previousLifeCycle {
           id, name, description
         }, nextLifeCycle {
           id, name, description

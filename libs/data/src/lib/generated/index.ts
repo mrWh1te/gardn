@@ -405,7 +405,7 @@ export type GetTargetEventsQuery = (
       & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
     ) | (
       { __typename?: 'LightEventData' }
-      & Pick<LightEventData, 'eventTime'>
+      & Pick<LightEventData, 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
     )> }
   )>>> }
 );
@@ -420,7 +420,10 @@ export type GetPlantLifeCycleEventsQuery = (
   & { events?: Maybe<Array<Maybe<(
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'type'>
-    & { data?: Maybe<{ __typename?: 'WaterEventData' } | (
+    & { data?: Maybe<(
+      { __typename?: 'WaterEventData' }
+      & Pick<WaterEventData, 'eventTime'>
+    ) | (
       { __typename?: 'LifeCycleEventData' }
       & Pick<LifeCycleEventData, 'eventTime'>
       & { previousLifeCycle?: Maybe<(
@@ -430,7 +433,22 @@ export type GetPlantLifeCycleEventsQuery = (
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
-    ) | { __typename?: 'TemperatureEventData' } | { __typename?: 'HumidityEventData' } | { __typename?: 'PHEventData' } | { __typename?: 'ECEventData' } | { __typename?: 'LightEventData' }> }
+    ) | (
+      { __typename?: 'TemperatureEventData' }
+      & Pick<TemperatureEventData, 'eventTime'>
+    ) | (
+      { __typename?: 'HumidityEventData' }
+      & Pick<HumidityEventData, 'eventTime'>
+    ) | (
+      { __typename?: 'PHEventData' }
+      & Pick<PhEventData, 'eventTime'>
+    ) | (
+      { __typename?: 'ECEventData' }
+      & Pick<EcEventData, 'eventTime'>
+    ) | (
+      { __typename?: 'LightEventData' }
+      & Pick<LightEventData, 'eventTime'>
+    )> }
   )>>> }
 );
 
@@ -572,27 +590,38 @@ export type GetPlantCoverPhotoQuery = (
   )> }
 );
 
-export type GetPlantInfoQueryVariables = Exact<{
+export type GetPlantHeaderQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetPlantInfoQuery = (
+export type GetPlantHeaderQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'id' | 'name' | 'dateCreated'>
+    & Pick<Plant, 'name'>
+    & { species?: Maybe<(
+      { __typename?: 'Species' }
+      & Pick<Species, 'name'>
+    )> }
+  )> }
+);
+
+export type GetPlantCurrentLifeCycleEnvironmentQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPlantCurrentLifeCycleEnvironmentQuery = (
+  { __typename?: 'Query' }
+  & { plant?: Maybe<(
+    { __typename?: 'Plant' }
     & { currentLifeCycle?: Maybe<(
       { __typename?: 'LifeCycle' }
-      & Pick<LifeCycle, 'id' | 'name' | 'description'>
       & { environment?: Maybe<(
         { __typename?: 'Environment' }
-        & Pick<Environment, 'id' | 'name'>
         & EnvironmentConditionsFragment
       )> }
-    )>, species?: Maybe<(
-      { __typename?: 'Species' }
-      & Pick<Species, 'id' | 'name' | 'description' | 'sproutToHarvestInHours'>
     )> }
   )> }
 );
@@ -636,7 +665,7 @@ export type GetPlantEventsQuery = (
         & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
       ) | (
         { __typename?: 'LightEventData' }
-        & Pick<LightEventData, 'eventTime'>
+        & Pick<LightEventData, 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
       )> }
     )>>> }
   )> }
@@ -781,6 +810,13 @@ export const GetTargetEventsDocument = gql`
         electricalConductivity
         electricalConductivityUnit
       }
+      ... on LightEventData {
+        lightOn
+        color
+        lumens
+        wattage
+        bulbType
+      }
     }
   }
 }
@@ -819,6 +855,9 @@ export const GetPlantLifeCycleEventsDocument = gql`
     id
     type
     data {
+      ... on BaseEventData {
+        eventTime
+      }
       ... on LifeCycleEventData {
         eventTime
         previousLifeCycle {
@@ -1191,57 +1230,79 @@ export function useGetPlantCoverPhotoLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetPlantCoverPhotoQueryHookResult = ReturnType<typeof useGetPlantCoverPhotoQuery>;
 export type GetPlantCoverPhotoLazyQueryHookResult = ReturnType<typeof useGetPlantCoverPhotoLazyQuery>;
 export type GetPlantCoverPhotoQueryResult = Apollo.QueryResult<GetPlantCoverPhotoQuery, GetPlantCoverPhotoQueryVariables>;
-export const GetPlantInfoDocument = gql`
-    query getPlantInfo($id: Int!) {
+export const GetPlantHeaderDocument = gql`
+    query getPlantHeader($id: Int!) {
   plant(id: $id) {
-    id
     name
-    currentLifeCycle {
-      id
-      name
-      description
-      environment {
-        id
-        name
-        ...EnvironmentConditions
-      }
-    }
     species {
-      id
       name
-      description
-      sproutToHarvestInHours
     }
-    dateCreated
   }
 }
-    ${EnvironmentConditionsFragmentDoc}`;
+    `;
 
 /**
- * __useGetPlantInfoQuery__
+ * __useGetPlantHeaderQuery__
  *
- * To run a query within a React component, call `useGetPlantInfoQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPlantInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPlantHeaderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantHeaderQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPlantInfoQuery({
+ * const { data, loading, error } = useGetPlantHeaderQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetPlantInfoQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantInfoQuery, GetPlantInfoQueryVariables>) {
-        return Apollo.useQuery<GetPlantInfoQuery, GetPlantInfoQueryVariables>(GetPlantInfoDocument, baseOptions);
+export function useGetPlantHeaderQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>) {
+        return Apollo.useQuery<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>(GetPlantHeaderDocument, baseOptions);
       }
-export function useGetPlantInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantInfoQuery, GetPlantInfoQueryVariables>) {
-          return Apollo.useLazyQuery<GetPlantInfoQuery, GetPlantInfoQueryVariables>(GetPlantInfoDocument, baseOptions);
+export function useGetPlantHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>(GetPlantHeaderDocument, baseOptions);
         }
-export type GetPlantInfoQueryHookResult = ReturnType<typeof useGetPlantInfoQuery>;
-export type GetPlantInfoLazyQueryHookResult = ReturnType<typeof useGetPlantInfoLazyQuery>;
-export type GetPlantInfoQueryResult = Apollo.QueryResult<GetPlantInfoQuery, GetPlantInfoQueryVariables>;
+export type GetPlantHeaderQueryHookResult = ReturnType<typeof useGetPlantHeaderQuery>;
+export type GetPlantHeaderLazyQueryHookResult = ReturnType<typeof useGetPlantHeaderLazyQuery>;
+export type GetPlantHeaderQueryResult = Apollo.QueryResult<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>;
+export const GetPlantCurrentLifeCycleEnvironmentDocument = gql`
+    query getPlantCurrentLifeCycleEnvironment($id: Int!) {
+  plant(id: $id) {
+    currentLifeCycle {
+      environment {
+        ...EnvironmentConditions
+      }
+    }
+  }
+}
+    ${EnvironmentConditionsFragmentDoc}`;
+
+/**
+ * __useGetPlantCurrentLifeCycleEnvironmentQuery__
+ *
+ * To run a query within a React component, call `useGetPlantCurrentLifeCycleEnvironmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantCurrentLifeCycleEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantCurrentLifeCycleEnvironmentQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlantCurrentLifeCycleEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantCurrentLifeCycleEnvironmentQuery, GetPlantCurrentLifeCycleEnvironmentQueryVariables>) {
+        return Apollo.useQuery<GetPlantCurrentLifeCycleEnvironmentQuery, GetPlantCurrentLifeCycleEnvironmentQueryVariables>(GetPlantCurrentLifeCycleEnvironmentDocument, baseOptions);
+      }
+export function useGetPlantCurrentLifeCycleEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantCurrentLifeCycleEnvironmentQuery, GetPlantCurrentLifeCycleEnvironmentQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantCurrentLifeCycleEnvironmentQuery, GetPlantCurrentLifeCycleEnvironmentQueryVariables>(GetPlantCurrentLifeCycleEnvironmentDocument, baseOptions);
+        }
+export type GetPlantCurrentLifeCycleEnvironmentQueryHookResult = ReturnType<typeof useGetPlantCurrentLifeCycleEnvironmentQuery>;
+export type GetPlantCurrentLifeCycleEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantCurrentLifeCycleEnvironmentLazyQuery>;
+export type GetPlantCurrentLifeCycleEnvironmentQueryResult = Apollo.QueryResult<GetPlantCurrentLifeCycleEnvironmentQuery, GetPlantCurrentLifeCycleEnvironmentQueryVariables>;
 export const GetPlantEventsDocument = gql`
     query getPlantEvents($id: Int!) {
   plant(id: $id) {
@@ -1284,6 +1345,13 @@ export const GetPlantEventsDocument = gql`
         ... on ECEventData {
           electricalConductivity
           electricalConductivityUnit
+        }
+        ... on LightEventData {
+          lightOn
+          color
+          lumens
+          wattage
+          bulbType
         }
       }
     }

@@ -28,21 +28,21 @@ query getPlantCoverPhoto($id: Int!) {
   }
 }
 
-query getPlantInfo($id: Int!) {
+query getPlantHeader($id: Int!) {
   plant(id: $id) {
-    id,
-    name,
+    name, species {
+      name
+    }
+  }
+}
+
+query getPlantCurrentLifeCycleEnvironment($id: Int!) {
+  plant(id: $id) {
     currentLifeCycle {
-      id, name, description, environment {
-        id, 
-        name,
+      environment {
         ...EnvironmentConditions
       }
-    },
-    species {
-      id, name, description, sproutToHarvestInHours
-    },
-    dateCreated
+    }
   }
 }
 

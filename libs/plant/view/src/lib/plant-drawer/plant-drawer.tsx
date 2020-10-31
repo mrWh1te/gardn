@@ -6,16 +6,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import { DrawerView, TabPanel, a11yProps } from '@gardn/ui';
-import { PlantPhotos, PlantInfo } from '@gardn/plant/smart';
+import { PlantPhotos, PlantCurrentLifeCycleIdealEnvironment, PlantLifeCyclesTimeline, PlantHeader } from '@gardn/plant/smart';
+import { DrawerView, Grid, TabPanel, a11yProps } from '@gardn/ui';
 
 /**
  * Component shown in Drawer on Plant page
  */
 export const PlantDrawer = () => {
-  const [value, setValue] = useState(0)
+  const [activeTabIndex, setValue] = useState(1)
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
@@ -27,20 +27,26 @@ export const PlantDrawer = () => {
     <>
       <SwipeableViews
         axis={'x'}
-        index={value}
+        index={activeTabIndex}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0}>
+        <TabPanel value={activeTabIndex} index={0}>
           <DrawerView>
             <PlantPhotos />
           </DrawerView>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={activeTabIndex} index={1}>
           <DrawerView>
-            <PlantInfo />
+            <Grid columns={1} gridTemplateRows={'auto'}>
+              <PlantHeader />
+              <Grid rows={1} columns={2}>
+                <PlantLifeCyclesTimeline />
+                <PlantCurrentLifeCycleIdealEnvironment />
+              </Grid>
+            </Grid>
           </DrawerView>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={activeTabIndex} index={2}>
           <DrawerView>
             Feed
             <br />
@@ -57,7 +63,7 @@ export const PlantDrawer = () => {
         position: 'relative'
       }}>
         <Tabs
-          value={value}
+          value={activeTabIndex}
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
