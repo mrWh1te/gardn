@@ -6,6 +6,7 @@ query getPlants {
 
 query getPlant($id: Int!) {
   plant(id: $id) {
+    id,
     name,
     species {
       name
@@ -22,6 +23,7 @@ query getPlant($id: Int!) {
 
 query getPlantCoverPhoto($id: Int!) {
   plant(id: $id) {
+    id,
     coverPhoto {
       url
     }
@@ -30,7 +32,7 @@ query getPlantCoverPhoto($id: Int!) {
 
 query getPlantHeader($id: Int!) {
   plant(id: $id) {
-    name, species {
+    id, name, species {
       name
     }
   }
@@ -38,7 +40,7 @@ query getPlantHeader($id: Int!) {
 
 query getPlantCurrentLifeCycleEnvironment($id: Int!) {
   plant(id: $id) {
-    currentLifeCycle {
+    id, currentLifeCycle {
       environment {
         ...EnvironmentConditions
       }
@@ -48,35 +50,36 @@ query getPlantCurrentLifeCycleEnvironment($id: Int!) {
 
 query getPlantEvents($id: Int!) {
   plant(id: $id) {
-    events {
+    id, events {
       id, type, data {
+        __typename
         ... on BaseEventData {
-          eventTime
+          id, eventTime
         }
         ... on WaterEventData {
-         	amount, amountUnit, temperature, temperatureUnit
+         	id, eventTime, amount, amountUnit, temperature, temperatureUnit
         }
         ... on LifeCycleEventData {
-          previousLifeCycle {
+          id, eventTime, previousLifeCycle {
             id, name, description
           }, nextLifeCycle {
             id, name, description
           }
         }
         ... on TemperatureEventData {
-          temperature, temperatureUnit
+          id, eventTime, temperature, temperatureUnit
         }
         ... on HumidityEventData {
-          humidity, humidityUnit
+          id, eventTime, humidity, humidityUnit
         }
         ... on PHEventData {
-          pH
+          id, eventTime, pH
         }
         ... on ECEventData {
-          electricalConductivity, electricalConductivityUnit
+          id, eventTime, electricalConductivity, electricalConductivityUnit
         }
         ... on LightEventData {
-          lightOn, color, lumens, wattage, bulbType
+          id, eventTime, lightOn, color, lumens, wattage, bulbType
         }
       }
     }
@@ -85,7 +88,7 @@ query getPlantEvents($id: Int!) {
 
 query getPlantPhotos($id: Int!) {
   plant(id: $id) {
-    photos {
+    id, photos {
       id, url, title, dateCreated
     }
   }

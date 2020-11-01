@@ -70,6 +70,9 @@
     },
     "helpers": {
       "tags": []
+    },
+    "events-ui": {
+      "tags": []
     }
   }
 }

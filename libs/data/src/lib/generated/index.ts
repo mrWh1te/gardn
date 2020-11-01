@@ -379,11 +379,11 @@ export type GetTargetEventsQuery = (
     { __typename?: 'Event' }
     & Pick<Event, 'id' | 'type'>
     & { data?: Maybe<(
-      { __typename?: 'WaterEventData' }
-      & Pick<WaterEventData, 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
+      { __typename: 'WaterEventData' }
+      & Pick<WaterEventData, 'id' | 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
     ) | (
-      { __typename?: 'LifeCycleEventData' }
-      & Pick<LifeCycleEventData, 'eventTime'>
+      { __typename: 'LifeCycleEventData' }
+      & Pick<LifeCycleEventData, 'id' | 'eventTime'>
       & { previousLifeCycle?: Maybe<(
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
@@ -392,20 +392,20 @@ export type GetTargetEventsQuery = (
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
       )> }
     ) | (
-      { __typename?: 'TemperatureEventData' }
-      & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
+      { __typename: 'TemperatureEventData' }
+      & Pick<TemperatureEventData, 'id' | 'eventTime' | 'temperature' | 'temperatureUnit'>
     ) | (
-      { __typename?: 'HumidityEventData' }
-      & Pick<HumidityEventData, 'eventTime' | 'humidity' | 'humidityUnit'>
+      { __typename: 'HumidityEventData' }
+      & Pick<HumidityEventData, 'id' | 'eventTime' | 'humidity' | 'humidityUnit'>
     ) | (
-      { __typename?: 'PHEventData' }
-      & Pick<PhEventData, 'eventTime' | 'pH'>
+      { __typename: 'PHEventData' }
+      & Pick<PhEventData, 'id' | 'eventTime' | 'pH'>
     ) | (
-      { __typename?: 'ECEventData' }
-      & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
+      { __typename: 'ECEventData' }
+      & Pick<EcEventData, 'id' | 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
     ) | (
-      { __typename?: 'LightEventData' }
-      & Pick<LightEventData, 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
+      { __typename: 'LightEventData' }
+      & Pick<LightEventData, 'id' | 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
     )> }
   )>>> }
 );
@@ -422,10 +422,10 @@ export type GetPlantLifeCycleEventsQuery = (
     & Pick<Event, 'id' | 'type'>
     & { data?: Maybe<(
       { __typename?: 'WaterEventData' }
-      & Pick<WaterEventData, 'eventTime'>
+      & Pick<WaterEventData, 'id' | 'eventTime'>
     ) | (
       { __typename?: 'LifeCycleEventData' }
-      & Pick<LifeCycleEventData, 'eventTime'>
+      & Pick<LifeCycleEventData, 'id' | 'eventTime'>
       & { previousLifeCycle?: Maybe<(
         { __typename?: 'LifeCycle' }
         & Pick<LifeCycle, 'id' | 'name' | 'description'>
@@ -435,19 +435,19 @@ export type GetPlantLifeCycleEventsQuery = (
       )> }
     ) | (
       { __typename?: 'TemperatureEventData' }
-      & Pick<TemperatureEventData, 'eventTime'>
+      & Pick<TemperatureEventData, 'id' | 'eventTime'>
     ) | (
       { __typename?: 'HumidityEventData' }
-      & Pick<HumidityEventData, 'eventTime'>
+      & Pick<HumidityEventData, 'id' | 'eventTime'>
     ) | (
       { __typename?: 'PHEventData' }
-      & Pick<PhEventData, 'eventTime'>
+      & Pick<PhEventData, 'id' | 'eventTime'>
     ) | (
       { __typename?: 'ECEventData' }
-      & Pick<EcEventData, 'eventTime'>
+      & Pick<EcEventData, 'id' | 'eventTime'>
     ) | (
       { __typename?: 'LightEventData' }
-      & Pick<LightEventData, 'eventTime'>
+      & Pick<LightEventData, 'id' | 'eventTime'>
     )> }
   )>>> }
 );
@@ -560,7 +560,7 @@ export type GetPlantQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'name' | 'dateCreated'>
+    & Pick<Plant, 'id' | 'name' | 'dateCreated'>
     & { species?: Maybe<(
       { __typename?: 'Species' }
       & Pick<Species, 'name'>
@@ -583,6 +583,7 @@ export type GetPlantCoverPhotoQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
     & { coverPhoto?: Maybe<(
       { __typename?: 'Photo' }
       & Pick<Photo, 'url'>
@@ -599,7 +600,7 @@ export type GetPlantHeaderQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'name'>
+    & Pick<Plant, 'id' | 'name'>
     & { species?: Maybe<(
       { __typename?: 'Species' }
       & Pick<Species, 'name'>
@@ -616,6 +617,7 @@ export type GetPlantCurrentLifeCycleEnvironmentQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
     & { currentLifeCycle?: Maybe<(
       { __typename?: 'LifeCycle' }
       & { environment?: Maybe<(
@@ -635,15 +637,16 @@ export type GetPlantEventsQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
     & { events?: Maybe<Array<Maybe<(
       { __typename?: 'Event' }
       & Pick<Event, 'id' | 'type'>
       & { data?: Maybe<(
-        { __typename?: 'WaterEventData' }
-        & Pick<WaterEventData, 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
+        { __typename: 'WaterEventData' }
+        & Pick<WaterEventData, 'id' | 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
       ) | (
-        { __typename?: 'LifeCycleEventData' }
-        & Pick<LifeCycleEventData, 'eventTime'>
+        { __typename: 'LifeCycleEventData' }
+        & Pick<LifeCycleEventData, 'id' | 'eventTime'>
         & { previousLifeCycle?: Maybe<(
           { __typename?: 'LifeCycle' }
           & Pick<LifeCycle, 'id' | 'name' | 'description'>
@@ -652,20 +655,20 @@ export type GetPlantEventsQuery = (
           & Pick<LifeCycle, 'id' | 'name' | 'description'>
         )> }
       ) | (
-        { __typename?: 'TemperatureEventData' }
-        & Pick<TemperatureEventData, 'eventTime' | 'temperature' | 'temperatureUnit'>
+        { __typename: 'TemperatureEventData' }
+        & Pick<TemperatureEventData, 'id' | 'eventTime' | 'temperature' | 'temperatureUnit'>
       ) | (
-        { __typename?: 'HumidityEventData' }
-        & Pick<HumidityEventData, 'eventTime' | 'humidity' | 'humidityUnit'>
+        { __typename: 'HumidityEventData' }
+        & Pick<HumidityEventData, 'id' | 'eventTime' | 'humidity' | 'humidityUnit'>
       ) | (
-        { __typename?: 'PHEventData' }
-        & Pick<PhEventData, 'eventTime' | 'pH'>
+        { __typename: 'PHEventData' }
+        & Pick<PhEventData, 'id' | 'eventTime' | 'pH'>
       ) | (
-        { __typename?: 'ECEventData' }
-        & Pick<EcEventData, 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
+        { __typename: 'ECEventData' }
+        & Pick<EcEventData, 'id' | 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
       ) | (
-        { __typename?: 'LightEventData' }
-        & Pick<LightEventData, 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
+        { __typename: 'LightEventData' }
+        & Pick<LightEventData, 'id' | 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
       )> }
     )>>> }
   )> }
@@ -680,6 +683,7 @@ export type GetPlantPhotosQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
     & { photos?: Maybe<Array<Maybe<(
       { __typename?: 'Photo' }
       & Pick<Photo, 'id' | 'url' | 'title' | 'dateCreated'>
@@ -774,16 +778,22 @@ export const GetTargetEventsDocument = gql`
     id
     type
     data {
+      __typename
       ... on BaseEventData {
+        id
         eventTime
       }
       ... on WaterEventData {
+        id
+        eventTime
         amount
         amountUnit
         temperature
         temperatureUnit
       }
       ... on LifeCycleEventData {
+        id
+        eventTime
         previousLifeCycle {
           id
           name
@@ -796,21 +806,31 @@ export const GetTargetEventsDocument = gql`
         }
       }
       ... on TemperatureEventData {
+        id
+        eventTime
         temperature
         temperatureUnit
       }
       ... on HumidityEventData {
+        id
+        eventTime
         humidity
         humidityUnit
       }
       ... on PHEventData {
+        id
+        eventTime
         pH
       }
       ... on ECEventData {
+        id
+        eventTime
         electricalConductivity
         electricalConductivityUnit
       }
       ... on LightEventData {
+        id
+        eventTime
         lightOn
         color
         lumens
@@ -856,9 +876,11 @@ export const GetPlantLifeCycleEventsDocument = gql`
     type
     data {
       ... on BaseEventData {
+        id
         eventTime
       }
       ... on LifeCycleEventData {
+        id
         eventTime
         previousLifeCycle {
           id
@@ -1154,6 +1176,7 @@ export type GetPlantsQueryResult = Apollo.QueryResult<GetPlantsQuery, GetPlantsQ
 export const GetPlantDocument = gql`
     query getPlant($id: Int!) {
   plant(id: $id) {
+    id
     name
     species {
       name
@@ -1198,6 +1221,7 @@ export type GetPlantQueryResult = Apollo.QueryResult<GetPlantQuery, GetPlantQuer
 export const GetPlantCoverPhotoDocument = gql`
     query getPlantCoverPhoto($id: Int!) {
   plant(id: $id) {
+    id
     coverPhoto {
       url
     }
@@ -1233,6 +1257,7 @@ export type GetPlantCoverPhotoQueryResult = Apollo.QueryResult<GetPlantCoverPhot
 export const GetPlantHeaderDocument = gql`
     query getPlantHeader($id: Int!) {
   plant(id: $id) {
+    id
     name
     species {
       name
@@ -1269,6 +1294,7 @@ export type GetPlantHeaderQueryResult = Apollo.QueryResult<GetPlantHeaderQuery, 
 export const GetPlantCurrentLifeCycleEnvironmentDocument = gql`
     query getPlantCurrentLifeCycleEnvironment($id: Int!) {
   plant(id: $id) {
+    id
     currentLifeCycle {
       environment {
         ...EnvironmentConditions
@@ -1306,20 +1332,27 @@ export type GetPlantCurrentLifeCycleEnvironmentQueryResult = Apollo.QueryResult<
 export const GetPlantEventsDocument = gql`
     query getPlantEvents($id: Int!) {
   plant(id: $id) {
+    id
     events {
       id
       type
       data {
+        __typename
         ... on BaseEventData {
+          id
           eventTime
         }
         ... on WaterEventData {
+          id
+          eventTime
           amount
           amountUnit
           temperature
           temperatureUnit
         }
         ... on LifeCycleEventData {
+          id
+          eventTime
           previousLifeCycle {
             id
             name
@@ -1332,21 +1365,31 @@ export const GetPlantEventsDocument = gql`
           }
         }
         ... on TemperatureEventData {
+          id
+          eventTime
           temperature
           temperatureUnit
         }
         ... on HumidityEventData {
+          id
+          eventTime
           humidity
           humidityUnit
         }
         ... on PHEventData {
+          id
+          eventTime
           pH
         }
         ... on ECEventData {
+          id
+          eventTime
           electricalConductivity
           electricalConductivityUnit
         }
         ... on LightEventData {
+          id
+          eventTime
           lightOn
           color
           lumens
@@ -1387,6 +1430,7 @@ export type GetPlantEventsQueryResult = Apollo.QueryResult<GetPlantEventsQuery, 
 export const GetPlantPhotosDocument = gql`
     query getPlantPhotos($id: Int!) {
   plant(id: $id) {
+    id
     photos {
       id
       url

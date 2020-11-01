@@ -6,7 +6,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import { PlantPhotos, PlantCurrentLifeCycleIdealEnvironment, PlantLifeCyclesTimeline, PlantHeader } from '@gardn/plant/smart';
+import { 
+  PlantPhotos,
+  PlantCurrentLifeCycleIdealEnvironment,
+  PlantLifeCyclesTimeline,
+  PlantHeader,
+  PlantEventsTimeline
+} from '@gardn/plant/smart';
 import { DrawerView, Grid, TabPanel, a11yProps } from '@gardn/ui';
 
 /**
@@ -48,13 +54,7 @@ export const PlantDrawer = () => {
         </TabPanel>
         <TabPanel value={activeTabIndex} index={2}>
           <DrawerView>
-            Feed
-            <br />
-            <br />
-            Scroll down....
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <p>You made it!</p>
-            <br />
+            <PlantEventsTimeline />
           </DrawerView>
         </TabPanel>
       </SwipeableViews>

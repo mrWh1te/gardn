@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantCurrentLifeCycleEnvironmentQuery } from '@gardn/data';
+import { useGetPlantCurrentLifeCycleEnvironmentLazyQuery } from '@gardn/data';
 import { PlantCurrentLifeCycleIdealEnvironment as PlantCurrentLifeCycleIdealEnvironmentUi } from '@gardn/plant/ui';
 
 /**
@@ -10,17 +10,23 @@ import { PlantCurrentLifeCycleIdealEnvironment as PlantCurrentLifeCycleIdealEnvi
 export const PlantCurrentLifeCycleIdealEnvironment = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantCurrentLifeCycleEnvironmentQuery({
+  const [getPlantCurrentLifeCycleEnvironment, { data, loading, error }] = useGetPlantCurrentLifeCycleEnvironmentLazyQuery({
     variables: {
       id: parseInt(id)
     }
   });
 
-  return (
-    loading ? <div>Loading</div> : 
-    error ? <div>Error :( { error.graphQLErrors[0]?.message } </div> :
-    <PlantCurrentLifeCycleIdealEnvironmentUi plant={data.plant} /> 
-  )
+  useEffect(() => { getPlantCurrentLifeCycleEnvironment() }, [getPlantCurrentLifeCycleEnvironment])
+
+  if (error) {
+    return <div>Error :( { error.graphQLErrors[0]?.message } </div>
+  }
+
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
+
+  return <PlantCurrentLifeCycleIdealEnvironmentUi plant={data.plant} /> 
 };
 
 export default PlantCurrentLifeCycleIdealEnvironment;

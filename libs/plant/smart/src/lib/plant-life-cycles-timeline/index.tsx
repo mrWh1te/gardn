@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantLifeCycleEventsQuery, GetPlantLifeCycleEventsQuery } from '@gardn/data';
+import { useGetPlantLifeCycleEventsLazyQuery, GetPlantLifeCycleEventsQuery } from '@gardn/data';
 import { PlantLifeCyclesTimeline as PlantLifeCyclesTimelineUi } from '@gardn/plant/ui';
 
 /**
@@ -10,11 +10,21 @@ import { PlantLifeCyclesTimeline as PlantLifeCyclesTimelineUi } from '@gardn/pla
 export const PlantLifeCyclesTimeline = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantLifeCycleEventsQuery({
+  const [getPlantLifeCycleEvents, { data, loading, error }] = useGetPlantLifeCycleEventsLazyQuery({
     variables: {
       plantId: parseInt(id)
     }
   });
+
+  useEffect(() => { getPlantLifeCycleEvents() }, [getPlantLifeCycleEvents])
+
+  if (error) {
+    return <div>Error :( { error.graphQLErrors[0]?.message } </div>
+  }
+
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
 
   // sort in reverse order (newest first -> to oldest last)
   let events: GetPlantLifeCycleEventsQuery['events'] = []
@@ -23,11 +33,7 @@ export const PlantLifeCyclesTimeline = () => {
     events.sort((a,b) => b.data.eventTime - a.data.eventTime)
   }
 
-  return (
-    loading ? <div>Loading</div> : 
-    error ? <div>Error :( { error.graphQLErrors[0]?.message } </div> :
-    <PlantLifeCyclesTimelineUi events={events} /> 
-  )
+  return <PlantLifeCyclesTimelineUi events={events} />
 };
 
 export default PlantLifeCyclesTimeline;

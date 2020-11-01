@@ -1,33 +1,34 @@
 query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $eventType: EventType) {
   events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, eventType: $eventType) {
     id, type, data {
+      __typename
       ... on BaseEventData {
-        eventTime
+        id, eventTime
       }
       ... on WaterEventData {
-        amount, amountUnit, temperature, temperatureUnit 
+        id, eventTime, amount, amountUnit, temperature, temperatureUnit 
       }
       ... on LifeCycleEventData {
-        previousLifeCycle {
+        id, eventTime, previousLifeCycle {
           id, name, description
         }, nextLifeCycle {
           id, name, description
         }
       }
       ... on TemperatureEventData {
-        temperature, temperatureUnit
+        id, eventTime, temperature, temperatureUnit
       }
       ... on HumidityEventData {
-        humidity, humidityUnit
+        id, eventTime, humidity, humidityUnit
       }
       ... on PHEventData {
-        pH
+        id, eventTime, pH
       }
       ... on ECEventData {
-        electricalConductivity, electricalConductivityUnit
+        id, eventTime, electricalConductivity, electricalConductivityUnit
       }
       ... on LightEventData {
-        lightOn, color, lumens, wattage, bulbType
+        id, eventTime, lightOn, color, lumens, wattage, bulbType
       }
     }
   }
@@ -37,10 +38,10 @@ query getPlantLifeCycleEvents($plantId: Int!) {
   events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: LIFE_CYCLE_CHANGE) {
     id, type, data {
       ... on BaseEventData {
-        eventTime
+        id, eventTime
       }
       ... on LifeCycleEventData {
-        eventTime, previousLifeCycle {
+        id, eventTime, previousLifeCycle {
           id, name, description
         }, nextLifeCycle {
           id, name, description

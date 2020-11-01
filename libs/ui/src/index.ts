@@ -17,6 +17,7 @@ export * from './lib/icons/humidity/humidity';
 export * from './lib/icons/sun/sun';
 export * from './lib/icons/thermometer/thermometer';
 export * from './lib/icons/water-droplet/water-droplet';
+export * from './lib/icons/milestone';
 
 // view components
 export * from './lib/drawer-view/drawer-view';

@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useGetPlantsQuery } from '@gardn/data';
+import { useGetPlantsLazyQuery } from '@gardn/data';
 
 import { PlantsList as PlantsListUi } from '@gardn/plants/ui';
 
 export const PlantsList = () => {
-  const { data, loading, error } = useGetPlantsQuery();
+  const [getPlants, { data, loading, error }] = useGetPlantsLazyQuery();
 
-  if (loading) {
-    return (
-      <p>Loading</p>
-    );
-  } else if (error) {
-    return (
-      <p>Error :(</p>
-    );
-  } else {
-    return <PlantsListUi plants={data.plants} />;
+  useEffect(() => { getPlants() }, [getPlants])
+
+  if (error) {
+    return <div>Error :( { error.graphQLErrors[0]?.message } </div>
   }
 
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
+  
+  return <PlantsListUi plants={data.plants} />;
 };
 
 export default PlantsList;

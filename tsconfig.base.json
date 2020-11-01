@@ -26,7 +26,8 @@
       "@gardn/utility": ["libs/utility/src/index.ts"],
       "@gardn/photo/ui": ["libs/photo/ui/src/index.ts"],
       "@gardn/plants/view": ["libs/plants/view/src/index.ts"],
-      "@gardn/helpers": ["libs/helpers/src/index.ts"]
+      "@gardn/helpers": ["libs/helpers/src/index.ts"],
+      "@gardn/events/ui": ["libs/events/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

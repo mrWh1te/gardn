@@ -490,6 +490,32 @@
           }
         }
       }
+    },
+    "events-ui": {
+      "root": "libs/events/ui",
+      "sourceRoot": "libs/events/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/events/ui/tsconfig.lib.json",
+              "libs/events/ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/events/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/events/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

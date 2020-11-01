@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantCoverPhotoQuery } from '@gardn/data';
+import { useGetPlantCoverPhotoLazyQuery } from '@gardn/data';
 import { Plant as PlantUi } from '@gardn/plant/ui'
 
 /**
@@ -11,15 +11,17 @@ import { Plant as PlantUi } from '@gardn/plant/ui'
 export const Plant = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantCoverPhotoQuery({
+  const [getPlantCoverPhoto, { data, loading, error }] = useGetPlantCoverPhotoLazyQuery({
     variables: {
       id: parseInt(id)
     }
   });
 
+  useEffect(() => { getPlantCoverPhoto() }, [getPlantCoverPhoto])
+
   return (
-    loading ? <div>Loading</div> : 
-    error ? <div>Error :( { error.graphQLErrors[0]?.message } </div> :
+    error ? <div>Error :( { error?.graphQLErrors[0]?.message } </div> :
+    loading || !data ? <div>Loading</div> : 
     <PlantUi plant={data.plant} /> 
   )
 };

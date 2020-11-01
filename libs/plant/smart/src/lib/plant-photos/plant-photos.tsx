@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantPhotosQuery } from '@gardn/data';
+import { useGetPlantPhotosLazyQuery } from '@gardn/data';
 import { PhotosGrid } from '@gardn/photo/ui'
 
 /**
@@ -11,17 +11,23 @@ import { PhotosGrid } from '@gardn/photo/ui'
 export const PlantPhotos = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantPhotosQuery({
+  const [getPlantPhotos, { data, loading, error }] = useGetPlantPhotosLazyQuery({
     variables: {
       id: parseInt(id)
     }
   });
 
-  return (
-    loading ? <div>Loading</div> : 
-    error ? <div>Error :( { error.graphQLErrors[0]?.message } </div> :
-    <PhotosGrid photos={data.plant.photos} columns={3} /> 
-  )
+  useEffect(() => { getPlantPhotos() }, [getPlantPhotos])
+
+  if (error) {
+    return <div>Error :( { error.graphQLErrors[0]?.message } </div>
+  }
+
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
+
+  return <PhotosGrid photos={data.plant.photos} columns={3} />
 };
 
 export default PlantPhotos;

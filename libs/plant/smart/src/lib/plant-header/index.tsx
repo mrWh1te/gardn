@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import { useGetPlantHeaderQuery } from '@gardn/data';
+import { useGetPlantHeaderLazyQuery } from '@gardn/data';
 import { PlantHeader as PlantHeaderUi } from '@gardn/plant/ui';
 
 /**
@@ -10,17 +10,23 @@ import { PlantHeader as PlantHeaderUi } from '@gardn/plant/ui';
 export const PlantHeader = () => {
   const { id } = useParams<{id: string}>()
 
-  const { data, loading, error } = useGetPlantHeaderQuery({
+  const [getPlantHeader, { data, loading, error }] = useGetPlantHeaderLazyQuery({
     variables: {
       id: parseInt(id)
     }
   });
 
-  return (
-    loading ? <div>Loading</div> : 
-    error ? <div>Error :( { error.graphQLErrors[0]?.message } </div> :
-    <PlantHeaderUi plant={data.plant} /> 
-  )
+  useEffect(() => { getPlantHeader() }, [getPlantHeader])
+
+  if (error) {
+    return <div>Error :( { error.graphQLErrors[0]?.message } </div>
+  }
+
+  if (loading || !data) {
+    return <div>Loading</div>
+  }
+
+  return <PlantHeaderUi plant={data.plant} /> 
 };
 
 export default PlantHeader;

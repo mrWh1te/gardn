@@ -27,6 +27,9 @@ export * from './lib/event/events/ph/data-source';
 export * from './lib/event/events/ec/data-source';
 export * from './lib/event/events/light/data-source';
 
+// Type Policies
+export * from './lib/event/type-policies';
+
 // Create Model Instance methods
 export * from './lib/plant/helpers/create-plant';
 export * from './lib/species/helpers/create-species';

@@ -9,8 +9,9 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
 import green from '@material-ui/core/colors/green';
+
+import { eventTypePolicies } from '@gardn/data';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +33,11 @@ const theme = createMuiTheme({
 
 const client = new ApolloClient({
   uri: 'http://localhost:3333/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      ...eventTypePolicies
+    },
+  })
 });
 
 ReactDOM.render(
