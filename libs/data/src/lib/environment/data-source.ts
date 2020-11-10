@@ -1,8 +1,10 @@
+import { DataSourceFactory } from '../data-sources.interfaces';
+import { Environment } from '../generated';
 import { Store } from './../store';
 
-export const EnvironmentDataSourceFactory = (store: Store) => ({
+export const EnvironmentDataSourceFactory: DataSourceFactory<Environment> = (store: Store) => ({
   // Read Data
-  getById({ id }: {id: number}) {
+  byId({ id }: {id: number}) {
     const environment = store.environments.find(environment => environment.id === id);
 
     if (environment) {

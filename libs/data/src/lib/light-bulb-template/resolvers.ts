@@ -7,7 +7,7 @@ export const lightBulbTemplateResolvers: Resolvers = {
   Query: {
     lightBulbTemplates: (_, __, { dataSources }) => dataSources.lightBulbTemplate.getAll(),
     lightBulbTemplate: (_, { id }, { dataSources }) => {
-      const lightBulbTemplateRecord = dataSources.lightBulbTemplate.getById({ id });
+      const lightBulbTemplateRecord = dataSources.lightBulbTemplate.byId({ id });
 
       if (lightBulbTemplateRecord) {
         return lightBulbTemplateRecord;

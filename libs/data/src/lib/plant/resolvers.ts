@@ -1,4 +1,3 @@
-import { eventsTargetsRecordToEvent } from '../event/helpers/events-targets-record-to-event';
 import { Resolvers } from './../generated';
 
 /**
@@ -7,9 +6,9 @@ import { Resolvers } from './../generated';
  */
 export const plantResolvers: Resolvers = {
   Query: {
-    plants: (_, __, { dataSources }) => dataSources.plant.getPlants(),
+    plants: (_, __, { dataSources }) => dataSources.plant.getAll(),
     plant: (_, { id }, { dataSources }) => {
-      const plant = dataSources.plant.getPlantById({ id })
+      const plant = dataSources.plant.byId({ id })
 
       if (plant) {
         return plant;
@@ -21,7 +20,7 @@ export const plantResolvers: Resolvers = {
   Plant: {
     avatar: (plant, _, { dataSources }) => {
       if (plant['avatarPhotoId']) { // not in obj type, but in db record ie parent
-        const avatar = dataSources.photo.getPhotoById({ id: plant['avatarPhotoId'] });
+        const avatar = dataSources.photo.byId({ id: plant['avatarPhotoId'] });
         return avatar;
       }
 
@@ -29,39 +28,35 @@ export const plantResolvers: Resolvers = {
     },
     coverPhoto: (plant, _, { dataSources }) => {
       if (plant['coverPhotoId']) {
-        const coverPhoto = dataSources.photo.getPhotoById({ id: plant['coverPhotoId'] });
+        const coverPhoto = dataSources.photo.byId({ id: plant['coverPhotoId'] });
         return coverPhoto;
       }
 
       return null;
     },
     photos: (plant, _, { dataSources }) => {
-      const photos = dataSources.photo.getPhotosByPlantId({ id: plant.id });
+      const photos = dataSources.photo.filterByPlantId({ id: plant.id });
       return photos;
     },
     species: (plant, _, { dataSources }) => {
       if (plant['speciesId']) {
-        const species = dataSources.species.getSpeciesById({ id: plant['speciesId'] })
+        const species = dataSources.species.byId({ id: plant['speciesId'] })
         return species;
       }
 
       return null;
     },
-    currentLifeCycle: (plant, _, { dataSources }) => {
-      if (plant['currentLifeCycleId']) {
-        const lifeCycle = dataSources.lifeCycle.getById({ id: plant['currentLifeCycleId'] });
-        return lifeCycle;
+    currentPlantStage: ({ id }, _, { dataSources }) => {
+      const plant = dataSources.plant.byId({ id })
+
+      if (plant.currentPlantStageId) {
+        return dataSources.plantStage.byId({ id: plant.currentPlantStageId });
       }
 
       return null;
-    },
-    events: ({ id }, _, { dataSources }) => {
-      const events = dataSources.eventsTargets.filterByPlantId({ eventTargetId: id })
-
-      return events.map(eventsTargetsRecord => eventsTargetsRecordToEvent(eventsTargetsRecord))
     }
   },
   Mutation: {
-    addPlant: (_, { name }, { dataSources }) => dataSources.plant.newPlant({name})
+    addPlant: (_, { name }, { dataSources }) => dataSources.plant.new({name})
   }
 }

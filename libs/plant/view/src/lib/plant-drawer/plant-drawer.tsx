@@ -8,8 +8,8 @@ import Tab from '@material-ui/core/Tab';
 
 import { 
   PlantPhotos,
-  PlantCurrentLifeCycleIdealEnvironment,
-  PlantLifeCyclesTimeline,
+  PlantCurrentStageIdealEnvironment,
+  PlantStagesTimeline,
   PlantHeader,
   PlantEventsTimeline
 } from '@gardn/plant/smart';
@@ -46,8 +46,8 @@ export const PlantDrawer = () => {
             <Grid columns={1} gridTemplateRows={'auto'}>
               <PlantHeader />
               <Grid rows={1} columns={2}>
-                <PlantLifeCyclesTimeline />
-                <PlantCurrentLifeCycleIdealEnvironment />
+                <PlantStagesTimeline />
+                <PlantCurrentStageIdealEnvironment />
               </Grid>
             </Grid>
           </DrawerView>

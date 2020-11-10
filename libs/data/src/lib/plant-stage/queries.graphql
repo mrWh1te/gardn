@@ -1,0 +1,21 @@
+query getPlantStage($id: Int!) {
+  plantStage(id: $id) {
+    name,
+    dateCreated,
+    description,
+    environment {
+      id, name
+    }
+  }
+}
+
+query getAllPlantStages {
+  plantStages {
+    name,
+    dateCreated,
+    description,
+    environment {
+      id, name
+    }
+  }
+}

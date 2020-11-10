@@ -1,34 +1,35 @@
-import { 
+import { // todo standardize casing with data-sources' naming
+  DataSources,
+  store,
   photoDataSourceFactory,
   plantDataSourceFactory,
   speciesDataSourceFactory,
-  LifeCycleDataSourceFactory,
+  PlantStageDataSourceFactory,
   lightBulbTemplateDataSourceFactory,
   EnvironmentDataSourceFactory,
   EventsTargetsDataSourceFactory,
   WaterEventDataDataSourceFactory,
-  LifeCycleEventDataDataSourceFactory,
+  PlantStageEventDataDataSourceFactory,
   TemperatureEventDataDataSourceFactory,
   HumidityEventDataDataSourceFactory,
   PHEventDataDataSourceFactory,
   ECEventDataDataSourceFactory,
-  LightEventDataDataSourceFactory,
-  store,
+  LightEventDataDataSourceFactory
 } from '@gardn/data';
 
 /**
  * Data Sources factory
  */
-export const dataSources = (): any => ({
+export const dataSources = (): DataSources => ({
   plant: plantDataSourceFactory(store),
   species: speciesDataSourceFactory(store),
   photo: photoDataSourceFactory(store),
-  lifeCycle: LifeCycleDataSourceFactory(store),
+  plantStage: PlantStageDataSourceFactory(store),
   lightBulbTemplate: lightBulbTemplateDataSourceFactory(store),
   environment: EnvironmentDataSourceFactory(store),
   eventsTargets: EventsTargetsDataSourceFactory(store),
   waterEventData: WaterEventDataDataSourceFactory(store),
-  lifeCycleEventData: LifeCycleEventDataDataSourceFactory(store),
+  plantStageEventData: PlantStageEventDataDataSourceFactory(store),
   temperatureEventData: TemperatureEventDataDataSourceFactory(store),
   humidityEventData: HumidityEventDataDataSourceFactory(store),
   pHEventData: PHEventDataDataSourceFactory(store),

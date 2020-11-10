@@ -16,8 +16,8 @@ import {
 // Database Models
 import { DBPlant } from './plant/interfaces';
 import { DBPhoto } from './photo/interfaces';
-import { DBLifeCycle } from './life-cycle/interfaces';
-import { DBSpeciesLifeCycles } from './species/interfaces';
+import { DBPlantStage } from './plant-stage/interfaces';
+import { DBSpeciesPlantStages } from './species/interfaces';
 import { DBEnvironmentsLightBulbTemplates } from './environment/interfaces';
 import { DBEventsTargets } from './event/events-targets/interface';
 
@@ -32,7 +32,8 @@ import {
 
 import { 
   mockPlant1,
-  mockPlant2
+  mockPlant2,
+  mockPlant3
 } from './plant/mocks';
 
 import {
@@ -62,15 +63,15 @@ import {
 } from './environment/mocks';
 
 import {
-  lifeCycleSeed,
-  lifeCycleGermination,
-  lifeCyclePlanting,
-  lifeCycleSprouting,
-  lifeCycleVeging,
-  lifeCycleEarlyFlower,
-  lifeCycleLateFlower,
-  lifeCycleHarvest
-} from './life-cycle/seed-data';
+  plantStageSeed,
+  plantStageGermination,
+  plantStagePlanting,
+  plantStageSprouting,
+  plantStageVeging,
+  plantStageEarlyFlower,
+  plantStageLateFlower,
+  plantStageHarvest
+} from './plant-stage/seed-data';
 
 import { 
   mockDBWaterEventData1,
@@ -78,12 +79,12 @@ import {
 } from './event/events/water/mocks';
 
 // Helpers
-import { createSpeciesLifeCycles } from './species/helpers/create-species-life-cycles';
+import { createSpeciesPlantStages } from './species/helpers/create-species-plant-stages';
 import { createEnvironmentsLightBulbTemplates } from './environment/helpers/create-environments-light-bulb-templates';
 import { createDBEventsTargets } from './event/events-targets/helpers/create-db-events-targets';
-import { DBLifeCycleEventData } from './event/events/life-cycle/interface';
-import { createDBLifeCycleEventData } from './event/events/life-cycle/helpers/create-db-life-cycle-event-data';
-import { mockDBTemperatureEventData1, mockDBTemperatureEventData2 } from './event/events/temperature/mocks';
+import { DBPlantStageEventData } from './event/events/plant-stage/interface';
+import { createDBPlantStageEventData } from './event/events/plant-stage/helpers/create-db-plant-stage-event-data';
+import { mockDBTemperatureEventData1, mockDBTemperatureEventData2, mockDBTemperatureEventData3 } from './event/events/temperature/mocks';
 import { mockDBHumidityEventData1, mockDBHumidityEventData2 } from './event/events/humidity/mocks';
 import { mockDBpHEventData1, mockDBpHEventData2 } from './event/events/ph/mocks';
 import { mockDBECEventData1, mockDBECEventData2 } from './event/events/ec/mocks';
@@ -97,19 +98,19 @@ export interface Store {
   photos: DBPhoto[],
   plants: DBPlant[],
   species: Species[],
-  lifeCycles: DBLifeCycle[],
+  plantStages: DBPlantStage[],
   environments: Environment[],
   lightBulbTemplates: LightBulbTemplate[],
   // event data
   waterEventsData: WaterEventData[],
-  lifeCycleEventsData: DBLifeCycleEventData[],
+  plantStageEventsData: DBPlantStageEventData[],
   temperatureEventsData: TemperatureEventData[],
   humidityEventsData: HumidityEventData[],
   pHEventsData: PhEventData[],
   eCEventsData: EcEventData[],
   lightEventsData: LightEventData[],
   // many:many association tables' data
-  speciesLifeCycles: DBSpeciesLifeCycles[],
+  speciesPlantStages: DBSpeciesPlantStages[],
   environmentsLightBulbTemplates: DBEnvironmentsLightBulbTemplates[],
   eventsTargets: DBEventsTargets[]
 }
@@ -131,44 +132,44 @@ export const environmentsSeed = [
 ];
 
 // plant life cycles associated with environments that detail the plant's preferred growth conditions
-const associatedLifeCycleSeed = {
-  ...lifeCycleSeed,
+const associatedPlantStageSeed = {
+  ...plantStageSeed,
   environmentId: mockEnvironmentSeed.id
 }
-const associatedLifeCycleGermination = {
-  ...lifeCycleGermination,
+const associatedPlantStageGermination = {
+  ...plantStageGermination,
   environmentId: mockEnvironmentSeed.id
 }
-const associatedLifeCyclePlanting = {
-  ...lifeCyclePlanting,
+const associatedPlantStagePlanting = {
+  ...plantStagePlanting,
   environmentId: mockEnvironmentSprout.id
 }
-const associatedLifeCycleSprouting = {
-  ...lifeCycleSprouting,
+const associatedPlantStageSprouting = {
+  ...plantStageSprouting,
   environmentId: mockEnvironmentSprout.id
 }
-const associatedLifeCycleVeging = {
-  ...lifeCycleVeging,
+const associatedPlantStageVeging = {
+  ...plantStageVeging,
   environmentId: mockEnvironmentVeg.id
 }
-const associatedLifeCycleEarlyFlower = {
-  ...lifeCycleEarlyFlower,
+const associatedPlantStageEarlyFlower = {
+  ...plantStageEarlyFlower,
   environmentId: mockEnvironmentEarlyFlower.id
 }
-const associatedLifeCycleLateFlower = {
-  ...lifeCycleLateFlower,
+const associatedPlantStageLateFlower = {
+  ...plantStageLateFlower,
   environmentId: mockEnvironmentLateFlower.id
 }
 
-export const lifeCyclesSeed = [
-  associatedLifeCycleSeed,
-  associatedLifeCycleGermination,
-  associatedLifeCyclePlanting,
-  associatedLifeCycleSprouting,
-  associatedLifeCycleVeging,
-  associatedLifeCycleEarlyFlower,
-  associatedLifeCycleLateFlower,
-  lifeCycleHarvest // no associated environment
+export const plantStagesSeed = [
+  associatedPlantStageSeed,
+  associatedPlantStageGermination,
+  associatedPlantStagePlanting,
+  associatedPlantStageSprouting,
+  associatedPlantStageVeging,
+  associatedPlantStageEarlyFlower,
+  associatedPlantStageLateFlower,
+  plantStageHarvest // no associated environment
 ];
 
 export const speciesSeed = [
@@ -185,15 +186,21 @@ const fakePlant1: DBPlant = {
   ...mockPlant1,
   coverPhotoId: mockLargePhoto1.id,
   speciesId: species1.id,
-  currentLifeCycleId: associatedLifeCycleSprouting.id
+  currentPlantStageId: associatedPlantStageSprouting.id
 }
 const fakePlant2: DBPlant = {
   ...mockPlant2,
   coverPhotoId: mockLargePhoto2.id,
   speciesId: species2.id,
-  currentLifeCycleId: associatedLifeCycleSprouting.id
+  currentPlantStageId: associatedPlantStageSprouting.id
 }
-export const plantsSeed = [fakePlant1, fakePlant2];
+const fakePlant3: DBPlant = {
+  ...mockPlant3,
+  coverPhotoId: mockLargePhoto2.id,
+  speciesId: species3.id,
+  currentPlantStageId: associatedPlantStageEarlyFlower.id
+}
+export const plantsSeed = [fakePlant1, fakePlant2, fakePlant3];
 
 const fakeLargePhoto3: DBPhoto = {
   ...mockLargePhoto3,
@@ -245,48 +252,49 @@ export const waterEventsDataSeed = [
  * Associations Seeds
  *  many:many relationships between Models
  */
-export const speciesLifeCyclesSeed = [
-  // Species 1's LifeCycles
-  createSpeciesLifeCycles({
+export const speciesPlantStagesSeed = [
+  // Species 1's PlantStages
+  createSpeciesPlantStages({
     speciesId: species1.id,
-    lifeCycleId: associatedLifeCycleSeed.id
+    plantStageId: associatedPlantStageSeed.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species1.id,
-    lifeCycleId: lifeCycleGermination.id
+    plantStageId: plantStageGermination.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species1.id,
-    lifeCycleId: lifeCyclePlanting.id
+    plantStageId: plantStagePlanting.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species1.id,
-    lifeCycleId: lifeCycleSprouting.id
+    plantStageId: plantStageSprouting.id
   }),
-  // Species 2's LifeCycles
-  createSpeciesLifeCycles({
+  // Species 2's PlantStages
+  createSpeciesPlantStages({
     speciesId: species2.id,
-    lifeCycleId: associatedLifeCycleSeed.id
+    plantStageId: associatedPlantStageSeed.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species2.id,
-    lifeCycleId: lifeCycleGermination.id
+    plantStageId: plantStageGermination.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species2.id,
-    lifeCycleId: lifeCyclePlanting.id
+    plantStageId: plantStagePlanting.id
   }),
-  createSpeciesLifeCycles({
+  createSpeciesPlantStages({
     speciesId: species2.id,
-    lifeCycleId: lifeCycleSprouting.id
+    plantStageId: plantStageSprouting.id
   }),
-  // for full testing, remaining species do not have the optional data LifeCycle
+  // for full testing, remaining species do not have the optional data PlantStage
 ];
 
 // Temperature reading Events
 const temperatureEventsDataSeed = [
   mockDBTemperatureEventData1,
-  mockDBTemperatureEventData2
+  mockDBTemperatureEventData2,
+  mockDBTemperatureEventData3
 ]
 
 // Humidity reading Events
@@ -314,38 +322,38 @@ const lightEventsDataSeed = [
 ]
 
 // Life Cycle change Events
-const mockLifeCycleEventsData1 = createDBLifeCycleEventData({
-  previousLifeCycleId: lifeCycleSeed.id,
-  nextLifeCycleId: lifeCycleGermination.id,
+const mockPlantStageEventsData1 = createDBPlantStageEventData({
+  previousPlantStageId: plantStageSeed.id,
+  nextPlantStageId: plantStageGermination.id,
   eventTime: new Date().getTime()
 });
-const mockLifeCycleEventsData2 = createDBLifeCycleEventData({
-  previousLifeCycleId: lifeCycleGermination.id,
-  nextLifeCycleId: lifeCyclePlanting.id,
+const mockPlantStageEventsData2 = createDBPlantStageEventData({
+  previousPlantStageId: plantStageGermination.id,
+  nextPlantStageId: plantStagePlanting.id,
   eventTime: new Date().getTime() + (24 * 60 * 60 * 1000) // 1 day later
 });
-const mockLifeCycleEventsData3 = createDBLifeCycleEventData({
-  previousLifeCycleId: lifeCyclePlanting.id,
-  nextLifeCycleId: lifeCycleSprouting.id,
+const mockPlantStageEventsData3 = createDBPlantStageEventData({
+  previousPlantStageId: plantStagePlanting.id,
+  nextPlantStageId: plantStageSprouting.id,
   eventTime: new Date().getTime() + (5 * 24 * 60 * 60 * 1000) // 5 days later (4 from planting)
 });
 
-const mockLifeCycleEventsData10 = createDBLifeCycleEventData({
-  previousLifeCycleId: lifeCycleSeed.id,
-  nextLifeCycleId: lifeCyclePlanting.id,
+const mockPlantStageEventsData10 = createDBPlantStageEventData({
+  previousPlantStageId: plantStageSeed.id,
+  nextPlantStageId: plantStagePlanting.id,
   eventTime: new Date().getTime()
 });
-const mockLifeCycleEventsData11 = createDBLifeCycleEventData({
-  previousLifeCycleId: lifeCyclePlanting.id,
-  nextLifeCycleId: lifeCycleSprouting.id,
+const mockPlantStageEventsData11 = createDBPlantStageEventData({
+  previousPlantStageId: plantStagePlanting.id,
+  nextPlantStageId: plantStageSprouting.id,
   eventTime: new Date().getTime() + (7 * 24 * 60 * 60 * 1000) // 1 week later from event 10
 });
-const lifeCycleEventsDataSeed = [
-  mockLifeCycleEventsData1,
-  mockLifeCycleEventsData2,
-  mockLifeCycleEventsData3,
-  mockLifeCycleEventsData10,
-  mockLifeCycleEventsData11
+const plantStageEventsDataSeed = [
+  mockPlantStageEventsData1,
+  mockPlantStageEventsData2,
+  mockPlantStageEventsData3,
+  mockPlantStageEventsData10,
+  mockPlantStageEventsData11
 ];
 
 export const environmentsLightBulbTemplatesSeed = [
@@ -370,55 +378,49 @@ export const environmentsLightBulbTemplatesSeed = [
 
 export const eventsTargetsSeed = [
   //
-  // 1 watering event, 2 targets
+  // 1 watering event, 1 target
   createDBEventsTargets({
     eventType: EventType.Water,
     eventDataId: mockDBWaterEventData1.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
-  }),
-  createDBEventsTargets({
-    eventType: EventType.Water,
-    eventDataId: mockDBWaterEventData1.id,
-    eventTargetType: EventTargetType.Plant,
-    eventTargetId: plantsSeed[1].id
   }),
   // 1 watering event, 1 target
   createDBEventsTargets({
     eventType: EventType.Water,
     eventDataId: mockDBWaterEventData2.id,
     eventTargetType: EventTargetType.Plant,
-    eventTargetId: plantsSeed[0].id
+    eventTargetId: plantsSeed[1].id
   }),
   //
   // 3 life-cycle change events, 1 target (1 plant)
   createDBEventsTargets({
-    eventType: EventType.LifeCycleChange,
-    eventDataId: mockLifeCycleEventsData1.id,
+    eventType: EventType.PlantStageChange,
+    eventDataId: mockPlantStageEventsData1.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
   createDBEventsTargets({
-    eventType: EventType.LifeCycleChange,
-    eventDataId: mockLifeCycleEventsData2.id,
+    eventType: EventType.PlantStageChange,
+    eventDataId: mockPlantStageEventsData2.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
   createDBEventsTargets({
-    eventType: EventType.LifeCycleChange,
-    eventDataId: mockLifeCycleEventsData3.id,
+    eventType: EventType.PlantStageChange,
+    eventDataId: mockPlantStageEventsData3.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
   createDBEventsTargets({
-    eventType: EventType.LifeCycleChange,
-    eventDataId: mockLifeCycleEventsData10.id,
+    eventType: EventType.PlantStageChange,
+    eventDataId: mockPlantStageEventsData10.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[1].id
   }),
   createDBEventsTargets({
-    eventType: EventType.LifeCycleChange,
-    eventDataId: mockLifeCycleEventsData11.id,
+    eventType: EventType.PlantStageChange,
+    eventDataId: mockPlantStageEventsData11.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[1].id
   }),
@@ -436,6 +438,13 @@ export const eventsTargetsSeed = [
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
+  // 1 temperature reading, 1 target (2nd plant)
+  createDBEventsTargets({
+    eventType: EventType.TemperatureReading,
+    eventDataId: mockDBTemperatureEventData3.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[1].id
+  }),
   //
   // 2 humidity readings, 1 target (1 plant)
   createDBEventsTargets({
@@ -449,6 +458,13 @@ export const eventsTargetsSeed = [
     eventDataId: mockDBHumidityEventData2.id,
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
+  }),
+  // 1 humidity event for plant 3
+  createDBEventsTargets({
+    eventType: EventType.HumidityReading,
+    eventDataId: mockDBHumidityEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[2].id
   }),
   //
   // 2 pH readings, 1 target (1 plant)
@@ -492,6 +508,13 @@ export const eventsTargetsSeed = [
     eventTargetType: EventTargetType.Plant,
     eventTargetId: plantsSeed[0].id
   }),
+  // 1 light change event (off), 1 target plant (3rd plant)
+  createDBEventsTargets({
+    eventType: EventType.LightChange,
+    eventDataId: mockDBLightEventData2.id,
+    eventTargetType: EventTargetType.Plant,
+    eventTargetId: plantsSeed[2].id
+  })
 ];
 
 
@@ -503,18 +526,18 @@ export const store: Store = {
   species: speciesSeed,
   photos: photosSeed,
   environments: environmentsSeed,
-  lifeCycles: lifeCyclesSeed,
+  plantStages: plantStagesSeed,
   lightBulbTemplates: lightBulbTemplatesSeed,
   // event data
   waterEventsData: waterEventsDataSeed,
-  lifeCycleEventsData: lifeCycleEventsDataSeed,
+  plantStageEventsData: plantStageEventsDataSeed,
   temperatureEventsData: temperatureEventsDataSeed,
   humidityEventsData: humidityEventsDataSeed,
   pHEventsData: pHEventsDataSeed,
   eCEventsData: eCEventsDataSeed,
   lightEventsData: lightEventsDataSeed,
   // relationships (many to many)
-  speciesLifeCycles: speciesLifeCyclesSeed,
+  speciesPlantStages: speciesPlantStagesSeed,
   environmentsLightBulbTemplates: environmentsLightBulbTemplatesSeed,
   eventsTargets: eventsTargetsSeed
 };

@@ -7,7 +7,7 @@ export const environmentResolvers: Resolvers = {
   Query: {
     environments: (_, __, { dataSources }) => dataSources.environment.getAll(),
     environment: (_, { id }, { dataSources }) => {
-      const environment = dataSources.environment.getById({ id });
+      const environment = dataSources.environment.byId({ id });
 
       if (environment) {
         return environment;

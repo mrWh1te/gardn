@@ -1,9 +1,11 @@
 import { Store } from './../store';
 
 import { valueIsDefined } from '@gardn/helpers';
+import { DataSourceFactory } from '../data-sources.interfaces';
+import { LightBulbTemplate } from '../generated';
 
-export const lightBulbTemplateDataSourceFactory = (store: Store) => ({
-  getById({ id }) {
+export const lightBulbTemplateDataSourceFactory: DataSourceFactory<LightBulbTemplate> = (store: Store) => ({
+  byId({ id }) {
     return store.lightBulbTemplates.find(lightBulbTemplate => lightBulbTemplate.id === id);
   },
   getAll() {

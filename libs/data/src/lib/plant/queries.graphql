@@ -38,9 +38,9 @@ query getPlantHeader($id: Int!) {
   }
 }
 
-query getPlantCurrentLifeCycleEnvironment($id: Int!) {
+query getPlantCurrentPlantStageEnvironment($id: Int!) {
   plant(id: $id) {
-    id, currentLifeCycle {
+    id, currentPlantStage {
       environment {
         ...EnvironmentConditions
       }
@@ -48,38 +48,123 @@ query getPlantCurrentLifeCycleEnvironment($id: Int!) {
   }
 }
 
+query getPlantRecentEventsAndCurrentStageEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
+  plant(id: $plantId) {
+    id, currentPlantStage {
+      environment {
+        id, 
+        idealWaterAmount,
+        idealWaterAmountUnit,
+        idealWaterAmountPerTimePeriod,
+        idealWaterAmountPerTimePeriodUnit,
+        idealTemperatureMin,
+        idealTemperatueMax,
+        idealTemperatureMinUnit,
+        idealTemperatureMaxUnit,
+        idealHumidityMin,
+        idealHumidityMax,
+        idealHumidityMinUnit,
+        idealHumidityMaxUnit,
+        lightOnTime,
+        lightOnTimeUnit,
+        lightOnTimePerTimePeriod,
+        lightOnTimePerTimePeriodUnit,
+        desiredPH,
+        phMinimum,
+        phMaximum,
+        desiredElectricalConductivity,
+        desiredElectricalConductivityUnit,
+        electricalConductivityMin,
+        electricalConductivityMax,
+        electricalConductivityMinUnit,
+        electricalConductivityMaxUnit
+      }
+    }
+  },
+  lightChangeEvents: events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: LIGHT_CHANGE, eventTimeMinimum: $eventTimeMinimum) {
+    id, type, data {
+      ... on LightEventData {
+        id, eventTime, lightOn, color, lumens, wattage, bulbType
+      }
+    } 
+  },
+  waterEvents: events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: WATER, eventTimeMinimum: $eventTimeMinimum) {
+    id, type, data {
+      ... on WaterEventData {
+        id, eventTime, amount, amountUnit, temperature, temperatureUnit 
+      }
+    } 
+  },
+  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType) {
+    id, type, data {
+      __typename
+      ... on BaseEventData {
+        id, eventTime
+      }
+      ... on TemperatureEventData {
+        id, eventTime, temperature, temperatureUnit
+      }
+      ... on HumidityEventData {
+        id, eventTime, humidity, humidityUnit
+      }
+      ... on PHEventData {
+        id, eventTime, pH
+      }
+      ... on ECEventData {
+        id, eventTime, electricalConductivity, electricalConductivityUnit
+      }
+    }
+  }
+}
+
 query getPlantEvents($id: Int!) {
-  plant(id: $id) {
-    id, events {
-      id, type, data {
-        __typename
-        ... on BaseEventData {
-          id, eventTime
+  events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING) {
+    id, type, data {
+      __typename
+      ... on BaseEventData {
+        id, eventTime
+      }
+      ... on WaterEventData {
+        id, eventTime, amount, amountUnit, temperature, temperatureUnit
+      }
+      ... on PlantStageEventData {
+        id, eventTime, previousPlantStage {
+          id, name, description
+        }, nextPlantStage {
+          id, name, description
         }
-        ... on WaterEventData {
-         	id, eventTime, amount, amountUnit, temperature, temperatureUnit
-        }
-        ... on LifeCycleEventData {
-          id, eventTime, previousLifeCycle {
-            id, name, description
-          }, nextLifeCycle {
-            id, name, description
-          }
-        }
-        ... on TemperatureEventData {
-          id, eventTime, temperature, temperatureUnit
-        }
-        ... on HumidityEventData {
-          id, eventTime, humidity, humidityUnit
-        }
-        ... on PHEventData {
-          id, eventTime, pH
-        }
-        ... on ECEventData {
-          id, eventTime, electricalConductivity, electricalConductivityUnit
-        }
-        ... on LightEventData {
-          id, eventTime, lightOn, color, lumens, wattage, bulbType
+      }
+      ... on TemperatureEventData {
+        id, eventTime, temperature, temperatureUnit
+      }
+      ... on HumidityEventData {
+        id, eventTime, humidity, humidityUnit
+      }
+      ... on PHEventData {
+        id, eventTime, pH
+      }
+      ... on ECEventData {
+        id, eventTime, electricalConductivity, electricalConductivityUnit
+      }
+      ... on LightEventData {
+        id, eventTime, lightOn, color, lumens, wattage, bulbType
+      }
+    }
+  }
+}
+
+query getPlantStageEvents($plantId: Int!) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: PLANT_STAGE_CHANGE) {
+    id, type, data {
+      __typename
+      ... on BaseEventData {
+        id, eventTime
+      }
+      ... on PlantStageEventData {
+        id, eventTime, previousPlantStage {
+          id, name, description
+        }, nextPlantStage {
+          id, name, description
         }
       }
     }

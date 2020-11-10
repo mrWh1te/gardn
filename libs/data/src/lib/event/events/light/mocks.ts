@@ -2,16 +2,17 @@ import { LightBulbColor, LightBulbType } from '../../../generated';
 import { createDBLightEventData } from './helpers/create-db-light-event-data';
 
 export const mockDBLightEventData1 = createDBLightEventData({
-  lightOn: true,
+  lightOn: false,
   bulbType: LightBulbType.Mh,
   wattage: 1000,
   color: LightBulbColor.FarRed,
-  eventTime: new Date().getTime()
+  eventTime: new Date().getTime() - (2 * 60 * 60 * 1000) // 2 hours ago
 })
 export const mockDBLightEventData2 = createDBLightEventData({
-  lightOn: false,
+  previousLightOn: false,
+  lightOn: true,
   bulbType: LightBulbType.Mh,
   wattage: 1200,
   color: LightBulbColor.Blue,
-  eventTime: new Date().getTime()
+  eventTime: new Date().getTime() - (8 * 60 * 60 * 1000) // 8 hours ago
 })

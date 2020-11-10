@@ -2,9 +2,9 @@ import { Resolvers } from './../generated';
 
 export const photoResolvers: Resolvers = {
   Query: {
-    photos: (_, __, { dataSources }) => dataSources.photo.getAllPhotos(),
+    photos: (_, __, { dataSources }) => dataSources.photo.getAll(),
     photo: (_, { id }, { dataSources }) => {
-      const photo = dataSources.photo.getPhotoById({id});
+      const photo = dataSources.photo.byId({id});
 
       if (photo) {
         return photo;
@@ -14,6 +14,6 @@ export const photoResolvers: Resolvers = {
     }
   },
   Mutation: {
-    addPhoto: (_, { url, title }, { dataSources }) => dataSources.photo.addPhoto({url, title})
+    addPhoto: (_, { url, title }, { dataSources }) => dataSources.photo.new({url, title})
   }
 }

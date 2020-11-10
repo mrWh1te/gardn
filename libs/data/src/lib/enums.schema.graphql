@@ -1,3 +1,8 @@
+enum SortDirection {
+  ASCENDING
+  DESCENDING
+}
+
 enum LiquidUnit {
   GILL
   PINT

@@ -1,9 +1,11 @@
 import { createPlant } from './helpers/create-plant';
 import { Store } from './../store';
+import { DataSourceFactory } from '../data-sources.interfaces';
+import { Plant } from '../generated';
 
-export const plantDataSourceFactory = (store: Store) => ({
+export const plantDataSourceFactory: DataSourceFactory<Plant> = (store: Store) => ({
   // Read Data
-  getPlantById({ id }: {id: number}) {
+  byId({ id }: {id: number}) {
     const plant = store.plants.find(plant => plant.id === id);
 
     if (!plant) {
@@ -12,11 +14,11 @@ export const plantDataSourceFactory = (store: Store) => ({
 
     return plant;
   },
-  getPlants() {
+  getAll() {
     return store.plants;
   },
   // Create Data
-  newPlant({ name }: {name: string}) {
+  new({ name }: {name: string}) {
     const aNewPlant = createPlant({name});
     store.plants.push(aNewPlant);
 

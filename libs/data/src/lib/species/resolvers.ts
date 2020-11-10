@@ -7,7 +7,7 @@ import { Resolvers } from './../generated';
 export const speciesResolvers: Resolvers = {
   Query: {
     species: (_, { id }, { dataSources }) => {
-      const oneSpecies = dataSources.species.getSpeciesById({ id });
+      const oneSpecies = dataSources.species.byId({ id });
 
       if (oneSpecies) {
         return oneSpecies;
@@ -15,12 +15,12 @@ export const speciesResolvers: Resolvers = {
 
       return new Error('Species not found');
     },
-    allSpecies: (_, __, { dataSources }) => dataSources.species.getAllSpecies()
+    allSpecies: (_, __, { dataSources }) => dataSources.species.getAll()
   },
   Mutation: {
-    addSpecies: (_, { name, description }, { dataSources }) => dataSources.species.newSpecies({name, description})
+    addSpecies: (_, { name, description }, { dataSources }) => dataSources.species.new({name, description})
   },
   Species: {
-    lifeCycles: ({ id }, _, { dataSources }) => dataSources.lifeCycle.getLifeCyclesBySpeciesId({ id })
+    plantStages: ({ id }, _, { dataSources }) => dataSources.plantStage.filterBySpeciesId({ id })
   }
 }

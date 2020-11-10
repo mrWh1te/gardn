@@ -4,11 +4,11 @@ import {
   plantResolvers,
   photoResolvers,
   speciesResolvers,
-  lifeCycleResolvers,
+  plantStageResolvers,
   environmentResolvers,
   lightBulbTemplateResolvers,
   eventResolvers,
-  lifeCycleEventDataResolvers,
+  plantStageEventDataResolvers,
   Resolvers
 } from '@gardn/data';
 
@@ -17,7 +17,7 @@ export const resolvers: Resolvers = {
     ...photoResolvers.Query,
     ...plantResolvers.Query,
     ...speciesResolvers.Query,
-    ...lifeCycleResolvers.Query,
+    ...plantStageResolvers.Query,
     ...environmentResolvers.Query,
     ...lightBulbTemplateResolvers.Query,
     ...eventResolvers.Query,
@@ -30,12 +30,12 @@ export const resolvers: Resolvers = {
   // Specific field resolvers
   Plant: plantResolvers.Plant,
   Species: speciesResolvers.Species,
-  LifeCycle: lifeCycleResolvers.LifeCycle,
+  PlantStage: plantStageResolvers.PlantStage,
   Environment: environmentResolvers.Environment,
   Event: eventResolvers.Event,
   EventTarget: eventResolvers.EventTarget,
   EventData: eventResolvers.EventData,
-  LifeCycleEventData: lifeCycleEventDataResolvers.LifeCycleEventData,
+  PlantStageEventData: plantStageEventDataResolvers.PlantStageEventData,
   // Custom Scalars
   Timestamp: TimestampResolver,
   // Base interfaces

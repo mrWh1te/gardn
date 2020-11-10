@@ -1,4 +1,4 @@
-import { Species, LifeCycle, BaseDbModel } from './../generated';
+import { Species, PlantStage, BaseDbModel } from './../generated';
 
 /**
  * These model the tables in the TBI database
@@ -11,7 +11,7 @@ import { Species, LifeCycle, BaseDbModel } from './../generated';
 //
 
 // Relationship Table between Species <-> Life-Cycles
-export interface DBSpeciesLifeCycles extends BaseDbModel {
+export interface DBSpeciesPlantStages extends BaseDbModel {
   speciesId: Species['id'],
-  lifeCycleId: LifeCycle['id']
+  plantStageId: PlantStage['id']
 }

@@ -1,7 +1,11 @@
 import { BaseEventData, EventTargetType, EventType, Resolvers } from '../generated';
 import { eventDataToEvent } from './helpers/event-data-to-event';
 import { eventDataTypeResolver } from './helpers/event-data-type-resolver';
-import { eventsTargetsRecordToEvent } from './helpers/events-targets-record-to-event';
+import { sortEventsByEventTime } from './helpers/sort-events-by-event-time';
+import { getEventData } from './helpers/get-event-data';
+import { filterEventsByMinimumEventTime } from './helpers/filter-events-by-minimum-event-time';
+import { filterEventsByMaximumEventTime } from './helpers/filter-events-by-maximum-event-time';
+import { filterOutEventTypes } from './events-targets/helpers/filter-out-event-types';
 
 /**
  * Data is stored in memory for development
@@ -10,40 +14,111 @@ export const eventResolvers: Resolvers = {
   Query: {
     event: (_, { eventDataId, eventType }, { dataSources }) => {
       if (eventDataId && eventType) {
-        switch(eventType) {
-          case EventType.Water:
-            return eventDataToEvent(dataSources.waterEventData.byId({id: eventDataId }), EventType.Water);
-          case EventType.LifeCycleChange:
-            return eventDataToEvent(dataSources.lifeCycleEventData.byId({id: eventDataId }), EventType.LifeCycleChange);
-          case EventType.TemperatureReading:
-            return eventDataToEvent(dataSources.temperatureEventData.byId({id: eventDataId }), EventType.TemperatureReading);
-          case EventType.HumidityReading:
-            return eventDataToEvent(dataSources.humidityEventData.byId({id: eventDataId }), EventType.HumidityReading);
-          case EventType.PhReading:
-            return eventDataToEvent(dataSources.pHEventData.byId({id: eventDataId }), EventType.PhReading);
-          case EventType.EcReading:
-            return eventDataToEvent(dataSources.eCEventData.byId({id: eventDataId }), EventType.EcReading);
-          case EventType.LightChange:
-            return eventDataToEvent(dataSources.lightEventData.byId({id: eventDataId }), EventType.LightChange);
-        }
+        const data = getEventData(dataSources, eventType, eventDataId)
+        const event = eventDataToEvent(data, eventType)
+
+        return event;
       }
 
       throw new Error('Event Query - Not Enough Params')
     },
-    events: (_, { eventTargetId, eventTargetType, eventType }, { dataSources }) => {
-      // get events for a target
-      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
-
-      // 1. get EventsTargets' records for target, convert into Event's
-        // note EventsTargets.id !== Event.id, instead EventsTargets.eventDataId = Event.id
-      let events = eventsTargetsRecords.map(eventsTargetsRecord => eventsTargetsRecordToEvent(eventsTargetsRecord))
-
-      // 2. (optional) filter events by eventType if provided
-      if (eventType) {
-        events = events.filter(event => event.type === eventType)
+    events: (_, { eventTargetId, eventTargetType, eventType, excludeEventTypes, limitPerType, sortDirection, eventTimeMinimum, eventTimeMaximum }, { dataSources }) => {
+      if (eventType !== undefined && excludeEventTypes !== undefined && excludeEventTypes.some(excludeEventType => excludeEventType === eventType)) {
+        return []
       }
-      
-      return events;
+
+      if (eventTimeMinimum !== undefined && eventTimeMaximum !== undefined && eventTimeMaximum === eventTimeMinimum) {
+        return []
+      }
+
+      // get recent events for a target
+      let eventsTargetsRecords
+
+      if (eventType) {
+        // filter by event type too
+        eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({ eventTargetId, eventTargetType, eventType });
+
+        // excluding events by event type(s)?
+        if (excludeEventTypes) {
+          eventsTargetsRecords = eventsTargetsRecords.filter(filterOutEventTypes(excludeEventTypes))
+        }
+
+        // get event time of each event for sorting
+        let events = eventsTargetsRecords.map(eventsTargetsRecord => {
+          const data = getEventData(dataSources, eventsTargetsRecord.eventType, eventsTargetsRecord.eventDataId)
+          const event = eventDataToEvent(data, eventsTargetsRecord.eventType)
+          return event;
+        })
+
+        // minimum eventTime?
+        if (eventTimeMinimum) {
+          events = events.filter(filterEventsByMinimumEventTime(eventTimeMinimum))
+        }
+
+        // maximum eventTime?
+        if (eventTimeMaximum) {
+          events = events.filter(filterEventsByMaximumEventTime(eventTimeMaximum))
+        }
+
+        // sort in descending order (latest at the start, oldest at the end)
+        events.sort(sortEventsByEventTime(sortDirection))
+
+        // limit?
+        if (limitPerType) {
+          return events.slice(0, limitPerType)
+        }
+
+        return events;
+      } else {
+        eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
+
+        // excluding events by event type(s)?
+        if (excludeEventTypes) {
+          eventsTargetsRecords = eventsTargetsRecords.filter(filterOutEventTypes(excludeEventTypes))
+        }
+
+        // get event data (eventTime) of each event for sorting
+        let events = eventsTargetsRecords.map(eventsTargetsRecord => {
+          const data = getEventData(dataSources, eventsTargetsRecord.eventType, eventsTargetsRecord.eventDataId)
+          const event = eventDataToEvent(data, eventsTargetsRecord.eventType);
+          return event
+        })
+
+        // minimum eventTime?
+        if (eventTimeMinimum) {
+          events = events.filter(filterEventsByMinimumEventTime(eventTimeMinimum))
+        }
+
+        // maximum eventTime?
+        if (eventTimeMaximum) {
+          events = events.filter(filterEventsByMaximumEventTime(eventTimeMaximum))
+        }
+
+        // if limitPerType, build data structure { EventType.Water: [Event, Event,...], EventType.PlantStageChange: []}
+        if (limitPerType) {
+          const eventsMapByType: Record<keyof EventType, Event> = events.reduce((accumulator, event) => {
+            if (!accumulator[event.type]) {
+              accumulator[event.type] = []
+            }
+            accumulator[event.type].push(event)
+
+            return accumulator
+          }, {})
+
+          const eventsMapByTypeKeys = Object.keys(eventsMapByType)
+          for (let i = 0; i < eventsMapByTypeKeys.length; i++) {
+            eventsMapByType[eventsMapByTypeKeys[i]].sort(sortEventsByEventTime(sortDirection))
+            eventsMapByType[eventsMapByTypeKeys[i]] = eventsMapByType[eventsMapByTypeKeys[i]].slice(0, limitPerType) // limit each type
+          }
+
+          return [].concat(...Object.values(eventsMapByType)) // flatten array
+        } else {
+          // no limiting
+          events.sort(sortEventsByEventTime(sortDirection))
+
+          return events;
+        }
+      }
     }
   },
   Event: {
@@ -53,39 +128,18 @@ export const eventResolvers: Resolvers = {
       const targets = eventsTargetsWithMatchingEventDataId.map(eventTargetRecord => {
         switch (eventTargetRecord.eventTargetType) {
           case EventTargetType.Plant:
-            return dataSources.plant.getPlantById({ id: eventTargetRecord.eventTargetId })
+            return dataSources.plant.byId({ id: eventTargetRecord.eventTargetId })
         }
       })
 
       return targets;
     },
-    data: ({ id, type }, _, { dataSources }) => {
-      let record: BaseEventData
-
-      switch(type) {
-        case EventType.Water:
-          record = dataSources.waterEventData.byId({id})
-          break;
-        case EventType.LifeCycleChange:
-          record = dataSources.lifeCycleEventData.byId({id})
-          break;
-        case EventType.TemperatureReading:
-          record = dataSources.temperatureEventData.byId({id})
-          break;
-        case EventType.HumidityReading:
-          record = dataSources.humidityEventData.byId({id})
-          break;
-        case EventType.PhReading:
-          record = dataSources.pHEventData.byId({id})
-          break;
-        case EventType.EcReading:
-          record = dataSources.eCEventData.byId({id})
-          break;
-        case EventType.LightChange:
-          record = dataSources.lightEventData.byId({id})
-          break;
+    data: ({ id, type, data }, _, { dataSources }) => {
+      if (typeof data === 'object' && data !== null && Object.keys(data).length > 0) {
+        return data
       }
 
+      const record: BaseEventData = getEventData(dataSources, type, id);
       if (record) {
         return record
       }

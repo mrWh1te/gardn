@@ -1,0 +1,13 @@
+type PlantStage implements BaseDbModel {
+  id: Int!
+  dateCreated: Timestamp!
+  
+  name: String!
+  description: String
+  environment: Environment
+}
+
+type Query {
+  plantStages: [PlantStage]
+  plantStage(id: Int!): PlantStage
+}

@@ -11,6 +11,7 @@ import {
   WaterDropletIcon
 } from '@gardn/ui';
 
+/* eslint-disable-next-line */
 interface EventIconProps {
   eventType: EventType
 }
@@ -23,7 +24,7 @@ export const EventIcon = ({eventType}: EventIconProps): JSX.Element => {
       return <BoltIcon />
     case EventType.HumidityReading:
       return <HumidityIcon />
-    case EventType.LifeCycleChange:
+    case EventType.PlantStageChange:
       return <MilestoneIcon />
     case EventType.LightChange:
       return <SunIcon />

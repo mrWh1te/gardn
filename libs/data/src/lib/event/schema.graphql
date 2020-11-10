@@ -1,5 +1,5 @@
 union EventTarget = Plant
-union EventData = WaterEventData | LifeCycleEventData | TemperatureEventData | HumidityEventData | PHEventData | ECEventData | LightEventData
+union EventData = WaterEventData | PlantStageEventData | TemperatureEventData | HumidityEventData | PHEventData | ECEventData | LightEventData
 
 type Event implements Node {
   id: Int!
@@ -13,7 +13,7 @@ type Event implements Node {
 
 type Query {
   event(eventDataId: Int!, eventType: EventType!): Event
-  events(eventTargetId: Int!, eventTargetType: EventTargetType!, eventType: EventType): [Event]
+  events(eventTargetId: Int!, eventTargetType: EventTargetType!, eventType: EventType, excludeEventTypes: [EventType], limitPerType: Int, sortDirection: SortDirection, eventTimeMinimum: Timestamp, eventTimeMaximum: Timestamp): [Event]  
 }
 
 

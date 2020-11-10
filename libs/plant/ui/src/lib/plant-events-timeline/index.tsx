@@ -23,7 +23,7 @@ const StyledPlantEventsTimeline = styled.div`
   }
 `;
 
-export const PlantEventsTimeline = ({ events }: Pick<GetPlantEventsQuery['plant'], 'events'>) => {
+export const PlantEventsTimeline = ({ events }: Pick<GetPlantEventsQuery, 'events'>) => {
   if (!events) {
     return (
       <FlexBox>

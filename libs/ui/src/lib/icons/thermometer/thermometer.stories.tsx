@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { text, color } from '@storybook/addon-knobs';
+import { text, color, number } from '@storybook/addon-knobs';
 
 import ThermometerIcon from './thermometer';
 import { black } from '../../colors';
@@ -16,5 +16,5 @@ export const widthParam = () => (
 );
 
 export const allParams = () => (
-  <ThermometerIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={color('Color', black)} />
+  <ThermometerIcon width={text('Width', '5rem')} rotate={text('Rotate', '20deg')} color={color('Color', black)} temperature={number('Temperature', 74)} />
 );

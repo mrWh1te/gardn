@@ -4,15 +4,15 @@ import { GetPlantEventsQuery } from '@gardn/data';
 
 import ECEventData from '../ec-event-data';
 import HumidityEventData from '../humidity-event-data';
-import LifeCycleEventData from '../life-cycle-event-data';
+import PlantStageEventData from '../plant-stage-event-data';
 import LightEventData from '../light-event-data';
 import PhEventData from '../ph-event-data';
 import TemperatureEventData from '../temperature-event-data';
 import WaterEventData from '../water-event-data';
 
-
+/* eslint-disable-next-line */
 interface EventDataProps {
-  event: GetPlantEventsQuery['plant']['events'][number]
+  event: GetPlantEventsQuery['events'][number]
 }
 
 export const EventData = ({event}: EventDataProps): JSX.Element => {
@@ -24,8 +24,8 @@ export const EventData = ({event}: EventDataProps): JSX.Element => {
       return <ECEventData data={event.data} />
     case 'HumidityEventData':
       return <HumidityEventData data={event.data} />
-    case 'LifeCycleEventData':
-      return <LifeCycleEventData data={event.data} />
+    case 'PlantStageEventData':
+      return <PlantStageEventData data={event.data} />
     case 'LightEventData':
       return <LightEventData data={event.data} />
     case 'PHEventData':

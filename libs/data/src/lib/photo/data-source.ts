@@ -1,21 +1,22 @@
 import { createPhoto } from './helpers/create-photo';
-import { QueryPhotoArgs, MutationAddPhotoArgs } from './../generated';
+import { Photo, Node } from './../generated';
 
 import { Store } from './../store';
+import { DataSourceFactory } from '../data-sources.interfaces';
 
-export const photoDataSourceFactory = (store: Store) => ({
+export const photoDataSourceFactory: DataSourceFactory<Photo> = (store: Store) => ({
   // Read Data
-  getPhotoById({ id }: QueryPhotoArgs) {
+  byId({ id }: Pick<Node, 'id'>) {
     return store.photos.find(photo => photo.id === id);
   },
-  getPhotosByPlantId({ id }: QueryPhotoArgs) {
-    return store.photos.filter(photo => photo.plantId === id);
-  },
-  getAllPhotos() {
+  getAll() {
     return store.photos;
   },
+  filterByPlantId({ id }: Pick<Node, 'id'>) {
+    return store.photos.filter(photo => photo.plantId === id);
+  },
   // Create Data
-  addPhoto({ url, title }: MutationAddPhotoArgs) {
+  new({ url, title }: Partial<Photo>) {
     const newPhoto = createPhoto({url, title});
     store.photos.push(newPhoto);
 

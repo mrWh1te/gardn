@@ -11,3 +11,8 @@ export const mockDBTemperatureEventData2 = createDBTemperatureEventData({
   temperatureUnit: TemperatureUnit.Fahrenheit,
   eventTime: new Date().getTime()
 })
+export const mockDBTemperatureEventData3 = createDBTemperatureEventData({
+  temperature: 32,
+  temperatureUnit: TemperatureUnit.Fahrenheit,
+  eventTime: new Date().getTime()
+})

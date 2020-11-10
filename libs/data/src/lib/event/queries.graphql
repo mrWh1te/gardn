@@ -1,5 +1,5 @@
-query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $eventType: EventType) {
-  events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, eventType: $eventType) {
+query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $excludeEventTypes: [EventType], $limitPerType: Int, $sortDirection: SortDirection) {
+  events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, excludeEventTypes: $excludeEventTypes, limitPerType: $limitPerType, sortDirection: $sortDirection) {
     id, type, data {
       __typename
       ... on BaseEventData {
@@ -8,10 +8,10 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
       ... on WaterEventData {
         id, eventTime, amount, amountUnit, temperature, temperatureUnit 
       }
-      ... on LifeCycleEventData {
-        id, eventTime, previousLifeCycle {
+      ... on PlantStageEventData {
+        id, eventTime, previousPlantStage {
           id, name, description
-        }, nextLifeCycle {
+        }, nextPlantStage {
           id, name, description
         }
       }
@@ -34,18 +34,37 @@ query getTargetEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, 
   }
 }
 
-query getPlantLifeCycleEvents($plantId: Int!) {
-  events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: LIFE_CYCLE_CHANGE) {
+query getTargetRecentEvents($eventTargetId: Int!, $eventTargetType: EventTargetType!, $eventType: EventType, $limitPerType: Int) {
+  events(eventTargetId: $eventTargetId, eventTargetType: $eventTargetType, eventType: $eventType, limitPerType: $limitPerType, sortDirection: DESCENDING) {
     id, type, data {
+      __typename
       ... on BaseEventData {
         id, eventTime
       }
-      ... on LifeCycleEventData {
-        id, eventTime, previousLifeCycle {
+      ... on WaterEventData {
+        id, eventTime, amount, amountUnit, temperature, temperatureUnit 
+      }
+      ... on PlantStageEventData {
+        id, eventTime, previousPlantStage {
           id, name, description
-        }, nextLifeCycle {
+        }, nextPlantStage {
           id, name, description
         }
+      }
+      ... on TemperatureEventData {
+        id, eventTime, temperature, temperatureUnit
+      }
+      ... on HumidityEventData {
+        id, eventTime, humidity, humidityUnit
+      }
+      ... on PHEventData {
+        id, eventTime, pH
+      }
+      ... on ECEventData {
+        id, eventTime, electricalConductivity, electricalConductivityUnit
+      }
+      ... on LightEventData {
+        id, eventTime, lightOn, color, lumens, wattage, bulbType
       }
     }
   }
