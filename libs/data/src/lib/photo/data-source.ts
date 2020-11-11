@@ -1,7 +1,7 @@
 import { createPhoto } from './helpers/create-photo';
 import { Photo, Node } from './../generated';
 
-import { Store } from './../store';
+import { Store } from './../store/interface';
 import { DataSourceFactory } from '../data-sources.interfaces';
 
 export const photoDataSourceFactory: DataSourceFactory<Photo> = (store: Store) => ({

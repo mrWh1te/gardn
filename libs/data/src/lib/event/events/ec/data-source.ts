@@ -1,5 +1,5 @@
 import { createDBECEventData } from './helpers/create-db-ec-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, EcEventData } from './../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 

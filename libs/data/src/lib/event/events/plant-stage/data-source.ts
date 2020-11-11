@@ -1,5 +1,5 @@
 import { createDBPlantStageEventData } from './helpers/create-db-plant-stage-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel } from './../../../generated';
 import { DBPlantStageEventData } from './interface';
 import { DataSourceFactory } from '../../../data-sources.interfaces';

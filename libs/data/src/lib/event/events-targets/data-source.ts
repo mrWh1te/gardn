@@ -1,4 +1,4 @@
-import { Store } from './../../store';
+import { Store } from './../../store/interface';
 import { BaseDbModel, EventTargetType } from '../../generated';
 import { DBEventsTargets } from './../events-targets/interface';
 import { createDBEventsTargets } from './helpers/create-db-events-targets';

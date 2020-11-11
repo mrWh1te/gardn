@@ -1,4 +1,4 @@
-import { Store } from './../store';
+import { Store } from './../store/interface';
 
 import { valueIsDefined } from '@gardn/helpers';
 import { DataSourceFactory } from '../data-sources.interfaces';

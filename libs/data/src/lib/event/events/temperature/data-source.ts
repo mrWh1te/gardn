@@ -1,5 +1,5 @@
 import { createDBTemperatureEventData } from './helpers/create-db-temperature-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, TemperatureEventData } from '../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 

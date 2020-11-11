@@ -1,7 +1,7 @@
 import { DataSource as ApolloDataSource } from 'apollo-datasource';
 
 import { Node } from './generated';
-import { Store } from "./store";
+import { Store } from "./store/interface";
 
 
 export interface DataSourceFactory<T> extends Function {

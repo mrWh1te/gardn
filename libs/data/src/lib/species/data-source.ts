@@ -1,5 +1,5 @@
 import { createSpecies } from './helpers/create-species';
-import { Store } from './../store';
+import { Store } from './../store/interface';
 import { DataSourceFactory } from '../data-sources.interfaces';
 import { Species } from '../generated';
 

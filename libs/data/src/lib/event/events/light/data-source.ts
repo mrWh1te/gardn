@@ -1,5 +1,5 @@
 import { createDBLightEventData } from './helpers/create-db-light-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, LightEventData, Node } from '../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 

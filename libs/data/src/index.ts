@@ -54,6 +54,7 @@ export * from './lib/plant-stage/seed-data';
 
 // In-Memory DB
 export * from './lib/store';
+export * from './lib/store/interface';
 
 // Measurement Unit to Abbreviation
 export * from './lib/helpers/measurement-unit-to-abbreviation';

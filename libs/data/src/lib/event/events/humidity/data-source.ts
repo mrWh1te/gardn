@@ -1,5 +1,5 @@
 import { createDBHumidityEventData } from './helpers/create-db-humidity-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, HumidityEventData, Node } from '../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 

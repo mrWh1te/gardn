@@ -1,5 +1,5 @@
 import { createDBpHEventData } from './helpers/create-db-ph-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, PhEventData } from './../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 

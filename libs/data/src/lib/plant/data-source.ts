@@ -1,5 +1,5 @@
 import { createPlant } from './helpers/create-plant';
-import { Store } from './../store';
+import { Store } from './../store/interface';
 import { DataSourceFactory } from '../data-sources.interfaces';
 import { Plant } from '../generated';
 

@@ -1,6 +1,6 @@
 import { DataSourceFactory } from '../data-sources.interfaces';
 import { Environment } from '../generated';
-import { Store } from './../store';
+import { Store } from './../store/interface';
 
 export const EnvironmentDataSourceFactory: DataSourceFactory<Environment> = (store: Store) => ({
   // Read Data

@@ -2,8 +2,8 @@ import { makeExecutableSchema } from 'graphql-tools'
 import { graphql, print } from 'graphql'
 
 import { GetPlantDocument, GetPlantsDocument } from './../generated'
-import { plantDataSourceFactory } from './../plant/data-source';
-import { store } from './../store';
+// import { plantDataSourceFactory } from './../plant/data-source';
+// import { store } from './../store';
 
 
 // TypeDefs for this data feature

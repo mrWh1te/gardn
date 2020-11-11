@@ -1,5 +1,5 @@
 import { createDBWaterEventData } from './helpers/create-db-water-event-data';
-import { Store } from './../../../store';
+import { Store } from './../../../store/interface';
 import { BaseDbModel, WaterEventData } from '../../../generated';
 import { DataSourceFactory } from '../../../data-sources.interfaces';
 
