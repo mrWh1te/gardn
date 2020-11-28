@@ -22,7 +22,8 @@ export * from './lib/icons/moon-stars';
 export * from './lib/icons/attention';
 
 // view components
-export * from './lib/drawer-view/drawer-view';
+export * from './lib/views/drawer-view/drawer-view';
+export * from './lib/views/cover-view/';
 
 // block components
 export * from './lib/header/header';

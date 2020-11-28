@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import { PlantView } from '@gardn/plant/view';
+import { PlantEventTypeView, PlantView } from '@gardn/plant/view';
 import { PlantsView } from '@gardn/plants/view';
 import { Header } from '@gardn/ui';
 
@@ -16,13 +16,17 @@ export const App = () => (
 
     <ActionMenu />
 
-    <Route
-      path="/"
-      exact
-      render={() => <div>This app is under development. </div>}
-    />
-    <Route path="/plants" component={PlantsView} />
-    <Route path="/plant/:id" component={PlantView} />
+    <Switch>  
+      <Route
+        path="/"
+        exact
+        render={() => <div>This app is under development. </div>}
+      />
+      <Route path="/plants" component={PlantsView} />
+      <Route path="/plant/:id/event-type/:eventType" component={PlantEventTypeView} />
+      <Route path="/plant/:id" component={PlantView} />
+      <Route component={() => <p>404</p>} />
+    </Switch>
   </>
 );
 

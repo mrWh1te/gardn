@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
@@ -25,6 +26,7 @@ import {
   WaterDropletIcon,
   AttentionIcon,
   white, 
+  black,
   logoDarkGreen
 } from '@gardn/ui';
 import { LightChangeIcon } from '@gardn/events/ui';
@@ -34,6 +36,9 @@ import { getCurrentPlantEnvironment } from '@gardn/plant/helpers';
 const StyledPlantRecentEventsIcons = styled.div`
   ol {
     list-style: none;
+    a {
+      color: ${black};
+    }
     li {
       position: relative;
       span {
@@ -119,40 +124,52 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
     <StyledPlantRecentEventsIcons>
       <ol>
         { eventsHasEventWithType(events, EventType.EcReading) && 
-          <li>
-            <span>{ generateEventLabelForType(EventType.EcReading) }</span> <BoltIcon width={'0.563rem'} />
-            { eventTypeNeedsAttention(EventType.EcReading) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.EcReading}`}>
+            <li>
+              <span>{ generateEventLabelForType(EventType.EcReading) }</span> <BoltIcon width={'0.563rem'} />
+              { eventTypeNeedsAttention(EventType.EcReading) && attentionIcon }
+            </li>
+          </Link>
         }
         { eventsHasEventWithType(events, EventType.PhReading) &&
-          <li>
-            <span>{ generateEventLabelForType(EventType.PhReading) }</span> <VialIcon width={'.84rem'} />
-            { eventTypeNeedsAttention(EventType.PhReading) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.PhReading}`}>
+            <li>
+              <span>{ generateEventLabelForType(EventType.PhReading) }</span> <VialIcon width={'.84rem'} />
+              { eventTypeNeedsAttention(EventType.PhReading) && attentionIcon }
+            </li>
+          </Link>
         }
         { eventsHasEventWithType(events, EventType.HumidityReading) &&
-          <li>
-            <span>{ generateEventLabelForType(EventType.HumidityReading) }</span> <HumidityIcon width={'.73rem'} />
-            { eventTypeNeedsAttention(EventType.HumidityReading) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.HumidityReading}`}>
+            <li>
+              <span>{ generateEventLabelForType(EventType.HumidityReading) }</span> <HumidityIcon width={'.73rem'} />
+              { eventTypeNeedsAttention(EventType.HumidityReading) && attentionIcon }
+            </li>
+          </Link>
         }
         { eventsHasEventWithType(events, EventType.TemperatureReading) &&
-          <li>
-            <span>{ generateEventLabelForType(EventType.TemperatureReading) }</span> <ThermometerIcon temperature={getTemperatureReading(events)} width={'0.5322rem'} />
-            { eventTypeNeedsAttention(EventType.TemperatureReading) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.TemperatureReading}`}>
+            <li>
+              <span>{ generateEventLabelForType(EventType.TemperatureReading) }</span> <ThermometerIcon temperature={getTemperatureReading(events)} width={'0.5322rem'} />
+              { eventTypeNeedsAttention(EventType.TemperatureReading) && attentionIcon }
+            </li>
+          </Link>
         }
         { waterEvents && waterEvents.length > 0 &&
-          <li>
-            <StyledWaterDropletIcon><WaterDropletIcon width={'.7rem'} /></StyledWaterDropletIcon>
-            { eventTypeNeedsAttention(EventType.Water) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.Water}`}>
+            <li>
+              <StyledWaterDropletIcon><WaterDropletIcon width={'.7rem'} /></StyledWaterDropletIcon>
+              { eventTypeNeedsAttention(EventType.Water) && attentionIcon }
+            </li>
+          </Link>
         }
         { lightChangeEvents && lightChangeEvents.length > 0 &&
-          <li>
-            <LightChangeIcon lightOn={getLightOnReading(lightChangeEvents)} />
-            { eventTypeNeedsAttention(EventType.LightChange) && attentionIcon }
-          </li>
+          <Link to={`/plant/${plant.id}/event-type/${EventType.LightChange}`}>
+            <li>
+              <LightChangeIcon lightOn={getLightOnReading(lightChangeEvents)} />
+              { eventTypeNeedsAttention(EventType.LightChange) && attentionIcon }
+            </li>
+          </Link>
         }
       </ol>
     </StyledPlantRecentEventsIcons>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import DrawerView from './drawer-view';
 
-export default { title: 'DrawerView' };
+export default { title: 'Views/DrawerView' };
 
 export const noScrollExample = () => (
   <DrawerView>

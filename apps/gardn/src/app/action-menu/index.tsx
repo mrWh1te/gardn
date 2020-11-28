@@ -3,12 +3,21 @@ import Drawer from '@material-ui/core/Drawer';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import styled from '@emotion/styled';
+
 import { PlantDrawer } from '@gardn/plant/view';
 import { white } from '@gardn/ui';
 
 import ActionButton from './../action-button';
 
 // TODO add tests
+
+const StyledDynamicUI = styled.div`
+  opacity: 1;
+  &.off {
+    opacity: 0;
+  }
+`;
 
 /**
  * This component extends upon a page with page dependent Actions
@@ -36,11 +45,13 @@ export const ActionMenu = () => {
   return (
     <>
       {/* todo ActionButton disabled when a particular page route of routes is active */}
-      <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
-      <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
-        PaperProps={{ elevation: 0, style, square: false }} style={{zIndex: 1000}}>
-        <Route path="/plant/:id" component={PlantDrawer} />
-      </Drawer>
+      <StyledDynamicUI className={'off'}>
+        <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
+        <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
+          PaperProps={{ elevation: 0, style, square: false }} style={{zIndex: 1000}}>
+          <Route path="/plant/:id" component={PlantDrawer} />
+        </Drawer>
+      </StyledDynamicUI>
     </>
   );
 };

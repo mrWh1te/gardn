@@ -17,15 +17,16 @@ const StyledBackButton = styled.div`
 
 /* eslint-disable-next-line */
 export interface GoBackProps extends RouteComponentProps {
-  disableClickHandler?: boolean
+  disableClickHandler?: boolean,
+  color?: string
 } 
 
-export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandler }) => {
+export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandler, color }) => {
   if (disableClickHandler) {
     return (
       <StyledBackButton>
         <button>
-          <ChevronIcon color={white} />
+          <ChevronIcon color={color ? color : white} />
         </button>
       </StyledBackButton>
     );
@@ -34,7 +35,7 @@ export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandl
   return (
     <StyledBackButton>
       <button onClick={() => history.goBack()}>
-        <ChevronIcon color={white} />
+        <ChevronIcon color={color ? color : white} />
       </button>
     </StyledBackButton>
   );
