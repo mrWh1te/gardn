@@ -5,9 +5,9 @@ import { Resolvers } from './../generated';
  */
 export const plantStageResolvers: Resolvers = {
   Query: {
-    plantStages: (_, __, { dataSources }) => dataSources.plantStage.getAll(),
+    plantStages: (_, __, { dataSources }) => dataSources.PlantStage.getAll(),
     plantStage: (_, { id }, { dataSources }) => {
-      const plantStage = dataSources.plantStage.byId({ id })
+      const plantStage = dataSources.PlantStage.byId({ id })
 
       if (plantStage) {
         return plantStage;
@@ -18,10 +18,10 @@ export const plantStageResolvers: Resolvers = {
   },
   PlantStage: {
     defaultEnvironment: ({ id }, _, { dataSources }) => {
-      const plantStage = dataSources.plantStage.byId({ id });
+      const plantStage = dataSources.PlantStage.byId({ id });
 
       if (plantStage.defaultEnvironmentId) {
-        const environment = dataSources.environment.byId({ id: plantStage.defaultEnvironmentId })
+        const environment = dataSources.Environment.byId({ id: plantStage.defaultEnvironmentId })
         return environment;
       }
 

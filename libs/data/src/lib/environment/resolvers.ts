@@ -5,9 +5,9 @@ import { Resolvers } from './../generated';
  */
 export const environmentResolvers: Resolvers = {
   Query: {
-    environments: (_, __, { dataSources }) => dataSources.environment.getAll(),
+    environments: (_, __, { dataSources }) => dataSources.Environment.getAll(),
     environment: (_, { id }, { dataSources }) => {
-      const environment = dataSources.environment.byId({ id });
+      const environment = dataSources.Environment.byId({ id });
 
       if (environment) {
         return environment;
@@ -18,7 +18,7 @@ export const environmentResolvers: Resolvers = {
   },
   Environment: {
     lightBulbTemplates: ({ id }, _, { dataSources }) => {
-      const lightBulbTemplates = dataSources.lightBulbTemplate.filterByEnvironmentId({ id });
+      const lightBulbTemplates = dataSources.LightBulbTemplate.filterByEnvironmentId({ id });
 
       return lightBulbTemplates;
     }

@@ -22,7 +22,7 @@ export const eventResolvers: Resolvers = {
         return null
       }
 
-      let eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
+      let eventsTargetsRecords = dataSources.EventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
 
       // excluding events by event type(s)?
       if (excludeEventTypes) {
@@ -71,7 +71,7 @@ export const eventResolvers: Resolvers = {
 
       if (eventType) {
         // filter by event type too
-        eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({ eventTargetId, eventTargetType, eventType });
+        eventsTargetsRecords = dataSources.EventsTargets.filterByTargetAndEventType({ eventTargetId, eventTargetType, eventType });
 
         // excluding events by event type(s)?
         if (excludeEventTypes) {
@@ -105,7 +105,7 @@ export const eventResolvers: Resolvers = {
 
         return events;
       } else {
-        eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
+        eventsTargetsRecords = dataSources.EventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
 
         // excluding events by event type(s)?
         if (excludeEventTypes) {
@@ -158,12 +158,12 @@ export const eventResolvers: Resolvers = {
   },
   Event: {
     targets: ({ id, type }, _, { dataSources }) => {
-      const eventsTargetsWithMatchingEventDataId = dataSources.eventsTargets.byEventDataIdAndEventType({eventDataId: id, eventType: type})
+      const eventsTargetsWithMatchingEventDataId = dataSources.EventsTargets.byEventDataIdAndEventType({eventDataId: id, eventType: type})
 
       const targets = eventsTargetsWithMatchingEventDataId.map(eventTargetRecord => {
         switch (eventTargetRecord.eventTargetType) {
           case EventTargetType.Plant:
-            return dataSources.plant.byId({ id: eventTargetRecord.eventTargetId })
+            return dataSources.Plant.byId({ id: eventTargetRecord.eventTargetId })
         }
       })
 

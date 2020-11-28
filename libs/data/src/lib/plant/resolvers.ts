@@ -6,9 +6,9 @@ import { EventTargetType, EventType, Resolvers } from './../generated';
  */
 export const plantResolvers: Resolvers = {
   Query: {
-    plants: (_, __, { dataSources }) => dataSources.plant.getAll(),
+    plants: (_, __, { dataSources }) => dataSources.Plant.getAll(),
     plant: (_, { id }, { dataSources }) => {
-      const plant = dataSources.plant.byId({ id })
+      const plant = dataSources.Plant.byId({ id })
 
       if (plant) {
         return plant;
@@ -20,7 +20,7 @@ export const plantResolvers: Resolvers = {
   Plant: {
     avatar: (plant, _, { dataSources }) => {
       if (plant['avatarPhotoId']) { // not in obj type, but in db record ie parent
-        const avatar = dataSources.photo.byId({ id: plant['avatarPhotoId'] });
+        const avatar = dataSources.Photo.byId({ id: plant['avatarPhotoId'] });
         return avatar;
       }
 
@@ -28,19 +28,19 @@ export const plantResolvers: Resolvers = {
     },
     coverPhoto: (plant, _, { dataSources }) => {
       if (plant['coverPhotoId']) {
-        const coverPhoto = dataSources.photo.byId({ id: plant['coverPhotoId'] });
+        const coverPhoto = dataSources.Photo.byId({ id: plant['coverPhotoId'] });
         return coverPhoto;
       }
 
       return null;
     },
     photos: (plant, _, { dataSources }) => {
-      const photos = dataSources.photo.filterByPlantId({ id: plant.id });
+      const photos = dataSources.Photo.filterByPlantId({ id: plant.id });
       return photos;
     },
     species: (plant, _, { dataSources }) => {
       if (plant['speciesId']) {
-        const species = dataSources.species.byId({ id: plant['speciesId'] })
+        const species = dataSources.Species.byId({ id: plant['speciesId'] })
         return species;
       }
 
@@ -48,7 +48,7 @@ export const plantResolvers: Resolvers = {
     },
     currentPlantStage: ({id}, _, { dataSources }) => {
       // get most recent plant stage change event to determine the plant stage
-      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({
+      const eventsTargetsRecords = dataSources.EventsTargets.filterByTargetAndEventType({
         eventTargetId: id,
         eventTargetType: EventTargetType.Plant,
         eventType: EventType.PlantStageChange
@@ -59,24 +59,24 @@ export const plantResolvers: Resolvers = {
       }
 
       // have events, so get their data so we can sort by eventTime to get "current"
-      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.plantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
+      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.PlantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
       eventsData.sort((a, b) => b.eventTime - a.eventTime) // descending
 
       if (eventsData[0].plantStageId) {
-        return dataSources.plantStage.byId({ id: eventsData[0].plantStageId })
+        return dataSources.PlantStage.byId({ id: eventsData[0].plantStageId })
       }
 
       return null
     },
     currentSpeciesPlantStage: ({id}, _, { dataSources }) => {
-      const plantRecord = dataSources.plant.byId({ id })
+      const plantRecord = dataSources.Plant.byId({ id })
 
       if (!plantRecord.speciesId) {
         return null
       }
 
       // get most recent plant stage change event to determine the plant stage
-      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({
+      const eventsTargetsRecords = dataSources.EventsTargets.filterByTargetAndEventType({
         eventTargetId: id,
         eventTargetType: EventTargetType.Plant,
         eventType: EventType.PlantStageChange
@@ -87,11 +87,11 @@ export const plantResolvers: Resolvers = {
       }
 
       // have events, so get their data so we can sort by eventTime to get "current"
-      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.plantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
+      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.PlantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
       eventsData.sort((a, b) => b.eventTime - a.eventTime) // descending
 
       if (eventsData[0].plantStageId) {
-        return dataSources.speciesPlantStage.filterBySpeciesAndStage({
+        return dataSources.SpeciesPlantStage.filterBySpeciesAndStage({
           speciesId: plantRecord.speciesId,
           plantStageId: eventsData[0].plantStageId
         })
@@ -101,6 +101,6 @@ export const plantResolvers: Resolvers = {
     }
   },
   Mutation: {
-    addPlant: (_, { name }, { dataSources }) => dataSources.plant.new({name})
+    addPlant: (_, { name }, { dataSources }) => dataSources.Plant.new({name})
   }
 }

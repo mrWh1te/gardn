@@ -5,9 +5,9 @@ import { Resolvers } from './../generated';
  */
 export const lightBulbTemplateResolvers: Resolvers = {
   Query: {
-    lightBulbTemplates: (_, __, { dataSources }) => dataSources.lightBulbTemplate.getAll(),
+    lightBulbTemplates: (_, __, { dataSources }) => dataSources.LightBulbTemplate.getAll(),
     lightBulbTemplate: (_, { id }, { dataSources }) => {
-      const lightBulbTemplateRecord = dataSources.lightBulbTemplate.byId({ id });
+      const lightBulbTemplateRecord = dataSources.LightBulbTemplate.byId({ id });
 
       if (lightBulbTemplateRecord) {
         return lightBulbTemplateRecord;

@@ -6,25 +6,25 @@ export const getEventData = (dataSources: DataSources, eventType: EventType, id:
 
   switch(eventType) {
     case EventType.Water:
-      data = dataSources.waterEventData.byId({ id });
+      data = dataSources.WaterEventData.byId({ id });
       break;
     case EventType.PlantStageChange:
-      data = dataSources.plantStageEventData.byId({ id });
+      data = dataSources.PlantStageEventData.byId({ id });
       break;
     case EventType.TemperatureReading:
-      data = dataSources.temperatureEventData.byId({ id });
+      data = dataSources.TemperatureEventData.byId({ id });
       break;
     case EventType.HumidityReading:
-      data = dataSources.humidityEventData.byId({ id });
+      data = dataSources.HumidityEventData.byId({ id });
       break;
     case EventType.PhReading:
-      data = dataSources.pHEventData.byId({ id });
+      data = dataSources.PHEventData.byId({ id });
       break;
     case EventType.EcReading:
-      data = dataSources.eCEventData.byId({ id });
+      data = dataSources.ECEventData.byId({ id });
       break;
     case EventType.LightChange:
-      data = dataSources.lightEventData.byId({ id });
+      data = dataSources.LightEventData.byId({ id });
       break;
     default:
       throw new Error('[getEventData] Event type not recognized ' + eventType)

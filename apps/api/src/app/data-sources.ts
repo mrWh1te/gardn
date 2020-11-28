@@ -22,19 +22,19 @@ import { // todo standardize casing with data-sources' naming
  * Data Sources factory
  */
 export const dataSources = (): DataSources => ({
-  plant: plantDataSourceFactory(store),
-  species: speciesDataSourceFactory(store),
-  photo: photoDataSourceFactory(store),
-  plantStage: PlantStageDataSourceFactory(store),
-  lightBulbTemplate: lightBulbTemplateDataSourceFactory(store),
-  environment: EnvironmentDataSourceFactory(store),
-  speciesPlantStage: SpeciesPlantStageDataSourceFactory(store),
-  eventsTargets: EventsTargetsDataSourceFactory(store),
-  waterEventData: WaterEventDataDataSourceFactory(store),
-  plantStageEventData: PlantStageEventDataDataSourceFactory(store),
-  temperatureEventData: TemperatureEventDataDataSourceFactory(store),
-  humidityEventData: HumidityEventDataDataSourceFactory(store),
-  pHEventData: PHEventDataDataSourceFactory(store),
-  eCEventData: ECEventDataDataSourceFactory(store),
-  lightEventData: LightEventDataDataSourceFactory(store)
+  Plant: plantDataSourceFactory(store),
+  Species: speciesDataSourceFactory(store),
+  Photo: photoDataSourceFactory(store),
+  PlantStage: PlantStageDataSourceFactory(store),
+  LightBulbTemplate: lightBulbTemplateDataSourceFactory(store),
+  Environment: EnvironmentDataSourceFactory(store),
+  SpeciesPlantStage: SpeciesPlantStageDataSourceFactory(store),
+  EventsTargets: EventsTargetsDataSourceFactory(store),
+  WaterEventData: WaterEventDataDataSourceFactory(store),
+  PlantStageEventData: PlantStageEventDataDataSourceFactory(store),
+  TemperatureEventData: TemperatureEventDataDataSourceFactory(store),
+  HumidityEventData: HumidityEventDataDataSourceFactory(store),
+  PHEventData: PHEventDataDataSourceFactory(store),
+  ECEventData: ECEventDataDataSourceFactory(store),
+  LightEventData: LightEventDataDataSourceFactory(store)
 });
