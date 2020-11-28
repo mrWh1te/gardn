@@ -1,4 +1,4 @@
-import { Resolvers } from './../generated';
+import { EventTargetType, EventType, Resolvers } from './../generated';
 
 /**
  * Data is stored in memory for development
@@ -46,14 +46,58 @@ export const plantResolvers: Resolvers = {
 
       return null;
     },
-    currentPlantStage: ({ id }, _, { dataSources }) => {
-      const plant = dataSources.plant.byId({ id })
+    currentPlantStage: ({id}, _, { dataSources }) => {
+      // get most recent plant stage change event to determine the plant stage
+      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({
+        eventTargetId: id,
+        eventTargetType: EventTargetType.Plant,
+        eventType: EventType.PlantStageChange
+      })
 
-      if (plant.currentPlantStageId) {
-        return dataSources.plantStage.byId({ id: plant.currentPlantStageId });
+      if (eventsTargetsRecords.length === 0) {
+        return null
       }
 
-      return null;
+      // have events, so get their data so we can sort by eventTime to get "current"
+      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.plantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
+      eventsData.sort((a, b) => b.eventTime - a.eventTime) // descending
+
+      if (eventsData[0].plantStageId) {
+        return dataSources.plantStage.byId({ id: eventsData[0].plantStageId })
+      }
+
+      return null
+    },
+    currentSpeciesPlantStage: ({id}, _, { dataSources }) => {
+      const plantRecord = dataSources.plant.byId({ id })
+
+      if (!plantRecord.speciesId) {
+        return null
+      }
+
+      // get most recent plant stage change event to determine the plant stage
+      const eventsTargetsRecords = dataSources.eventsTargets.filterByTargetAndEventType({
+        eventTargetId: id,
+        eventTargetType: EventTargetType.Plant,
+        eventType: EventType.PlantStageChange
+      })
+
+      if (eventsTargetsRecords.length === 0) {
+        return null
+      }
+
+      // have events, so get their data so we can sort by eventTime to get "current"
+      const eventsData = eventsTargetsRecords.map(eventsTargetsRecord => dataSources.plantStageEventData.byId({id: eventsTargetsRecord.eventDataId }))
+      eventsData.sort((a, b) => b.eventTime - a.eventTime) // descending
+
+      if (eventsData[0].plantStageId) {
+        return dataSources.speciesPlantStage.filterBySpeciesAndStage({
+          speciesId: plantRecord.speciesId,
+          plantStageId: eventsData[0].plantStageId
+        })
+      }
+
+      return null
     }
   },
   Mutation: {

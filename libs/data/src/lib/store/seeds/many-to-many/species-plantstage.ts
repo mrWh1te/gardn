@@ -4,8 +4,9 @@ import {
   plantStageSeed,
   plantStageSprouting
 } from '../../../plant-stage/seed-data';
-import { createSpeciesPlantStages } from '../../../species/helpers/create-species-plant-stages';
+import { createDBSpeciesPlantStage } from '../../../species/species-plantstage/helpers/create-species-plant-stage';
 import { species1, species2 } from '../../../species/seed-data';
+import { mockEnvironmentSeed, mockEnvironmentSprout, mockEnvironmentVeg } from '../../../environment/mocks';
 
 /**
  * Associations Seeds
@@ -13,38 +14,51 @@ import { species1, species2 } from '../../../species/seed-data';
  */
 export const speciesPlantStagesSeed = [
   // Species 1's PlantStages
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species1.id,
-    plantStageId: plantStageSeed.id
+    plantStageId: plantStageSeed.id,
+    idealEnvironmentId: mockEnvironmentSeed.id
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species1.id,
-    plantStageId: plantStageGermination.id
+    plantStageId: plantStageGermination.id,
+    idealEnvironmentId: mockEnvironmentSeed.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species1.id,
-    plantStageId: plantStagePlanting.id
+    plantStageId: plantStagePlanting.id,
+    idealEnvironmentId: mockEnvironmentSprout.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species1.id,
-    plantStageId: plantStageSprouting.id
+    plantStageId: plantStageSprouting.id,
+    idealEnvironmentId: mockEnvironmentSprout.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
   // Species 2's PlantStages
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species2.id,
-    plantStageId: plantStageSeed.id
+    plantStageId: plantStageSeed.id,
+    idealEnvironmentId: mockEnvironmentSeed.id,
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species2.id,
-    plantStageId: plantStageGermination.id
+    plantStageId: plantStageGermination.id,
+    idealEnvironmentId: mockEnvironmentSprout.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species2.id,
-    plantStageId: plantStagePlanting.id
+    plantStageId: plantStagePlanting.id,
+    idealEnvironmentId: mockEnvironmentSprout.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
-  createSpeciesPlantStages({
+  createDBSpeciesPlantStage({
     speciesId: species2.id,
-    plantStageId: plantStageSprouting.id
+    plantStageId: plantStageSprouting.id,
+    idealEnvironmentId: mockEnvironmentSprout.id,
+    plantStageTimeSpanInMinutes: 12 * 24 * 60 // 12 days
   }),
-  // for full testing, remaining species do not have the optional data PlantStage
 ];

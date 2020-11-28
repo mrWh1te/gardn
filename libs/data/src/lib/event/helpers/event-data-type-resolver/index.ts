@@ -25,7 +25,7 @@ export const eventDataTypeResolver: Resolvers['EventData']['__resolveType'] = (o
     return 'LightEventData';
   }
 
-  if (obj['previousPlantStageId'] || obj['nextPlantStageId']) {
+  if (obj['plantStageId']) {
     return 'PlantStageEventData';
   }
 

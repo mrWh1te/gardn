@@ -17,11 +17,11 @@ export const plantStageResolvers: Resolvers = {
     }
   },
   PlantStage: {
-    environment: ({ id }, _, { dataSources }) => {
+    defaultEnvironment: ({ id }, _, { dataSources }) => {
       const plantStage = dataSources.plantStage.byId({ id });
 
-      if (plantStage.environmentId) {
-        const environment = dataSources.environment.byId({ id: plantStage.environmentId })
+      if (plantStage.defaultEnvironmentId) {
+        const environment = dataSources.environment.byId({ id: plantStage.defaultEnvironmentId })
         return environment;
       }
 

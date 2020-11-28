@@ -38,46 +38,29 @@ query getPlantHeader($id: Int!) {
   }
 }
 
-query getPlantCurrentPlantStageEnvironment($id: Int!) {
+query getPlantCurrentEnvironment($id: Int!) {
   plant(id: $id) {
     id, currentPlantStage {
-      environment {
-        ...EnvironmentConditions
+      id, defaultEnvironment {
+        id, ...EnvironmentConditions
+      }
+    }, currentSpeciesPlantStage {
+      id, idealEnvironment {
+        id, ...EnvironmentConditions
       }
     }
   }
 }
 
-query getPlantRecentEventsAndCurrentStageEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
+query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
   plant(id: $plantId) {
     id, currentPlantStage {
-      environment {
-        id, 
-        idealWaterAmount,
-        idealWaterAmountUnit,
-        idealWaterAmountPerTimePeriod,
-        idealWaterAmountPerTimePeriodUnit,
-        idealTemperatureMin,
-        idealTemperatueMax,
-        idealTemperatureMinUnit,
-        idealTemperatureMaxUnit,
-        idealHumidityMin,
-        idealHumidityMax,
-        idealHumidityMinUnit,
-        idealHumidityMaxUnit,
-        lightOnTime,
-        lightOnTimeUnit,
-        lightOnTimePerTimePeriod,
-        lightOnTimePerTimePeriodUnit,
-        desiredPH,
-        phMinimum,
-        phMaximum,
-        desiredElectricalConductivity,
-        desiredElectricalConductivityUnit,
-        electricalConductivityMin,
-        electricalConductivityMax,
-        electricalConductivityMinUnit,
-        electricalConductivityMaxUnit
+      id, defaultEnvironment {
+        id, ...EnvironmentConditions
+      }
+    }, currentSpeciesPlantStage {
+      id, idealEnvironment {
+        id, ...EnvironmentConditions
       }
     }
   },
@@ -95,7 +78,7 @@ query getPlantRecentEventsAndCurrentStageEnvironment($plantId: Int!, $limitPerTy
       }
     } 
   },
-  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING) {
     id, type, data {
       __typename
       ... on BaseEventData {
@@ -128,9 +111,7 @@ query getPlantEvents($id: Int!) {
         id, eventTime, amount, amountUnit, temperature, temperatureUnit
       }
       ... on PlantStageEventData {
-        id, eventTime, previousPlantStage {
-          id, name, description
-        }, nextPlantStage {
+        id, eventTime, plantStage {
           id, name, description
         }
       }
@@ -161,9 +142,7 @@ query getPlantStageEvents($plantId: Int!) {
         id, eventTime
       }
       ... on PlantStageEventData {
-        id, eventTime, previousPlantStage {
-          id, name, description
-        }, nextPlantStage {
+        id, eventTime, plantStage {
           id, name, description
         }
       }

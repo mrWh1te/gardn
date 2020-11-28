@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import { 
   EventType,
-  GetPlantRecentEventsAndCurrentStageEnvironmentQuery,
+  GetPlantRecentEventsAndCurrentIdealEnvironmentQuery,
   eventsHasEventWithType,
   eventsSelectOneByType,
   getTemperatureReading,
@@ -28,6 +28,8 @@ import {
   logoDarkGreen
 } from '@gardn/ui';
 import { LightChangeIcon } from '@gardn/events/ui';
+
+import { getCurrentPlantEnvironment } from '@gardn/plant/helpers';
 
 const StyledPlantRecentEventsIcons = styled.div`
   ol {
@@ -55,10 +57,12 @@ const StyledWaterDropletIcon = styled.div`
   margin-right: 1px;
 `;
 
-export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, waterEvents }: GetPlantRecentEventsAndCurrentStageEnvironmentQuery) => {
-  if (plant === undefined || (events.length === 0 && lightChangeEvents.length === 0 && waterEvents.length === 0)) {
+export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, waterEvents }: GetPlantRecentEventsAndCurrentIdealEnvironmentQuery) => {
+  if (events.length === 0 && lightChangeEvents.length === 0 && waterEvents.length === 0) {
     return null
   }
+
+  const currentEnvironment = getCurrentPlantEnvironment(plant);
 
   const attentionIcon = (
     <StyledAttentionIcon>
@@ -84,30 +88,28 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
   }
 
   const eventTypeNeedsAttention = (eventType: EventType): boolean => {
-    if (plant?.currentPlantStage?.environment == undefined) {
+    if (!currentEnvironment) {
       return false // no data to compare against as to determine if event type needs attention
     }
 
-    const { currentPlantStage: { environment } } = plant
-
     if (eventType === EventType.LightChange) {
-      return doesLightNeedAttention(lightChangeEvents, environment);
+      return doesLightNeedAttention(lightChangeEvents, currentEnvironment);
     }
     if (eventType === EventType.Water) {
-      return doesWaterNeedAttention(waterEvents, environment);
+      return doesWaterNeedAttention(waterEvents, currentEnvironment);
     }
 
     const { data } = eventsSelectOneByType(events, eventType)
   
     switch (data?.__typename) {
       case 'ECEventData':
-        return doesECNeedAttention(data, environment);
+        return doesECNeedAttention(data, currentEnvironment);
       case 'HumidityEventData':
-        return doesHumidityNeedAttention(data, environment);
+        return doesHumidityNeedAttention(data, currentEnvironment);
       case 'PHEventData':
-        return doesPHNeedAttention(data, environment);
+        return doesPHNeedAttention(data, currentEnvironment);
       case 'TemperatureEventData':
-        return doesTemperatureNeedAttention(data, environment);
+        return doesTemperatureNeedAttention(data, currentEnvironment);
     }
   
     return false

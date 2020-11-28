@@ -47,7 +47,7 @@ export const PlantStagesTimeline = ({ events }: GetPlantStageEventsQuery) => {
               </TimelineSeparator>
               <TimelineContent>
                 <h6>
-                  { event.data['nextPlantStage']?.name }
+                  { event.data['plantStage']?.name }
                 </h6>
                 { event.data?.eventTime ? <p>{ formatDate(event.data.eventTime) }</p> : '' }
               </TimelineContent>

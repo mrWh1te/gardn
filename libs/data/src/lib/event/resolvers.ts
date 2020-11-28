@@ -6,21 +6,56 @@ import { getEventData } from './helpers/get-event-data';
 import { filterEventsByMinimumEventTime } from './helpers/filter-events-by-minimum-event-time';
 import { filterEventsByMaximumEventTime } from './helpers/filter-events-by-maximum-event-time';
 import { filterOutEventTypes } from './events-targets/helpers/filter-out-event-types';
+import { filterByEventType } from './events-targets/helpers/filter-by-event-type';
 
 /**
  * Data is stored in memory for development
  */
 export const eventResolvers: Resolvers = {
   Query: {
-    event: (_, { eventDataId, eventType }, { dataSources }) => {
-      if (eventDataId && eventType) {
-        const data = getEventData(dataSources, eventType, eventDataId)
-        const event = eventDataToEvent(data, eventType)
-
-        return event;
+    event: (_, { eventTargetId, eventTargetType, eventType, excludeEventTypes, sortDirection, eventTimeMinimum, eventTimeMaximum }, { dataSources }) => {
+      if (eventType !== undefined && excludeEventTypes !== undefined && excludeEventTypes.some(excludeEventType => excludeEventType === eventType)) {
+        return null
       }
 
-      throw new Error('Event Query - Not Enough Params')
+      if (eventTimeMinimum !== undefined && eventTimeMaximum !== undefined && eventTimeMaximum === eventTimeMinimum) {
+        return null
+      }
+
+      let eventsTargetsRecords = dataSources.eventsTargets.filterByTargetTypeAndTargetId({ eventTargetId, eventTargetType });
+
+      // excluding events by event type(s)?
+      if (excludeEventTypes) {
+        eventsTargetsRecords = eventsTargetsRecords.filter(filterOutEventTypes(excludeEventTypes))
+      }
+
+      // focusing event type?
+      if (eventType) {
+        eventsTargetsRecords = eventsTargetsRecords.filter(filterByEventType(eventType))
+      }
+
+      // get event data (eventTime) of each event for sorting
+      let events = eventsTargetsRecords.map(eventsTargetsRecord => {
+        const data = getEventData(dataSources, eventsTargetsRecord.eventType, eventsTargetsRecord.eventDataId)
+        const event = eventDataToEvent(data, eventsTargetsRecord.eventType);
+        return event
+      })
+
+      // minimum eventTime?
+      if (eventTimeMinimum) {
+        events = events.filter(filterEventsByMinimumEventTime(eventTimeMinimum))
+      }
+
+      // maximum eventTime?
+      if (eventTimeMaximum) {
+        events = events.filter(filterEventsByMaximumEventTime(eventTimeMaximum))
+      }
+
+      // sort in descending order (latest at the start, oldest at the end)
+      events.sort(sortEventsByEventTime(sortDirection))
+
+      // limit 1
+      return events[0]
     },
     events: (_, { eventTargetId, eventTargetType, eventType, excludeEventTypes, limitPerType, sortDirection, eventTimeMinimum, eventTimeMaximum }, { dataSources }) => {
       if (eventType !== undefined && excludeEventTypes !== undefined && excludeEventTypes.some(excludeEventType => excludeEventType === eventType)) {

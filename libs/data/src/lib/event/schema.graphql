@@ -12,7 +12,7 @@ type Event implements Node {
 }
 
 type Query {
-  event(eventDataId: Int!, eventType: EventType!): Event
+  event(eventTargetId: Int!, eventTargetType: EventTargetType!, eventType: EventType, excludeEventTypes: [EventType], sortDirection: SortDirection, eventTimeMinimum: Timestamp, eventTimeMaximum: Timestamp): Event
   events(eventTargetId: Int!, eventTargetType: EventTargetType!, eventType: EventType, excludeEventTypes: [EventType], limitPerType: Int, sortDirection: SortDirection, eventTimeMinimum: Timestamp, eventTimeMaximum: Timestamp): [Event]  
 }
 

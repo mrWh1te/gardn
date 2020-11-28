@@ -14,7 +14,8 @@ import { // todo standardize casing with data-sources' naming
   HumidityEventDataDataSourceFactory,
   PHEventDataDataSourceFactory,
   ECEventDataDataSourceFactory,
-  LightEventDataDataSourceFactory
+  LightEventDataDataSourceFactory,
+  SpeciesPlantStageDataSourceFactory
 } from '@gardn/data';
 
 /**
@@ -27,6 +28,7 @@ export const dataSources = (): DataSources => ({
   plantStage: PlantStageDataSourceFactory(store),
   lightBulbTemplate: lightBulbTemplateDataSourceFactory(store),
   environment: EnvironmentDataSourceFactory(store),
+  speciesPlantStage: SpeciesPlantStageDataSourceFactory(store),
   eventsTargets: EventsTargetsDataSourceFactory(store),
   waterEventData: WaterEventDataDataSourceFactory(store),
   plantStageEventData: PlantStageEventDataDataSourceFactory(store),

@@ -1,6 +1,7 @@
-import { Environment, HumidityEventData } from './../../../../../generated'
+import { LooseEnvironment } from './../../../../../environment/types';
+import { HumidityEventData } from './../../../../../generated'
 
-export const doesHumidityNeedAttention = (lastHumidityReadingEventData: Partial<HumidityEventData>, idealEnvironment: Partial<Environment>): boolean => {
+export const doesHumidityNeedAttention = (lastHumidityReadingEventData: Partial<HumidityEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
 
   // future have a threshold for when a reading event is considered too old, therefore a new reading is needed
   if (lastHumidityReadingEventData.humidity == undefined) {

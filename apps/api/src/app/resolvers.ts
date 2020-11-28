@@ -9,6 +9,7 @@ import {
   lightBulbTemplateResolvers,
   eventResolvers,
   plantStageEventDataResolvers,
+  speciesPlantStageResolvers,
   Resolvers
 } from '@gardn/data';
 
@@ -21,6 +22,7 @@ export const resolvers: Resolvers = {
     ...environmentResolvers.Query,
     ...lightBulbTemplateResolvers.Query,
     ...eventResolvers.Query,
+    ...speciesPlantStageResolvers.Query,
   },
   Mutation: {
     ...photoResolvers.Mutation,
@@ -36,6 +38,7 @@ export const resolvers: Resolvers = {
   EventTarget: eventResolvers.EventTarget,
   EventData: eventResolvers.EventData,
   PlantStageEventData: plantStageEventDataResolvers.PlantStageEventData,
+  SpeciesPlantStage: speciesPlantStageResolvers.SpeciesPlantStage,
   // Custom Scalars
   Timestamp: TimestampResolver,
   // Base interfaces

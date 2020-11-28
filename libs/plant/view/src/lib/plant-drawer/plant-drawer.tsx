@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 
 import { 
   PlantPhotos,
-  PlantCurrentStageIdealEnvironment,
+  PlantCurrentIdealEnvironment,
   PlantStagesTimeline,
   PlantHeader,
   PlantEventsTimeline
@@ -47,7 +47,7 @@ export const PlantDrawer = () => {
               <PlantHeader />
               <Grid rows={1} columns={2}>
                 <PlantStagesTimeline />
-                <PlantCurrentStageIdealEnvironment />
+                <PlantCurrentIdealEnvironment />
               </Grid>
             </Grid>
           </DrawerView>

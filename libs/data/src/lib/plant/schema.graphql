@@ -7,7 +7,9 @@ type Plant implements BaseDbModel {
   photos: [Photo]
   coverPhoto: Photo
   avatar: Photo
+
   currentPlantStage: PlantStage
+  currentSpeciesPlantStage: SpeciesPlantStage
 }
 
 type Query {

@@ -73,6 +73,9 @@
     },
     "events-ui": {
       "tags": []
+    },
+    "plant-helpers": {
+      "tags": []
     }
   }
 }

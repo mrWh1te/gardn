@@ -1,6 +1,7 @@
-import { Environment, PhEventData } from './../../../../../generated'
+import { LooseEnvironment } from './../../../../../environment/types'
+import { PhEventData } from './../../../../../generated'
 
-export const doesPHNeedAttention = (lastPHReadingEventData: Partial<PhEventData>, idealEnvironment: Partial<Environment>): boolean => {
+export const doesPHNeedAttention = (lastPHReadingEventData: Partial<PhEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
 
   // future have a threshold for when a reading event is considered too old, therefore a new reading is needed
   if (lastPHReadingEventData.pH == undefined) {

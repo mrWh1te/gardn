@@ -5,20 +5,11 @@ import { Resolvers } from './../../../generated';
  */
 export const plantStageEventDataResolvers: Resolvers = {
   PlantStageEventData: {
-    previousPlantStage: ({ id }, _, { dataSources }) => {
+    plantStage: ({ id }, _, { dataSources }) => {
       const plantStageEventDataRecord = dataSources.plantStageEventData.byId({ id })
 
-      if (plantStageEventDataRecord.previousPlantStageId) {
-        return dataSources.plantStage.byId({ id: plantStageEventDataRecord.previousPlantStageId })
-      }
-
-      return null
-    },
-    nextPlantStage: ({ id }, _, { dataSources }) => {
-      const plantStageEventDataRecord = dataSources.plantStageEventData.byId({ id })
-
-      if (plantStageEventDataRecord.nextPlantStageId) {
-        return dataSources.plantStage.byId({ id: plantStageEventDataRecord.nextPlantStageId })
+      if (plantStageEventDataRecord.plantStageId) {
+        return dataSources.plantStage.byId({ id: plantStageEventDataRecord.plantStageId })
       }
 
       return null

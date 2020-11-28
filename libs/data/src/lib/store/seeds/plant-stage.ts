@@ -19,31 +19,31 @@ import {
 // plant life cycles associated with environments that detail the plant's preferred growth conditions
 const associatedPlantStageSeed = {
   ...plantStageSeed,
-  environmentId: mockEnvironmentSeed.id
+  defaultEnvironmentId: mockEnvironmentSeed.id
 }
 const associatedPlantStageGermination = {
   ...plantStageGermination,
-  environmentId: mockEnvironmentSeed.id
+  defaultEnvironmentId: mockEnvironmentSeed.id
 }
 const associatedPlantStagePlanting = {
   ...plantStagePlanting,
-  environmentId: mockEnvironmentSprout.id
+  defaultEnvironmentId: mockEnvironmentSprout.id
 }
 const associatedPlantStageSprouting = {
   ...plantStageSprouting,
-  environmentId: mockEnvironmentSprout.id
+  defaultEnvironmentId: mockEnvironmentSprout.id
 }
 const associatedPlantStageVeging = {
   ...plantStageVeging,
-  environmentId: mockEnvironmentVeg.id
+  defaultEnvironmentId: mockEnvironmentVeg.id
 }
 const associatedPlantStageEarlyFlower = {
   ...plantStageEarlyFlower,
-  environmentId: mockEnvironmentEarlyFlower.id
+  defaultEnvironmentId: mockEnvironmentEarlyFlower.id
 }
 const associatedPlantStageLateFlower = {
   ...plantStageLateFlower,
-  environmentId: mockEnvironmentLateFlower.id
+  defaultEnvironmentId: mockEnvironmentLateFlower.id
 }
 
 export const plantStagesSeed = [

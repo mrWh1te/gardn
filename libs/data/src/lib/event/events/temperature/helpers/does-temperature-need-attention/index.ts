@@ -1,6 +1,7 @@
-import { Environment, TemperatureEventData } from './../../../../../generated'
+import { LooseEnvironment } from './../../../../../environment/types';
+import { TemperatureEventData } from './../../../../../generated'
 
-export const doesTemperatureNeedAttention = (lastTemperatureReadingEventData: Partial<TemperatureEventData>, idealEnvironment: Partial<Environment>): boolean => {
+export const doesTemperatureNeedAttention = (lastTemperatureReadingEventData: Partial<TemperatureEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
 
   if (lastTemperatureReadingEventData.temperature == undefined) {
     return false

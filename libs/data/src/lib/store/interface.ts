@@ -5,7 +5,7 @@ import { EcEventData, Environment, HumidityEventData, LightBulbTemplate, LightEv
 import { DBPhoto } from '../photo/interfaces';
 import { DBPlantStage } from '../plant-stage/interfaces';
 import { DBPlant } from '../plant/interfaces';
-import { DBSpeciesPlantStages } from '../species/interfaces';
+import { DBSpeciesPlantStages } from '../species/species-plantstage/interfaces';
 
 /**
  * In-Memory DB

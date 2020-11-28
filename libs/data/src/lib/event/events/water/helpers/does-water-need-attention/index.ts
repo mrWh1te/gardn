@@ -1,12 +1,12 @@
-import { Environment } from './../../../../../generated'
 import { LooseEvent } from '../../../../types'
+import { LooseEnvironment } from 'libs/data/src/lib/environment/types';
 
 /**
  * Based on the last watering event, and the ideal environment's conditions, is it time to water again?
  * @param lastWaterEventData 
  * @param idealEnvironment 
  */
-export const doesWaterNeedAttention = (lastWaterEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<Environment>): boolean => {
+export const doesWaterNeedAttention = (lastWaterEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean => {
   if (typeof idealEnvironment.idealWaterAmount !== 'number') {
     // not enough data to compare too, to ascertain if target needs attention in respect to its watering
     return false

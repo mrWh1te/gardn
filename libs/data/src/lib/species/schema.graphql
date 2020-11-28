@@ -8,7 +8,7 @@ type Species implements BaseDbModel {
   avatar: Photo
 
   sproutToHarvestInHours: Int
-  plantStages: [PlantStage]
+  speciesPlantStages: [SpeciesPlantStage]
 }
 
 type Query {

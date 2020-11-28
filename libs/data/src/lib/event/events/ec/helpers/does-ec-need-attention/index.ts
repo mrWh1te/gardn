@@ -1,6 +1,7 @@
-import { Environment, EcEventData } from './../../../../../generated'
+import { LooseEnvironment } from 'libs/data/src/lib/environment/types'
+import { EcEventData } from './../../../../../generated'
 
-export const doesECNeedAttention = (lastECReadingEventData: Partial<EcEventData>, idealEnvironment: Partial<Environment>): boolean => {
+export const doesECNeedAttention = (lastECReadingEventData: Partial<EcEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
 
   // future have a threshold for when a reading event is considered too old, therefore a new reading is needed
   if (lastECReadingEventData.electricalConductivity == undefined) {

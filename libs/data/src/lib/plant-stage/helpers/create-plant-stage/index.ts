@@ -1,4 +1,4 @@
 import { createDBModelInstanceFactory } from './../../../helpers/create-db-model-instance-factory'
-import { PlantStage } from './../../../generated';
+import { DBPlantStage } from '../../interfaces';
 
-export const createPlantStage = createDBModelInstanceFactory<PlantStage>();
+export const createPlantStage = createDBModelInstanceFactory<DBPlantStage>();

@@ -10,6 +10,7 @@ export * from './lib/environment/resolvers';
 export * from './lib/light-bulb-template/resolvers';
 export * from './lib/event/resolvers';
 export * from './lib/event/events/plant-stage/resolvers';
+export * from './lib/species/species-plantstage/resolvers';
 
 // Data Sources
 export * from './lib/data-sources.interfaces';
@@ -27,6 +28,7 @@ export * from './lib/event/events/humidity/data-source';
 export * from './lib/event/events/ph/data-source';
 export * from './lib/event/events/ec/data-source';
 export * from './lib/event/events/light/data-source';
+export * from './lib/species/species-plantstage/data-source';
 
 // Type Policies
 export * from './lib/event/type-policies';
@@ -41,7 +43,7 @@ export * from './lib/light-bulb-template/helpers/create-light-bulb-template';
 export * from './lib/event/helpers/event-data-to-event';
 
 // Model to Model Relationships
-export * from './lib/species/helpers/create-species-plant-stages';
+export * from './lib/species/species-plantstage/helpers/create-species-plant-stage';
 export * from './lib/environment/helpers/create-environments-light-bulb-templates';
 
 // Mock data

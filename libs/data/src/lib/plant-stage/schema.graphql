@@ -4,10 +4,12 @@ type PlantStage implements BaseDbModel {
   
   name: String!
   description: String
-  environment: Environment
+
+  defaultTimeSpanInMinutes: Int
+  defaultEnvironment: Environment
 }
 
 type Query {
   plantStages: [PlantStage]
-  plantStage(id: Int!): PlantStage
+  plantStage(id: Int!, speciesId: Int): PlantStage
 }

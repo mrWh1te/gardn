@@ -1,12 +1,13 @@
+import { LooseEnvironment } from './../../../../../environment/types'
 import { sortEventsByEventTime } from '../../../../helpers/sort-events-by-event-time'
 import { LooseEvent } from '../../../../types'
-import { Environment, SortDirection } from './../../../../../generated'
+import { SortDirection } from './../../../../../generated'
 
 /**
  * @param lightChangeEventsData
  * @param idealEnvironment 
  */
-export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<Environment>): boolean => {
+export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean => {
   if (typeof idealEnvironment.lightOnTime !== 'number') {
     return false
   }

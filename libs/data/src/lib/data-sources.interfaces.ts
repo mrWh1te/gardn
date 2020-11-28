@@ -32,7 +32,8 @@ export type DataSourcesKeys = 'plant' |
                               'humidityEventData' |
                               'pHEventData' |
                               'eCEventData' |
-                              'lightEventData';
+                              'lightEventData' | 
+                              'speciesPlantStage';
   // todo future ? Omit<keyof ResolversTypes, 'Timestamp'|'SortDirection'|...> then change casing of all dataSources -> DataSources
 
 // DataSources type used in the main gardn app

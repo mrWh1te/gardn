@@ -6,6 +6,5 @@ import { PlantStageEventData, PlantStage } from '../../../generated';
  */
 export interface DBPlantStageEventData extends Omit<PlantStageEventData, '__typename'> {
   __typename?: 'DBPlantStageEventData',
-  previousPlantStageId: PlantStage['id'],
-  nextPlantStageId: PlantStage['id']
+  plantStageId: PlantStage['id']
 }

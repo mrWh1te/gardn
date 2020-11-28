@@ -21,6 +21,10 @@ export const speciesResolvers: Resolvers = {
     addSpecies: (_, { name, description }, { dataSources }) => dataSources.species.new({name, description})
   },
   Species: {
-    plantStages: ({ id }, _, { dataSources }) => dataSources.plantStage.filterBySpeciesId({ id })
+    speciesPlantStages: ({ id }, _, { dataSources }) => {
+      const speciesPlantStageRecords = dataSources.speciesPlantStage.filterBySpecies({ speciesId: id })
+
+      return speciesPlantStageRecords
+    }
   }
 }

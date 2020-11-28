@@ -11,6 +11,5 @@ import { Plant, Photo, Species, PlantStage } from './../generated'; // From *.gr
 export interface DBPlant extends Plant {
   speciesId?: Species['id'], // not required on User to associate data to Species
   coverPhotoId?: Photo['id'],
-  avatarPhotoId?: Photo['id'], // not required of User to upload avatar photo 
-  currentPlantStageId?: PlantStage['id']
+  avatarPhotoId?: Photo['id'] // not required of User to upload avatar photo 
 }

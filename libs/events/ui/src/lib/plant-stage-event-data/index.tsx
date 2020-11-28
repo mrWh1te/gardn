@@ -9,8 +9,7 @@ import { EventTime } from './../event-time';
 /* eslint-disable-next-line */
 export interface PlantStageEventDataProps {
   data: {
-    previousPlantStage?: Omit<PlantStageEventDataModel['previousPlantStage'], 'dateCreated'>,
-    nextPlantStage?: Omit<PlantStageEventDataModel['previousPlantStage'], 'dateCreated'>,
+    plantStage?: Omit<PlantStageEventDataModel['plantStage'], 'dateCreated'>,
     eventTime: number
   }
 }
@@ -20,7 +19,7 @@ const StyledPlantStageEventData = styled.div`
 `;
 
 export const PlantStageEventData = ({ data }: PlantStageEventDataProps) => {
-  let lifeCycleInfoText = data.nextPlantStage?.name ? data.nextPlantStage.name + '' : undefined
+  let lifeCycleInfoText = data.plantStage?.name ? data.plantStage.name + '' : undefined
 
   return (
     <StyledPlantStageEventData>

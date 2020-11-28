@@ -130,6 +130,8 @@ export type Query = {
   plantStages?: Maybe<Array<Maybe<PlantStage>>>;
   plants?: Maybe<Array<Maybe<Plant>>>;
   species?: Maybe<Species>;
+  speciesPlantStage?: Maybe<SpeciesPlantStage>;
+  speciesPlantStages?: Maybe<Array<Maybe<SpeciesPlantStage>>>;
 };
 
 
@@ -139,8 +141,13 @@ export type QueryEnvironmentArgs = {
 
 
 export type QueryEventArgs = {
-  eventDataId: Scalars['Int'];
-  eventType: EventType;
+  eventTargetId: Scalars['Int'];
+  eventTargetType: EventTargetType;
+  eventType?: Maybe<EventType>;
+  excludeEventTypes?: Maybe<Array<Maybe<EventType>>>;
+  sortDirection?: Maybe<SortDirection>;
+  eventTimeMinimum?: Maybe<Scalars['Timestamp']>;
+  eventTimeMaximum?: Maybe<Scalars['Timestamp']>;
 };
 
 
@@ -173,10 +180,16 @@ export type QueryPlantArgs = {
 
 export type QueryPlantStageArgs = {
   id: Scalars['Int'];
+  speciesId?: Maybe<Scalars['Int']>;
 };
 
 
 export type QuerySpeciesArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QuerySpeciesPlantStageArgs = {
   id: Scalars['Int'];
 };
 
@@ -237,8 +250,7 @@ export type PlantStageEventData = BaseEventData & {
   __typename?: 'PlantStageEventData';
   id: Scalars['Int'];
   dateCreated: Scalars['Timestamp'];
-  previousPlantStage?: Maybe<PlantStage>;
-  nextPlantStage?: Maybe<PlantStage>;
+  plantStage?: Maybe<PlantStage>;
   eventTime: Scalars['Timestamp'];
 };
 
@@ -339,7 +351,8 @@ export type PlantStage = BaseDbModel & {
   dateCreated: Scalars['Timestamp'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  environment?: Maybe<Environment>;
+  defaultTimeSpanInMinutes?: Maybe<Scalars['Int']>;
+  defaultEnvironment?: Maybe<Environment>;
 };
 
 export type Plant = BaseDbModel & {
@@ -352,6 +365,7 @@ export type Plant = BaseDbModel & {
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
   currentPlantStage?: Maybe<PlantStage>;
+  currentSpeciesPlantStage?: Maybe<SpeciesPlantStage>;
 };
 
 export type Species = BaseDbModel & {
@@ -363,7 +377,16 @@ export type Species = BaseDbModel & {
   coverPhoto?: Maybe<Photo>;
   avatar?: Maybe<Photo>;
   sproutToHarvestInHours?: Maybe<Scalars['Int']>;
-  plantStages?: Maybe<Array<Maybe<PlantStage>>>;
+  speciesPlantStages?: Maybe<Array<Maybe<SpeciesPlantStage>>>;
+};
+
+export type SpeciesPlantStage = BaseDbModel & {
+  __typename?: 'SpeciesPlantStage';
+  id: Scalars['Int'];
+  dateCreated: Scalars['Timestamp'];
+  idealEnvironment?: Maybe<Environment>;
+  plantStage?: Maybe<PlantStage>;
+  plantStageTimeSpanInMinutes?: Maybe<Scalars['Int']>;
 };
 
 export type EnvironmentConditionsFragment = (
@@ -395,10 +418,7 @@ export type GetTargetEventsQuery = (
     ) | (
       { __typename: 'PlantStageEventData' }
       & Pick<PlantStageEventData, 'id' | 'eventTime'>
-      & { previousPlantStage?: Maybe<(
-        { __typename?: 'PlantStage' }
-        & Pick<PlantStage, 'id' | 'name' | 'description'>
-      )>, nextPlantStage?: Maybe<(
+      & { plantStage?: Maybe<(
         { __typename?: 'PlantStage' }
         & Pick<PlantStage, 'id' | 'name' | 'description'>
       )> }
@@ -440,10 +460,7 @@ export type GetTargetRecentEventsQuery = (
     ) | (
       { __typename: 'PlantStageEventData' }
       & Pick<PlantStageEventData, 'id' | 'eventTime'>
-      & { previousPlantStage?: Maybe<(
-        { __typename?: 'PlantStage' }
-        & Pick<PlantStage, 'id' | 'name' | 'description'>
-      )>, nextPlantStage?: Maybe<(
+      & { plantStage?: Maybe<(
         { __typename?: 'PlantStage' }
         & Pick<PlantStage, 'id' | 'name' | 'description'>
       )> }
@@ -519,7 +536,7 @@ export type GetPlantStageQuery = (
   & { plantStage?: Maybe<(
     { __typename?: 'PlantStage' }
     & Pick<PlantStage, 'name' | 'dateCreated' | 'description'>
-    & { environment?: Maybe<(
+    & { defaultEnvironment?: Maybe<(
       { __typename?: 'Environment' }
       & Pick<Environment, 'id' | 'name'>
     )> }
@@ -534,7 +551,7 @@ export type GetAllPlantStagesQuery = (
   & { plantStages?: Maybe<Array<Maybe<(
     { __typename?: 'PlantStage' }
     & Pick<PlantStage, 'name' | 'dateCreated' | 'description'>
-    & { environment?: Maybe<(
+    & { defaultEnvironment?: Maybe<(
       { __typename?: 'Environment' }
       & Pick<Environment, 'id' | 'name'>
     )> }
@@ -622,27 +639,37 @@ export type GetPlantHeaderQuery = (
   )> }
 );
 
-export type GetPlantCurrentPlantStageEnvironmentQueryVariables = Exact<{
+export type GetPlantCurrentEnvironmentQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetPlantCurrentPlantStageEnvironmentQuery = (
+export type GetPlantCurrentEnvironmentQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id'>
     & { currentPlantStage?: Maybe<(
       { __typename?: 'PlantStage' }
-      & { environment?: Maybe<(
+      & Pick<PlantStage, 'id'>
+      & { defaultEnvironment?: Maybe<(
         { __typename?: 'Environment' }
+        & Pick<Environment, 'id'>
+        & EnvironmentConditionsFragment
+      )> }
+    )>, currentSpeciesPlantStage?: Maybe<(
+      { __typename?: 'SpeciesPlantStage' }
+      & Pick<SpeciesPlantStage, 'id'>
+      & { idealEnvironment?: Maybe<(
+        { __typename?: 'Environment' }
+        & Pick<Environment, 'id'>
         & EnvironmentConditionsFragment
       )> }
     )> }
   )> }
 );
 
-export type GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables = Exact<{
+export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables = Exact<{
   plantId: Scalars['Int'];
   limitPerType?: Maybe<Scalars['Int']>;
   eventType?: Maybe<EventType>;
@@ -650,16 +677,26 @@ export type GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables = Exact
 }>;
 
 
-export type GetPlantRecentEventsAndCurrentStageEnvironmentQuery = (
+export type GetPlantRecentEventsAndCurrentIdealEnvironmentQuery = (
   { __typename?: 'Query' }
   & { plant?: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id'>
     & { currentPlantStage?: Maybe<(
       { __typename?: 'PlantStage' }
-      & { environment?: Maybe<(
+      & Pick<PlantStage, 'id'>
+      & { defaultEnvironment?: Maybe<(
         { __typename?: 'Environment' }
-        & Pick<Environment, 'id' | 'idealWaterAmount' | 'idealWaterAmountUnit' | 'idealWaterAmountPerTimePeriod' | 'idealWaterAmountPerTimePeriodUnit' | 'idealTemperatureMin' | 'idealTemperatueMax' | 'idealTemperatureMinUnit' | 'idealTemperatureMaxUnit' | 'idealHumidityMin' | 'idealHumidityMax' | 'idealHumidityMinUnit' | 'idealHumidityMaxUnit' | 'lightOnTime' | 'lightOnTimeUnit' | 'lightOnTimePerTimePeriod' | 'lightOnTimePerTimePeriodUnit' | 'desiredPH' | 'phMinimum' | 'phMaximum' | 'desiredElectricalConductivity' | 'desiredElectricalConductivityUnit' | 'electricalConductivityMin' | 'electricalConductivityMax' | 'electricalConductivityMinUnit' | 'electricalConductivityMaxUnit'>
+        & Pick<Environment, 'id'>
+        & EnvironmentConditionsFragment
+      )> }
+    )>, currentSpeciesPlantStage?: Maybe<(
+      { __typename?: 'SpeciesPlantStage' }
+      & Pick<SpeciesPlantStage, 'id'>
+      & { idealEnvironment?: Maybe<(
+        { __typename?: 'Environment' }
+        & Pick<Environment, 'id'>
+        & EnvironmentConditionsFragment
       )> }
     )> }
   )>, lightChangeEvents?: Maybe<Array<Maybe<(
@@ -720,10 +757,7 @@ export type GetPlantEventsQuery = (
     ) | (
       { __typename: 'PlantStageEventData' }
       & Pick<PlantStageEventData, 'id' | 'eventTime'>
-      & { previousPlantStage?: Maybe<(
-        { __typename?: 'PlantStage' }
-        & Pick<PlantStage, 'id' | 'name' | 'description'>
-      )>, nextPlantStage?: Maybe<(
+      & { plantStage?: Maybe<(
         { __typename?: 'PlantStage' }
         & Pick<PlantStage, 'id' | 'name' | 'description'>
       )> }
@@ -762,10 +796,7 @@ export type GetPlantStageEventsQuery = (
     ) | (
       { __typename: 'PlantStageEventData' }
       & Pick<PlantStageEventData, 'id' | 'eventTime'>
-      & { previousPlantStage?: Maybe<(
-        { __typename?: 'PlantStage' }
-        & Pick<PlantStage, 'id' | 'name' | 'description'>
-      )>, nextPlantStage?: Maybe<(
+      & { plantStage?: Maybe<(
         { __typename?: 'PlantStage' }
         & Pick<PlantStage, 'id' | 'name' | 'description'>
       )> }
@@ -908,12 +939,7 @@ export const GetTargetEventsDocument = gql`
       ... on PlantStageEventData {
         id
         eventTime
-        previousPlantStage {
-          id
-          name
-          description
-        }
-        nextPlantStage {
+        plantStage {
           id
           name
           description
@@ -1007,12 +1033,7 @@ export const GetTargetRecentEventsDocument = gql`
       ... on PlantStageEventData {
         id
         eventTime
-        previousPlantStage {
-          id
-          name
-          description
-        }
-        nextPlantStage {
+        plantStage {
           id
           name
           description
@@ -1196,7 +1217,7 @@ export const GetPlantStageDocument = gql`
     name
     dateCreated
     description
-    environment {
+    defaultEnvironment {
       id
       name
     }
@@ -1235,7 +1256,7 @@ export const GetAllPlantStagesDocument = gql`
     name
     dateCreated
     description
-    environment {
+    defaultEnvironment {
       id
       name
     }
@@ -1451,12 +1472,21 @@ export function useGetPlantHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetPlantHeaderQueryHookResult = ReturnType<typeof useGetPlantHeaderQuery>;
 export type GetPlantHeaderLazyQueryHookResult = ReturnType<typeof useGetPlantHeaderLazyQuery>;
 export type GetPlantHeaderQueryResult = Apollo.QueryResult<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>;
-export const GetPlantCurrentPlantStageEnvironmentDocument = gql`
-    query getPlantCurrentPlantStageEnvironment($id: Int!) {
+export const GetPlantCurrentEnvironmentDocument = gql`
+    query getPlantCurrentEnvironment($id: Int!) {
   plant(id: $id) {
     id
     currentPlantStage {
-      environment {
+      id
+      defaultEnvironment {
+        id
+        ...EnvironmentConditions
+      }
+    }
+    currentSpeciesPlantStage {
+      id
+      idealEnvironment {
+        id
         ...EnvironmentConditions
       }
     }
@@ -1465,62 +1495,46 @@ export const GetPlantCurrentPlantStageEnvironmentDocument = gql`
     ${EnvironmentConditionsFragmentDoc}`;
 
 /**
- * __useGetPlantCurrentPlantStageEnvironmentQuery__
+ * __useGetPlantCurrentEnvironmentQuery__
  *
- * To run a query within a React component, call `useGetPlantCurrentPlantStageEnvironmentQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPlantCurrentPlantStageEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPlantCurrentEnvironmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantCurrentEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPlantCurrentPlantStageEnvironmentQuery({
+ * const { data, loading, error } = useGetPlantCurrentEnvironmentQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetPlantCurrentPlantStageEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantCurrentPlantStageEnvironmentQuery, GetPlantCurrentPlantStageEnvironmentQueryVariables>) {
-        return Apollo.useQuery<GetPlantCurrentPlantStageEnvironmentQuery, GetPlantCurrentPlantStageEnvironmentQueryVariables>(GetPlantCurrentPlantStageEnvironmentDocument, baseOptions);
+export function useGetPlantCurrentEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>) {
+        return Apollo.useQuery<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>(GetPlantCurrentEnvironmentDocument, baseOptions);
       }
-export function useGetPlantCurrentPlantStageEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantCurrentPlantStageEnvironmentQuery, GetPlantCurrentPlantStageEnvironmentQueryVariables>) {
-          return Apollo.useLazyQuery<GetPlantCurrentPlantStageEnvironmentQuery, GetPlantCurrentPlantStageEnvironmentQueryVariables>(GetPlantCurrentPlantStageEnvironmentDocument, baseOptions);
+export function useGetPlantCurrentEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>(GetPlantCurrentEnvironmentDocument, baseOptions);
         }
-export type GetPlantCurrentPlantStageEnvironmentQueryHookResult = ReturnType<typeof useGetPlantCurrentPlantStageEnvironmentQuery>;
-export type GetPlantCurrentPlantStageEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantCurrentPlantStageEnvironmentLazyQuery>;
-export type GetPlantCurrentPlantStageEnvironmentQueryResult = Apollo.QueryResult<GetPlantCurrentPlantStageEnvironmentQuery, GetPlantCurrentPlantStageEnvironmentQueryVariables>;
-export const GetPlantRecentEventsAndCurrentStageEnvironmentDocument = gql`
-    query getPlantRecentEventsAndCurrentStageEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
+export type GetPlantCurrentEnvironmentQueryHookResult = ReturnType<typeof useGetPlantCurrentEnvironmentQuery>;
+export type GetPlantCurrentEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantCurrentEnvironmentLazyQuery>;
+export type GetPlantCurrentEnvironmentQueryResult = Apollo.QueryResult<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>;
+export const GetPlantRecentEventsAndCurrentIdealEnvironmentDocument = gql`
+    query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
   plant(id: $plantId) {
     id
     currentPlantStage {
-      environment {
+      id
+      defaultEnvironment {
         id
-        idealWaterAmount
-        idealWaterAmountUnit
-        idealWaterAmountPerTimePeriod
-        idealWaterAmountPerTimePeriodUnit
-        idealTemperatureMin
-        idealTemperatueMax
-        idealTemperatureMinUnit
-        idealTemperatureMaxUnit
-        idealHumidityMin
-        idealHumidityMax
-        idealHumidityMinUnit
-        idealHumidityMaxUnit
-        lightOnTime
-        lightOnTimeUnit
-        lightOnTimePerTimePeriod
-        lightOnTimePerTimePeriodUnit
-        desiredPH
-        phMinimum
-        phMaximum
-        desiredElectricalConductivity
-        desiredElectricalConductivityUnit
-        electricalConductivityMin
-        electricalConductivityMax
-        electricalConductivityMinUnit
-        electricalConductivityMaxUnit
+        ...EnvironmentConditions
+      }
+    }
+    currentSpeciesPlantStage {
+      id
+      idealEnvironment {
+        id
+        ...EnvironmentConditions
       }
     }
   }
@@ -1553,7 +1567,7 @@ export const GetPlantRecentEventsAndCurrentStageEnvironmentDocument = gql`
       }
     }
   }
-  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING) {
     id
     type
     data {
@@ -1588,19 +1602,19 @@ export const GetPlantRecentEventsAndCurrentStageEnvironmentDocument = gql`
     }
   }
 }
-    `;
+    ${EnvironmentConditionsFragmentDoc}`;
 
 /**
- * __useGetPlantRecentEventsAndCurrentStageEnvironmentQuery__
+ * __useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery__
  *
- * To run a query within a React component, call `useGetPlantRecentEventsAndCurrentStageEnvironmentQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPlantRecentEventsAndCurrentStageEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPlantRecentEventsAndCurrentStageEnvironmentQuery({
+ * const { data, loading, error } = useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery({
  *   variables: {
  *      plantId: // value for 'plantId'
  *      limitPerType: // value for 'limitPerType'
@@ -1609,15 +1623,15 @@ export const GetPlantRecentEventsAndCurrentStageEnvironmentDocument = gql`
  *   },
  * });
  */
-export function useGetPlantRecentEventsAndCurrentStageEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantRecentEventsAndCurrentStageEnvironmentQuery, GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables>) {
-        return Apollo.useQuery<GetPlantRecentEventsAndCurrentStageEnvironmentQuery, GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables>(GetPlantRecentEventsAndCurrentStageEnvironmentDocument, baseOptions);
+export function useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>) {
+        return Apollo.useQuery<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>(GetPlantRecentEventsAndCurrentIdealEnvironmentDocument, baseOptions);
       }
-export function useGetPlantRecentEventsAndCurrentStageEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantRecentEventsAndCurrentStageEnvironmentQuery, GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables>) {
-          return Apollo.useLazyQuery<GetPlantRecentEventsAndCurrentStageEnvironmentQuery, GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables>(GetPlantRecentEventsAndCurrentStageEnvironmentDocument, baseOptions);
+export function useGetPlantRecentEventsAndCurrentIdealEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>(GetPlantRecentEventsAndCurrentIdealEnvironmentDocument, baseOptions);
         }
-export type GetPlantRecentEventsAndCurrentStageEnvironmentQueryHookResult = ReturnType<typeof useGetPlantRecentEventsAndCurrentStageEnvironmentQuery>;
-export type GetPlantRecentEventsAndCurrentStageEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantRecentEventsAndCurrentStageEnvironmentLazyQuery>;
-export type GetPlantRecentEventsAndCurrentStageEnvironmentQueryResult = Apollo.QueryResult<GetPlantRecentEventsAndCurrentStageEnvironmentQuery, GetPlantRecentEventsAndCurrentStageEnvironmentQueryVariables>;
+export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryHookResult = ReturnType<typeof useGetPlantRecentEventsAndCurrentIdealEnvironmentQuery>;
+export type GetPlantRecentEventsAndCurrentIdealEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantRecentEventsAndCurrentIdealEnvironmentLazyQuery>;
+export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryResult = Apollo.QueryResult<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>;
 export const GetPlantEventsDocument = gql`
     query getPlantEvents($id: Int!) {
   events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING) {
@@ -1640,12 +1654,7 @@ export const GetPlantEventsDocument = gql`
       ... on PlantStageEventData {
         id
         eventTime
-        previousPlantStage {
-          id
-          name
-          description
-        }
-        nextPlantStage {
+        plantStage {
           id
           name
           description
@@ -1727,12 +1736,7 @@ export const GetPlantStageEventsDocument = gql`
       ... on PlantStageEventData {
         id
         eventTime
-        previousPlantStage {
-          id
-          name
-          description
-        }
-        nextPlantStage {
+        plantStage {
           id
           name
           description
@@ -2016,13 +2020,14 @@ export type ResolversTypes = {
   EventData: ResolversTypes['WaterEventData'] | ResolversTypes['PlantStageEventData'] | ResolversTypes['TemperatureEventData'] | ResolversTypes['HumidityEventData'] | ResolversTypes['PHEventData'] | ResolversTypes['ECEventData'] | ResolversTypes['LightEventData'];
   Event: ResolverTypeWrapper<Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversTypes['EventTarget']>>> }>;
   Node: ResolversTypes['Event'];
-  BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LightBulbTemplate'] | ResolversTypes['Photo'] | ResolversTypes['PlantStage'] | ResolversTypes['Plant'] | ResolversTypes['Species'];
+  BaseDbModel: ResolversTypes['Environment'] | ResolversTypes['LightBulbTemplate'] | ResolversTypes['Photo'] | ResolversTypes['PlantStage'] | ResolversTypes['Plant'] | ResolversTypes['Species'] | ResolversTypes['SpeciesPlantStage'];
   LightBulbTemplate: ResolverTypeWrapper<LightBulbTemplate>;
   Photo: ResolverTypeWrapper<Photo>;
   Mutation: ResolverTypeWrapper<{}>;
   PlantStage: ResolverTypeWrapper<PlantStage>;
   Plant: ResolverTypeWrapper<Plant>;
   Species: ResolverTypeWrapper<Species>;
+  SpeciesPlantStage: ResolverTypeWrapper<SpeciesPlantStage>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -2046,13 +2051,14 @@ export type ResolversParentTypes = {
   EventData: ResolversParentTypes['WaterEventData'] | ResolversParentTypes['PlantStageEventData'] | ResolversParentTypes['TemperatureEventData'] | ResolversParentTypes['HumidityEventData'] | ResolversParentTypes['PHEventData'] | ResolversParentTypes['ECEventData'] | ResolversParentTypes['LightEventData'];
   Event: Omit<Event, 'data' | 'targets'> & { data?: Maybe<ResolversParentTypes['EventData']>, targets?: Maybe<Array<Maybe<ResolversParentTypes['EventTarget']>>> };
   Node: ResolversParentTypes['Event'];
-  BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LightBulbTemplate'] | ResolversParentTypes['Photo'] | ResolversParentTypes['PlantStage'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'];
+  BaseDbModel: ResolversParentTypes['Environment'] | ResolversParentTypes['LightBulbTemplate'] | ResolversParentTypes['Photo'] | ResolversParentTypes['PlantStage'] | ResolversParentTypes['Plant'] | ResolversParentTypes['Species'] | ResolversParentTypes['SpeciesPlantStage'];
   LightBulbTemplate: LightBulbTemplate;
   Photo: Photo;
   Mutation: {};
   PlantStage: PlantStage;
   Plant: Plant;
   Species: Species;
+  SpeciesPlantStage: SpeciesPlantStage;
 };
 
 export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
@@ -2097,7 +2103,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   allSpecies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Species']>>>, ParentType, ContextType>;
   environment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType, RequireFields<QueryEnvironmentArgs, 'id'>>;
   environments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Environment']>>>, ParentType, ContextType>;
-  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryEventArgs, 'eventDataId' | 'eventType'>>;
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryEventArgs, 'eventTargetId' | 'eventTargetType'>>;
   events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType, RequireFields<QueryEventsArgs, 'eventTargetId' | 'eventTargetType'>>;
   lightBulbTemplate?: Resolver<Maybe<ResolversTypes['LightBulbTemplate']>, ParentType, ContextType, RequireFields<QueryLightBulbTemplateArgs, 'id'>>;
   lightBulbTemplates?: Resolver<Maybe<Array<Maybe<ResolversTypes['LightBulbTemplate']>>>, ParentType, ContextType>;
@@ -2108,6 +2114,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   plantStages?: Resolver<Maybe<Array<Maybe<ResolversTypes['PlantStage']>>>, ParentType, ContextType>;
   plants?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plant']>>>, ParentType, ContextType>;
   species?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType, RequireFields<QuerySpeciesArgs, 'id'>>;
+  speciesPlantStage?: Resolver<Maybe<ResolversTypes['SpeciesPlantStage']>, ParentType, ContextType, RequireFields<QuerySpeciesPlantStageArgs, 'id'>>;
+  speciesPlantStages?: Resolver<Maybe<Array<Maybe<ResolversTypes['SpeciesPlantStage']>>>, ParentType, ContextType>;
 };
 
 export type EcEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['ECEventData'] = ResolversParentTypes['ECEventData']> = {
@@ -2152,8 +2160,7 @@ export type PhEventDataResolvers<ContextType = any, ParentType extends Resolvers
 export type PlantStageEventDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['PlantStageEventData'] = ResolversParentTypes['PlantStageEventData']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  previousPlantStage?: Resolver<Maybe<ResolversTypes['PlantStage']>, ParentType, ContextType>;
-  nextPlantStage?: Resolver<Maybe<ResolversTypes['PlantStage']>, ParentType, ContextType>;
+  plantStage?: Resolver<Maybe<ResolversTypes['PlantStage']>, ParentType, ContextType>;
   eventTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -2207,7 +2214,7 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type BaseDbModelResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseDbModel'] = ResolversParentTypes['BaseDbModel']> = {
-  __resolveType: TypeResolveFn<'Environment' | 'LightBulbTemplate' | 'Photo' | 'PlantStage' | 'Plant' | 'Species', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Environment' | 'LightBulbTemplate' | 'Photo' | 'PlantStage' | 'Plant' | 'Species' | 'SpeciesPlantStage', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
 };
@@ -2243,7 +2250,8 @@ export type PlantStageResolvers<ContextType = any, ParentType extends ResolversP
   dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  environment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType>;
+  defaultTimeSpanInMinutes?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  defaultEnvironment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2256,6 +2264,7 @@ export type PlantResolvers<ContextType = any, ParentType extends ResolversParent
   coverPhoto?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
   currentPlantStage?: Resolver<Maybe<ResolversTypes['PlantStage']>, ParentType, ContextType>;
+  currentSpeciesPlantStage?: Resolver<Maybe<ResolversTypes['SpeciesPlantStage']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2267,7 +2276,16 @@ export type SpeciesResolvers<ContextType = any, ParentType extends ResolversPare
   coverPhoto?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['Photo']>, ParentType, ContextType>;
   sproutToHarvestInHours?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  plantStages?: Resolver<Maybe<Array<Maybe<ResolversTypes['PlantStage']>>>, ParentType, ContextType>;
+  speciesPlantStages?: Resolver<Maybe<Array<Maybe<ResolversTypes['SpeciesPlantStage']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SpeciesPlantStageResolvers<ContextType = any, ParentType extends ResolversParentTypes['SpeciesPlantStage'] = ResolversParentTypes['SpeciesPlantStage']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  dateCreated?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  idealEnvironment?: Resolver<Maybe<ResolversTypes['Environment']>, ParentType, ContextType>;
+  plantStage?: Resolver<Maybe<ResolversTypes['PlantStage']>, ParentType, ContextType>;
+  plantStageTimeSpanInMinutes?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2294,6 +2312,7 @@ export type Resolvers<ContextType = any> = {
   PlantStage?: PlantStageResolvers<ContextType>;
   Plant?: PlantResolvers<ContextType>;
   Species?: SpeciesResolvers<ContextType>;
+  SpeciesPlantStage?: SpeciesPlantStageResolvers<ContextType>;
 };
 
 

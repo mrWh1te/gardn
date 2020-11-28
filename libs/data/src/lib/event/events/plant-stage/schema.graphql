@@ -2,8 +2,7 @@ type PlantStageEventData implements BaseEventData {
   id: Int!
   dateCreated: Timestamp!
 
-  previousPlantStage: PlantStage
-  nextPlantStage: PlantStage
+  plantStage: PlantStage
 
   eventTime: Timestamp!
 }
