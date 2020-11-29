@@ -1,7 +1,7 @@
 import Drawer from '@material-ui/core/Drawer';
 
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, useLocation } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
@@ -9,15 +9,28 @@ import { PlantDrawer } from '@gardn/plant/view';
 import { white } from '@gardn/ui';
 
 import ActionButton from './../action-button';
+import { doesActionMenuHideForPage } from './does-action-menu-hide-for-page';
 
 // TODO add tests
 
 const StyledDynamicUI = styled.div`
   opacity: 1;
-  &.off {
-    opacity: 0;
+  transition-timing-function: ease-out;
+  transition:opacity 600ms, visibility 600ms;
+
+  position: relative;
+  z-index: 10000;
+
+  &.hide {
+    opacity : 0;
+    visibility: hidden;
   }
 `;
+
+interface ActionMenuState {
+  menuOpenStatus: boolean,
+  menuHidden: boolean,
+}
 
 /**
  * This component extends upon a page with page dependent Actions
@@ -30,10 +43,21 @@ const StyledDynamicUI = styled.div`
  * @param props 
  */
 export const ActionMenu = () => {
-  const [menuOpenStatus, setMenuOpenStatus] = React.useState(false);
+  const [actionMenuState, setActionMenuState] = React.useState<ActionMenuState>({menuOpenStatus: false, menuHidden: true});
 
-  const toggleDrawer = (newOpenStatus: boolean) => (event) => {
-    setMenuOpenStatus(newOpenStatus);
+  let location = useLocation();
+  useEffect(() => {
+    const doesActionMenuHideForThisPage = doesActionMenuHideForPage(location.pathname);
+
+    if (doesActionMenuHideForThisPage && !actionMenuState.menuHidden) {
+      setActionMenuState({...actionMenuState, menuHidden: true})
+    } else if (!doesActionMenuHideForThisPage && actionMenuState.menuHidden) {
+      setActionMenuState({...actionMenuState, menuHidden: false})
+    }
+  }, [location]);
+
+  const toggleDrawer = (menuOpenStatus: boolean) => () => {
+    setActionMenuState({...actionMenuState, menuOpenStatus});
   };
 
   const style: React.CSSProperties = {
@@ -44,10 +68,9 @@ export const ActionMenu = () => {
 
   return (
     <>
-      {/* todo ActionButton disabled when a particular page route of routes is active */}
-      <StyledDynamicUI className={'off'}>
-        <ActionButton open={menuOpenStatus} toggleMenu={toggleDrawer} />
-        <Drawer anchor={'bottom'} open={menuOpenStatus} onClose={toggleDrawer(false)} 
+      <StyledDynamicUI className={actionMenuState.menuHidden ? 'hide' : ''}>
+        <ActionButton open={actionMenuState.menuOpenStatus} toggleMenu={toggleDrawer} />
+        <Drawer anchor={'bottom'} open={actionMenuState.menuOpenStatus} onClose={toggleDrawer(false)} 
           PaperProps={{ elevation: 0, style, square: false }} style={{zIndex: 1000}}>
           <Route path="/plant/:id" component={PlantDrawer} />
         </Drawer>
