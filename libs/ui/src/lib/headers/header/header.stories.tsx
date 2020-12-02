@@ -8,7 +8,7 @@ export default {
   decorators: [
     story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
   ],
-  title: 'Header'
+  title: 'Headers/Header'
 }
 
 export const noChild = () => (

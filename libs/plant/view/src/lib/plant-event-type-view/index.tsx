@@ -2,8 +2,15 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import { GoBack, StyledGoBackTopLeftCorner } from '@gardn/utility';
-import { CoverView, Grid, HumidityIcon, white, logoLightGreen } from '@gardn/ui';
+import { 
+  CoverView,
+  Grid,
+  HumidityIcon,
+  white,
+  logoLightGreen,
+  GoBack, 
+  StyledGoBackTopLeftCorner
+} from '@gardn/ui';
 
 const StyledTopRightCorner = styled.div`
   position: absolute;

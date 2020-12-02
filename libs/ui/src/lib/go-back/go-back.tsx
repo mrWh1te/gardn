@@ -3,7 +3,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import styled from '@emotion/styled';
 
-import { ChevronIcon, white } from '@gardn/ui';
+import { white } from './../colors';
+import { ChevronIcon } from './../icons/chevron-icon/chevron-icon';
 
 const StyledBackButton = styled.div`
   button {

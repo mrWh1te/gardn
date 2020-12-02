@@ -25,8 +25,9 @@ export * from './lib/icons/attention';
 export * from './lib/views/drawer-view/drawer-view';
 export * from './lib/views/cover-view/';
 
-// block components
-export * from './lib/header/header';
+// header components
+export * from './lib/headers/header/header';
+export * from './lib/headers/full-screen-header';
 
 // layout components
 export * from './lib/layout/grid/grid';
@@ -37,3 +38,7 @@ export * from './lib/tab-panel/tab-panel';
 
 // helpers
 export * from './lib/helpers/a11y-props';
+
+// utility
+export * from './lib/go-back/go-back';
+export * from './lib/go-back/styled';
