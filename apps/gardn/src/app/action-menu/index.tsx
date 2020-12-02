@@ -19,7 +19,7 @@ const StyledDynamicUI = styled.div`
   transition:opacity 600ms, visibility 600ms;
 
   position: relative;
-  z-index: 10000;
+  z-index: 1100;
 
   &.hide {
     opacity : 0;

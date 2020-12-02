@@ -26,7 +26,7 @@ export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandl
   if (disableClickHandler) {
     return (
       <StyledBackButton>
-        <button>
+        <button className={'go-back'}>
           <ChevronIcon color={color ? color : white} />
         </button>
       </StyledBackButton>
@@ -35,7 +35,7 @@ export const GoBack = withRouter<GoBackProps, any>(({ history, disableClickHandl
 
   return (
     <StyledBackButton>
-      <button onClick={() => history.goBack()}>
+      <button onClick={() => history.goBack()} className={'go-back'}>
         <ChevronIcon color={color ? color : white} />
       </button>
     </StyledBackButton>

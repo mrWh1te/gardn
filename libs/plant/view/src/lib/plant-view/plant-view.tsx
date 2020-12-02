@@ -3,14 +3,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import { PlantCoverPhoto, PlantRecentEventsIcons } from '@gardn/plant/smart';
-import { CoverView, logoLightGreen, GoBack, StyledGoBackTopLeftCorner } from '@gardn/ui';
+import { CoverView, logoLightGreen, FullScreenHeader } from '@gardn/ui';
 
 const StyledPlantRecentEvents = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
   zoom: 1.13;
-  padding: .9rem 1rem;
+  padding-right: 1rem;
   
   ol {
     display: flex;
@@ -33,27 +30,17 @@ const StyledPlantRecentEvents = styled.div`
   }
 `;
 
-const StyledGoBackContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
 export const PlantView = () => {
   return (
     <CoverView backgroundColor={logoLightGreen}>
 
-      <StyledGoBackContainer>
-        <StyledGoBackTopLeftCorner>
-          <GoBack />
-        </StyledGoBackTopLeftCorner>
-      </StyledGoBackContainer>
+      <FullScreenHeader 
+        right={ <StyledPlantRecentEvents>
+                  <PlantRecentEventsIcons />
+                </StyledPlantRecentEvents>  }
+      />
 
       <PlantCoverPhoto />
-
-      <StyledPlantRecentEvents>
-        <PlantRecentEventsIcons />
-      </StyledPlantRecentEvents>
 
     </CoverView>
   );

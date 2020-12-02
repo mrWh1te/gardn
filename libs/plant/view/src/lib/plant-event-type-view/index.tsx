@@ -8,26 +8,13 @@ import {
   HumidityIcon,
   white,
   logoLightGreen,
-  GoBack, 
-  StyledGoBackTopLeftCorner
+  FullScreenHeader,
+  FullScreenHeaderHeight
 } from '@gardn/ui';
 
-const StyledTopRightCorner = styled.div`
-  position: absolute;
-  right: 1.35rem;
-  top: 1.35rem;
-  height: 1rem;
-  width: 1rem;
-`;
-
-const StyledEventTypeHeader = styled.h1`
-  display: inline-block;
-  font-size: 1.1rem;
-  text-decoration: underline;
-`;
-
 const StyledPlantEventTypeView = styled.div`
-  height: 100vh;
+  height: 100vh - ${FullScreenHeaderHeight};
+  margin-top: ${FullScreenHeaderHeight};
   overflow-y: auto;
 `;
 
@@ -35,15 +22,9 @@ export const PlantEventTypeView = () => {
   return (
     <CoverView backgroundColor={white}>
 
-      <StyledGoBackTopLeftCorner>
-        <GoBack color={logoLightGreen} />
-        <StyledEventTypeHeader>
-          Humidity
-        </StyledEventTypeHeader>
-      </StyledGoBackTopLeftCorner>
-      <StyledTopRightCorner>
-        <HumidityIcon width={'1.25rem'} />
-      </StyledTopRightCorner>
+      <FullScreenHeader 
+        right={<div>Humidity <HumidityIcon width={'1.25rem'} /></div>}
+        goBackColor={logoLightGreen} />
 
       <StyledPlantEventTypeView>
         <Grid rows={1} columns={2}>
