@@ -5,12 +5,12 @@ import styled from '@emotion/styled';
 import { 
   CoverView,
   Grid,
-  HumidityIcon,
   white,
   logoLightGreen,
   FullScreenHeader,
   FullScreenHeaderHeight
 } from '@gardn/ui';
+import { PlantEventTypeLabel } from '@gardn/plant/smart';
 
 const StyledPlantEventTypeView = styled.div`
   height: 100vh - ${FullScreenHeaderHeight};
@@ -23,7 +23,7 @@ export const PlantEventTypeView = () => {
     <CoverView backgroundColor={white}>
 
       <FullScreenHeader 
-        right={<div>Humidity <HumidityIcon width={'1.25rem'} /></div>}
+        right={<PlantEventTypeLabel />}
         goBackColor={logoLightGreen} />
 
       <StyledPlantEventTypeView>

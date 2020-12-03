@@ -6,3 +6,12 @@ import { Event, EventData } from './../generated'
 export type LooseEvent = Omit<Partial<Event>, 'data'> & {
   data: Partial<EventData> // don't require 'dateCreated'
 }
+
+
+export type EventTypeFriendlyUrl = 'ec' |
+                                   'ph' |
+                                   'light' |
+                                   'water' |
+                                   'humidity' |
+                                   'temperature' |
+                                   'plant-stage';

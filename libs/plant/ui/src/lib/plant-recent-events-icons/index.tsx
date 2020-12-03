@@ -124,7 +124,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
     <StyledPlantRecentEventsIcons>
       <ol>
         { eventsHasEventWithType(events, EventType.EcReading) && 
-          <Link to={`/plant/${plant.id}/event-type/${EventType.EcReading}`}>
+          <Link to={`/plant/${plant.id}/event-type/ec`}>
             <li>
               <span>{ generateEventLabelForType(EventType.EcReading) }</span> <BoltIcon width={'0.563rem'} />
               { eventTypeNeedsAttention(EventType.EcReading) && attentionIcon }
@@ -132,7 +132,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
           </Link>
         }
         { eventsHasEventWithType(events, EventType.PhReading) &&
-          <Link to={`/plant/${plant.id}/event-type/${EventType.PhReading}`}>
+          <Link to={`/plant/${plant.id}/event-type/ph`}>
             <li>
               <span>{ generateEventLabelForType(EventType.PhReading) }</span> <VialIcon width={'.84rem'} />
               { eventTypeNeedsAttention(EventType.PhReading) && attentionIcon }
@@ -140,7 +140,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
           </Link>
         }
         { eventsHasEventWithType(events, EventType.HumidityReading) &&
-          <Link to={`/plant/${plant.id}/event-type/${EventType.HumidityReading}`}>
+          <Link to={`/plant/${plant.id}/event-type/humidity`}>
             <li>
               <span>{ generateEventLabelForType(EventType.HumidityReading) }</span> <HumidityIcon width={'.73rem'} />
               { eventTypeNeedsAttention(EventType.HumidityReading) && attentionIcon }
@@ -148,7 +148,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
           </Link>
         }
         { eventsHasEventWithType(events, EventType.TemperatureReading) &&
-          <Link to={`/plant/${plant.id}/event-type/${EventType.TemperatureReading}`}>
+          <Link to={`/plant/${plant.id}/event-type/temperature`}>
             <li>
               <span>{ generateEventLabelForType(EventType.TemperatureReading) }</span> <ThermometerIcon temperature={getTemperatureReading(events)} width={'0.5322rem'} />
               { eventTypeNeedsAttention(EventType.TemperatureReading) && attentionIcon }
@@ -156,7 +156,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
           </Link>
         }
         { waterEvents && waterEvents.length > 0 &&
-          <Link to={`/plant/${plant.id}/event-type/${EventType.Water}`}>
+          <Link to={`/plant/${plant.id}/event-type/water`}>
             <li>
               <StyledWaterDropletIcon><WaterDropletIcon width={'.7rem'} /></StyledWaterDropletIcon>
               { eventTypeNeedsAttention(EventType.Water) && attentionIcon }
@@ -164,7 +164,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
           </Link>
         }
         { lightChangeEvents && lightChangeEvents.length > 0 &&
-          <Link to={`/plant/${plant.id}/event-type/${EventType.LightChange}`}>
+          <Link to={`/plant/${plant.id}/event-type/light`}>
             <li>
               <LightChangeIcon lightOn={getLightOnReading(lightChangeEvents)} />
               { eventTypeNeedsAttention(EventType.LightChange) && attentionIcon }

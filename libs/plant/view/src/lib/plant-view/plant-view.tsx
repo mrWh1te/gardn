@@ -37,7 +37,7 @@ export const PlantView = () => {
       <FullScreenHeader 
         right={ <StyledPlantRecentEvents>
                   <PlantRecentEventsIcons />
-                </StyledPlantRecentEvents>  }
+                </StyledPlantRecentEvents> }
       />
 
       <PlantCoverPhoto />

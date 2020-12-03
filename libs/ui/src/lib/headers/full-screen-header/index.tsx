@@ -22,12 +22,16 @@ const StyledFullScreenHeader = styled.div`
   }
 `;
 
-interface FullScreenHeaderProps {
+/* eslint-disable-next-line */
+export interface FullScreenHeaderProps {
   left?: JSX.Element
   right?: JSX.Element
   goBackColor?: string
 }
 
+/**
+ * This Header is for Full-Screen content pages where the Logo is covered with a fallback "Go back" icon or what is set with `left` prop
+ */
 export const FullScreenHeader = ({left, right, goBackColor}: FullScreenHeaderProps) => {
 
   return (
