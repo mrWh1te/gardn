@@ -8,7 +8,8 @@ import {
   white,
   logoLightGreen,
   FullScreenHeader,
-  FullScreenHeaderHeight
+  FullScreenHeaderHeight,
+  DataPoint
 } from '@gardn/ui';
 import { PlantEventTypeLabel } from '@gardn/plant/smart';
 
@@ -27,19 +28,17 @@ export const PlantEventTypeView = () => {
         goBackColor={logoLightGreen} />
 
       <StyledPlantEventTypeView>
-        <Grid rows={1} columns={2}>
-          <div>
-            <h3>Basil (Sprout)</h3>
-            <p>ideal: 65-75%</p>
-          </div>
-          <div>
-            <h2>
-              71%
-            </h2>
-          </div>
+        <Grid rows={1} columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
+          <DataPoint label={'low'} value={'41.7%'} />
+          <DataPoint label={'recent'} value={'68.5%'} large={true} />
+          <DataPoint label={'high'} value={'82.1%'} />
         </Grid>
         <Grid>
           Graph TBI  
+        </Grid>
+        <Grid rows={1} columns={2}>
+          <h3>Basil (Sprout)</h3>
+          <p>ideal: 65-75%</p>
         </Grid>
         <Grid>
           Dynamic "!" Action(s) Section TBI
