@@ -43,9 +43,9 @@ export const PlantDrawer = () => {
         </TabPanel>
         <TabPanel value={activeTabIndex} index={1}>
           <DrawerView>
-            <Grid columns={1} gridTemplateRows={'auto'}>
+            <Grid gridTemplateRows={'auto'}>
               <PlantHeader />
-              <Grid rows={1} columns={2}>
+              <Grid columns={2}>
                 <PlantStagesTimeline />
                 <PlantCurrentIdealEnvironment />
               </Grid>

@@ -28,7 +28,7 @@ export const PlantEventTypeView = () => {
         goBackColor={logoLightGreen} />
 
       <StyledPlantEventTypeView>
-        <Grid rows={1} columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
+        <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
           <DataPoint label={'low'} value={'41.7%'} />
           <DataPoint label={'recent'} value={'68.5%'} large={true} />
           <DataPoint label={'high'} value={'82.1%'} />
@@ -36,9 +36,9 @@ export const PlantEventTypeView = () => {
         <Grid>
           Graph TBI  
         </Grid>
-        <Grid rows={1} columns={2}>
+        <Grid columns={2}>
           <h3>Basil (Sprout)</h3>
-          <p>ideal: 65-75%</p>
+          <DataPoint label={'ideal'} value={'65-75%'} />
         </Grid>
         <Grid>
           Dynamic "!" Action(s) Section TBI

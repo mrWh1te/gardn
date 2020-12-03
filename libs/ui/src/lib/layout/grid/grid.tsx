@@ -13,6 +13,10 @@ export interface GridProps {
   gap?: string, // can set columnGap & rowGap with this `gap` property
   margin?: string
 }
+
+/**
+ * If number of columns and rows are not provided, the default is 1 for each
+ */
 export const Grid = styled.section<GridProps>`
   display: grid;
   grid-template-columns: ${({gridTemplateColumns, columns, columnWidth}) => calculateGridTemplateColumnsValue({gridTemplateColumns, columns, columnWidth})};
@@ -29,14 +33,14 @@ const calculateGridTemplateColumnsValue = ({gridTemplateColumns, columns, column
     return gridTemplateColumns
   }
 
-  return `repeat(${columns ? columns : 3}, ${columnWidth ? columnWidth : '1fr'})`
+  return `repeat(${columns ? columns : 1}, ${columnWidth ? columnWidth : '1fr'})`
 }
 const calculateGridTemplateRowsValue = ({gridTemplateRows, rows, rowHeight}: Pick<GridProps, 'gridTemplateRows' | 'rows' | 'rowHeight'>): string => {
   if (gridTemplateRows) {
     return gridTemplateRows
   }
 
-  return `repeat(${rows ? rows : 2}, ${rowHeight ? rowHeight : '1fr'})`
+  return `repeat(${rows ? rows : 1}, ${rowHeight ? rowHeight : '1fr'})`
 }
 
 
