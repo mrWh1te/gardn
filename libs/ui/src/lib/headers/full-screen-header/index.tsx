@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-
 import GoBack from '../../go-back/go-back';
 
 export const FullScreenHeaderHeight = '4rem';
+export const FullScreenHeaderGutter = '1.35rem';
 
 const StyledFullScreenHeader = styled.div`
   position: absolute;
@@ -18,7 +18,7 @@ const StyledFullScreenHeader = styled.div`
   justify-content: space-between;
 
   button.go-back {
-    margin-left: 1.35rem;
+    margin-left: ${FullScreenHeaderGutter};
   }
 `;
 
