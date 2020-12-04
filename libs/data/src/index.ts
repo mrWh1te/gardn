@@ -80,4 +80,4 @@ export * from './lib/event/events/temperature/helpers/does-temperature-need-atte
 export * from './lib/event/events/light/helpers/does-light-need-attention';
 export * from './lib/event/helpers/event-type-friendly-url-to-enum';
 
-export * from './lib/environment/helpers/generate-ideal-environment-label-by-event-type';
+export * from './lib/environment/helpers/get-ideal-environment-value-by-event-type';

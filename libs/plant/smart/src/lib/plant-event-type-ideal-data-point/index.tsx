@@ -2,11 +2,11 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { EventTypeFriendlyUrl, useGetPlantCurrentEnvironmentLazyQuery } from '@gardn/data';
+import { EventTypeFriendlyUrl, eventTypeFriendlyUrlToEnum, getIdealEnvironmentValueByEventType, useGetPlantCurrentEnvironmentLazyQuery } from '@gardn/data';
 import { DataPoint } from '@gardn/ui';
 
 export const PlantEventTypeIdealDataPoint = () => {
-  const { eventType, id: plantId } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
+  const { eventType: friendlyUrlEventType, id: plantId } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
 
   // ideal values of the environment in regards to this eventType for this Plant
   const [getCurrentIdealEnvironment, { data, loading, error }] = useGetPlantCurrentEnvironmentLazyQuery({
@@ -25,11 +25,18 @@ export const PlantEventTypeIdealDataPoint = () => {
     return <div>Loading</div>
   }
 
-  let dataPointValue = ''
-
   const { currentSpeciesPlantStage, currentPlantStage } = data.plant
+  const eventType = eventTypeFriendlyUrlToEnum(friendlyUrlEventType)
 
-  if (typeof data.plant.currentSpeciesPlantStage === 'object' && data.plant.currentSpeciesPlantStage)
+  let dataPointValue
 
+  if (currentSpeciesPlantStage?.idealEnvironment && currentSpeciesPlantStage?.idealEnvironment !== null) {
+    dataPointValue = getIdealEnvironmentValueByEventType(currentSpeciesPlantStage.idealEnvironment, eventType)
+  } else if (currentPlantStage?.defaultEnvironment && currentPlantStage?.defaultEnvironment !== null) {
+    dataPointValue = getIdealEnvironmentValueByEventType(currentSpeciesPlantStage.idealEnvironment, eventType)
+  } else {
+    dataPointValue = ''
+  }
+  
   return <DataPoint label={'ideal'} value={ dataPointValue } />
 }

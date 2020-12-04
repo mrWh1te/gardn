@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { EventType, generateIdealEnvironmentLabelByEventType, GetPlantCurrentEnvironmentQuery } from '@gardn/data';
+import { EventType, getIdealEnvironmentValueByEventType, GetPlantCurrentEnvironmentQuery } from '@gardn/data';
 import { 
   FlexBox,
   WaterDropletIcon,
@@ -49,12 +49,12 @@ export const PlantCurrentIdealEnvironment = ({plant}: GetPlantCurrentEnvironment
 
   let water, temperature, humidity, light, pH, electricalConductivity;
 
-  water = generateIdealEnvironmentLabelByEventType(environment, EventType.Water)
-  temperature = generateIdealEnvironmentLabelByEventType(environment, EventType.TemperatureReading)
-  humidity = generateIdealEnvironmentLabelByEventType(environment, EventType.HumidityReading)
-  light = generateIdealEnvironmentLabelByEventType(environment, EventType.LightChange)
-  pH = generateIdealEnvironmentLabelByEventType(environment, EventType.PhReading)
-  electricalConductivity = generateIdealEnvironmentLabelByEventType(environment, EventType.EcReading)
+  water = getIdealEnvironmentValueByEventType(environment, EventType.Water)
+  temperature = getIdealEnvironmentValueByEventType(environment, EventType.TemperatureReading)
+  humidity = getIdealEnvironmentValueByEventType(environment, EventType.HumidityReading)
+  light = getIdealEnvironmentValueByEventType(environment, EventType.LightChange)
+  pH = getIdealEnvironmentValueByEventType(environment, EventType.PhReading)
+  electricalConductivity = getIdealEnvironmentValueByEventType(environment, EventType.EcReading)
 
   return (
     <StyledPlantInfo>

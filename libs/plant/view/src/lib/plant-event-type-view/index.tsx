@@ -11,7 +11,7 @@ import {
   FullScreenHeaderHeight,
   DataPoint
 } from '@gardn/ui';
-import { PlantEventTypeLabel } from '@gardn/plant/smart';
+import { PlantEventTypeIdealDataPoint, PlantEventTypeLabel } from '@gardn/plant/smart';
 
 const StyledPlantEventTypeView = styled.div`
   height: 100vh - ${FullScreenHeaderHeight};
@@ -38,7 +38,8 @@ export const PlantEventTypeView = () => {
         </Grid>
         <Grid columns={2}>
           <h3>Basil (Sprout)</h3>
-          <DataPoint label={'ideal'} value={'65-75%'} />
+          {/* <DataPoint label={'ideal'} value={'65-75%'} /> */}
+          <PlantEventTypeIdealDataPoint />
         </Grid>
         <Grid>
           Dynamic "!" Action(s) Section TBI

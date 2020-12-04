@@ -1,10 +1,10 @@
 import { DeepPartial } from '@gardn/helpers';
-import { measurementUnitToAbbreviation as abbreviate } from '@gardn/data';
 
+import { measurementUnitToAbbreviation as abbreviate } from '../../../helpers/measurement-unit-to-abbreviation';
 import { Environment, EventType } from '../../../generated';
 
 
-export const generateIdealEnvironmentLabelByEventType = (environment: DeepPartial<Environment>, eventType: EventType): string => {
+export const getIdealEnvironmentValueByEventType = (environment: DeepPartial<Environment>, eventType: EventType): string => {
   let label
 
   switch(eventType){

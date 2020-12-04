@@ -9,3 +9,4 @@ export * from './lib/plant-events-timeline';
 export * from './lib/plant-recent-events-icons';
 
 export * from './lib/plant-event-type-label';
+export * from './lib/plant-event-type-ideal-data-point';
