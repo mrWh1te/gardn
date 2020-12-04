@@ -10,3 +10,4 @@ export * from './lib/plant-recent-events-icons';
 
 export * from './lib/plant-event-type-label';
 export * from './lib/plant-event-type-ideal-data-point';
+export * from './lib/plant-species-stage-label';

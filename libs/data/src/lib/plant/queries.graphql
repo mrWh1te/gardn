@@ -38,6 +38,16 @@ query getPlantHeader($id: Int!) {
   }
 }
 
+query getPlantSpeciesAndCurrentStage($plantId: Int!) {
+  plant(id: $plantId) {
+    id, currentPlantStage {
+      id, name
+    }, species {
+      id, name
+    }
+  }
+}
+
 query getPlantCurrentEnvironment($id: Int!) {
   plant(id: $id) {
     id, currentPlantStage {

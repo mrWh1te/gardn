@@ -14,7 +14,7 @@ export const PlantEventTypeLabel = ({eventType}: PlantEventTypeLabelProps) => {
 
   switch( eventType ) {
     case 'EC_READING':
-      label = 'EC'
+      label = 'Electrical Conductivity'
       labelIcon = <BoltIcon />
       break;
     case 'HUMIDITY_READING':

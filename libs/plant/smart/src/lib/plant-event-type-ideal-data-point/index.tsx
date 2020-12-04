@@ -30,9 +30,9 @@ export const PlantEventTypeIdealDataPoint = () => {
 
   let dataPointValue
 
-  if (currentSpeciesPlantStage?.idealEnvironment && currentSpeciesPlantStage?.idealEnvironment !== null) {
+  if (currentSpeciesPlantStage?.idealEnvironment && currentSpeciesPlantStage.idealEnvironment !== null) {
     dataPointValue = getIdealEnvironmentValueByEventType(currentSpeciesPlantStage.idealEnvironment, eventType)
-  } else if (currentPlantStage?.defaultEnvironment && currentPlantStage?.defaultEnvironment !== null) {
+  } else if (currentPlantStage?.defaultEnvironment && currentPlantStage.defaultEnvironment !== null) {
     dataPointValue = getIdealEnvironmentValueByEventType(currentSpeciesPlantStage.idealEnvironment, eventType)
   } else {
     dataPointValue = ''

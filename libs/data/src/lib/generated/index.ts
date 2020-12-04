@@ -639,6 +639,26 @@ export type GetPlantHeaderQuery = (
   )> }
 );
 
+export type GetPlantSpeciesAndCurrentStageQueryVariables = Exact<{
+  plantId: Scalars['Int'];
+}>;
+
+
+export type GetPlantSpeciesAndCurrentStageQuery = (
+  { __typename?: 'Query' }
+  & { plant?: Maybe<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
+    & { currentPlantStage?: Maybe<(
+      { __typename?: 'PlantStage' }
+      & Pick<PlantStage, 'id' | 'name'>
+    )>, species?: Maybe<(
+      { __typename?: 'Species' }
+      & Pick<Species, 'id' | 'name'>
+    )> }
+  )> }
+);
+
 export type GetPlantCurrentEnvironmentQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -1472,6 +1492,47 @@ export function useGetPlantHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetPlantHeaderQueryHookResult = ReturnType<typeof useGetPlantHeaderQuery>;
 export type GetPlantHeaderLazyQueryHookResult = ReturnType<typeof useGetPlantHeaderLazyQuery>;
 export type GetPlantHeaderQueryResult = Apollo.QueryResult<GetPlantHeaderQuery, GetPlantHeaderQueryVariables>;
+export const GetPlantSpeciesAndCurrentStageDocument = gql`
+    query getPlantSpeciesAndCurrentStage($plantId: Int!) {
+  plant(id: $plantId) {
+    id
+    currentPlantStage {
+      id
+      name
+    }
+    species {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlantSpeciesAndCurrentStageQuery__
+ *
+ * To run a query within a React component, call `useGetPlantSpeciesAndCurrentStageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantSpeciesAndCurrentStageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantSpeciesAndCurrentStageQuery({
+ *   variables: {
+ *      plantId: // value for 'plantId'
+ *   },
+ * });
+ */
+export function useGetPlantSpeciesAndCurrentStageQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantSpeciesAndCurrentStageQuery, GetPlantSpeciesAndCurrentStageQueryVariables>) {
+        return Apollo.useQuery<GetPlantSpeciesAndCurrentStageQuery, GetPlantSpeciesAndCurrentStageQueryVariables>(GetPlantSpeciesAndCurrentStageDocument, baseOptions);
+      }
+export function useGetPlantSpeciesAndCurrentStageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantSpeciesAndCurrentStageQuery, GetPlantSpeciesAndCurrentStageQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantSpeciesAndCurrentStageQuery, GetPlantSpeciesAndCurrentStageQueryVariables>(GetPlantSpeciesAndCurrentStageDocument, baseOptions);
+        }
+export type GetPlantSpeciesAndCurrentStageQueryHookResult = ReturnType<typeof useGetPlantSpeciesAndCurrentStageQuery>;
+export type GetPlantSpeciesAndCurrentStageLazyQueryHookResult = ReturnType<typeof useGetPlantSpeciesAndCurrentStageLazyQuery>;
+export type GetPlantSpeciesAndCurrentStageQueryResult = Apollo.QueryResult<GetPlantSpeciesAndCurrentStageQuery, GetPlantSpeciesAndCurrentStageQueryVariables>;
 export const GetPlantCurrentEnvironmentDocument = gql`
     query getPlantCurrentEnvironment($id: Int!) {
   plant(id: $id) {
