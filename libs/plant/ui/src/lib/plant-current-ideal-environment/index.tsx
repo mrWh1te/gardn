@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { GetPlantCurrentEnvironmentQuery, measurementUnitToAbbreviation as abbreviate } from '@gardn/data';
+import { EventType, generateIdealEnvironmentLabelByEventType, GetPlantCurrentEnvironmentQuery } from '@gardn/data';
 import { 
   FlexBox,
   WaterDropletIcon,
@@ -49,44 +49,12 @@ export const PlantCurrentIdealEnvironment = ({plant}: GetPlantCurrentEnvironment
 
   let water, temperature, humidity, light, pH, electricalConductivity;
 
-  water = environment.idealWaterAmount ? environment.idealWaterAmount + abbreviate(environment.idealWaterAmountUnit) + ' / ' + environment.idealWaterAmountPerTimePeriod + abbreviate(environment.idealWaterAmountPerTimePeriodUnit) : ''
-  
-  temperature = environment.idealTemperatureMin ? environment.idealTemperatureMin + ' ' + abbreviate(environment.idealTemperatureMinUnit) : ''
-  if (environment.idealTemperatureMin && environment.idealTemperatueMax) {
-    temperature += ' - '
-  }
-  if (environment.idealTemperatueMax) {
-    temperature += environment.idealTemperatueMax + ' ' + abbreviate(environment.idealTemperatureMaxUnit)
-  }
-
-  humidity = environment.idealHumidityMin ? environment.idealHumidityMin + ' ' + abbreviate(environment.idealHumidityMinUnit) : ''
-  if (environment.idealHumidityMin && environment.idealHumidityMax) {
-    humidity += ' - '
-  }
-  if (environment.idealHumidityMax) {
-    humidity += environment.idealHumidityMax + ' ' + abbreviate(environment.idealHumidityMaxUnit)
-  }
-
-  light = typeof environment.lightOnTime !== undefined ? environment.lightOnTime + ' ' + abbreviate(environment.lightOnTimeUnit) + ' / ' + environment.lightOnTimePerTimePeriod + ' ' + abbreviate(environment.lightOnTimePerTimePeriodUnit) : ''
-
-  pH = environment.desiredPH ? environment.desiredPH : environment.phMinimum ? environment.phMinimum : ''
-  if (environment.phMinimum && environment.phMaximum) {
-    pH += ' - '
-  }
-  if (environment.phMaximum) {
-    pH += environment.phMaximum
-  }
-  if (pH !== '') {
-    pH += ' pH';
-  }
-
-  electricalConductivity = environment.desiredElectricalConductivity ? environment.desiredElectricalConductivity + abbreviate(environment.desiredElectricalConductivityUnit) : environment.electricalConductivityMin ? environment.electricalConductivityMin + abbreviate(environment.electricalConductivityMinUnit) : ''
-  if (environment.electricalConductivityMin && environment.electricalConductivityMax) {
-    electricalConductivity += ' - '
-  }
-  if (environment.electricalConductivityMax) {
-    electricalConductivity += environment.electricalConductivityMax + abbreviate(environment.electricalConductivityMaxUnit)
-  }
+  water = generateIdealEnvironmentLabelByEventType(environment, EventType.Water)
+  temperature = generateIdealEnvironmentLabelByEventType(environment, EventType.TemperatureReading)
+  humidity = generateIdealEnvironmentLabelByEventType(environment, EventType.HumidityReading)
+  light = generateIdealEnvironmentLabelByEventType(environment, EventType.LightChange)
+  pH = generateIdealEnvironmentLabelByEventType(environment, EventType.PhReading)
+  electricalConductivity = generateIdealEnvironmentLabelByEventType(environment, EventType.EcReading)
 
   return (
     <StyledPlantInfo>
