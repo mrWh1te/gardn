@@ -1,6 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
+import { color } from '@storybook/addon-knobs';
+
+import { logoLightGreen } from './../../colors'
+
 import FullScreenHeader from './';
 
 export default {
@@ -12,7 +16,7 @@ export default {
 }
 
 export const noChild = () => (
-  <FullScreenHeader />
+  <FullScreenHeader goBackColor={color('GoBack Color', logoLightGreen)} />
 );
 
 export const leftChild = () => (
@@ -20,7 +24,7 @@ export const leftChild = () => (
 );
 
 export const rightChild = () => (
-  <FullScreenHeader right={<div>hello</div>} />
+  <FullScreenHeader goBackColor={color('GoBack Color', logoLightGreen)} right={<div>hello</div>} />
 );
 
 export const bothChildren = () => (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { 
@@ -17,12 +17,13 @@ import {
   doesTemperatureNeedAttention
 } from '@gardn/data';
 import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@gardn/ui'
 
 export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
   const eventTypeEnum = eventTypeFriendlyUrlToEnum(eventType)
 
+  const [visible, setAlertVisibility] = useState(true)
   const [getPlantRecentEventsByTypeWithIdealEnvironment, { data, loading, error }] = useGetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQuery();
 
   useEffect(() => { 
@@ -90,8 +91,7 @@ export const PlantEventTypeAttentionAlert = () => {
   }
   
   return (
-    <Alert severity="warning">
-      <AlertTitle>Attention</AlertTitle>
+    <Alert title={'Attention'} visible={visible} onClose={() => { setAlertVisibility(false) }}>
       <p>This recorded humidity is outside recommended humidity levels.</p>
       <p>Recommendation:</p>
       <ul>

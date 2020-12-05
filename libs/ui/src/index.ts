@@ -42,6 +42,7 @@ export * from './lib/helpers/a11y-props';
 // utility
 export * from './lib/go-back/go-back';
 export * from './lib/go-back/styled';
+export * from './lib/alert';
 
 // Data display
 export * from './lib/data-point';
