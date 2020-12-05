@@ -20,7 +20,8 @@ export const allParams = () => (
     severity={radios('Severity (theme)', {'Success': 'success', 'Warning': 'warning', 'Info': 'info', 'Error': 'error'}, 'success')}
     onClose={() => {}}>
     <div>
-      The "Close" icon displays (far-right) because the `onClose` prop is set
+      The "Close" icon displays (far-right) when the `onClose` prop is set (as done in this story w/o a knob)
+      <p>Children component is set in this story w/o knob</p>
     </div>
   </Alert>
 );

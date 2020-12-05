@@ -23,7 +23,6 @@ export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
   const eventTypeEnum = eventTypeFriendlyUrlToEnum(eventType)
 
-  const [visible, setAlertVisibility] = useState(true)
   const [getPlantRecentEventsByTypeWithIdealEnvironment, { data, loading, error }] = useGetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQuery();
 
   useEffect(() => { 
@@ -91,7 +90,7 @@ export const PlantEventTypeAttentionAlert = () => {
   }
   
   return (
-    <Alert title={'Attention'} visible={visible} onClose={() => { setAlertVisibility(false) }}>
+    <Alert title={'Attention'} visible={true}>
       <p>This recorded humidity is outside recommended humidity levels.</p>
       <p>Recommendation:</p>
       <ul>
