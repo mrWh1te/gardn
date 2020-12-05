@@ -9,6 +9,7 @@ import {
   logoLightGreen,
   FullScreenHeader,
   FullScreenHeaderHeight,
+  FullScreenHeaderGutter,
   DataPoint
 } from '@gardn/ui';
 import { 
@@ -21,6 +22,7 @@ import {
 const StyledPlantEventTypeView = styled.div`
   height: 100vh - ${FullScreenHeaderHeight};
   margin-top: ${FullScreenHeaderHeight};
+  padding: 0 ${FullScreenHeaderGutter};
   overflow-y: auto;
 `;
 

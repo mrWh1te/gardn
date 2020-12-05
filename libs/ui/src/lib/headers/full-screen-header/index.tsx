@@ -17,6 +17,8 @@ const StyledFullScreenHeader = styled.div`
   align-items: flex-end;
   justify-content: space-between;
 
+  padding-right: ${FullScreenHeaderGutter};
+
   button.go-back {
     margin-left: ${FullScreenHeaderGutter};
   }

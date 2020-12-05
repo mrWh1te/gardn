@@ -2,21 +2,22 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { 
+  EventType,
   useGetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQuery,
   EventTypeFriendlyUrl,
   eventTypeFriendlyUrlToEnum,
   eventsHasEventWithType,
-  EventType,
   filterEventsByType,
+  eventsSelectOneByType,
   doesLightNeedAttention,
   doesWaterNeedAttention,
-  eventsSelectOneByType,
   doesECNeedAttention,
   doesHumidityNeedAttention,
   doesPHNeedAttention,
   doesTemperatureNeedAttention
 } from '@gardn/data';
 import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
@@ -43,7 +44,6 @@ export const PlantEventTypeAttentionAlert = () => {
   if (loading || !data) {
     return <div>Loading</div>
   }
-
 
   const { plant } = data
   const environment = getPlantCurrentIdealEnvironment(plant)
@@ -81,13 +81,24 @@ export const PlantEventTypeAttentionAlert = () => {
     case 'TemperatureEventData':
       eventTypeNeedsAttentionAlert = doesTemperatureNeedAttention(recentEventOfEventType.data, environment);
       break;
+    default:
+      eventTypeNeedsAttentionAlert = false
   }
 
   if (!eventTypeNeedsAttentionAlert) {
     return null
   }
   
-  return <div>tbd plant event type attention alert ui component</div>
+  return (
+    <Alert severity="warning">
+      <AlertTitle>Attention</AlertTitle>
+      <p>This recorded humidity is outside recommended humidity levels.</p>
+      <p>Recommendation:</p>
+      <ul>
+        <li>Increase humidity with a humidifier</li>
+      </ul>
+    </Alert>
+  )
 }
 
 export default PlantEventTypeAttentionAlert
