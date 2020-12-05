@@ -62,6 +62,46 @@ query getPlantCurrentEnvironment($id: Int!) {
   }
 }
 
+query getPlantRecentEventsForEventTypeWithIdealEnvironment($plantId: Int!, $eventType: EventType!, $eventTimeMinimum: Timestamp!) {
+  plant(id: $plantId) {
+    id, currentPlantStage {
+      id, defaultEnvironment {
+        id, ...EnvironmentConditions
+      }
+    }, currentSpeciesPlantStage {
+      id, idealEnvironment {
+        id, ...EnvironmentConditions
+      }
+    }
+  },
+  events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: $eventType, sortDirection: DESCENDING, eventTimeMinimum: $eventTimeMinimum) {
+    id, type, data {
+      __typename
+      ... on BaseEventData {
+        id, eventTime
+      }
+      ... on TemperatureEventData {
+        id, eventTime, temperature, temperatureUnit
+      }
+      ... on HumidityEventData {
+        id, eventTime, humidity, humidityUnit
+      }
+      ... on PHEventData {
+        id, eventTime, pH
+      }
+      ... on ECEventData {
+        id, eventTime, electricalConductivity, electricalConductivityUnit
+      }
+      ... on LightEventData {
+        id, eventTime, lightOn, color, lumens, wattage, bulbType
+      }
+      ... on WaterEventData {
+        id, eventTime, amount, amountUnit, temperature, temperatureUnit 
+      }
+    }
+  }
+}
+
 query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
   plant(id: $plantId) {
     id, currentPlantStage {
@@ -88,7 +128,7 @@ query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerTy
       }
     } 
   },
-  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING, eventTimeMinimum: $eventTimeMinimum) {
     id, type, data {
       __typename
       ... on BaseEventData {

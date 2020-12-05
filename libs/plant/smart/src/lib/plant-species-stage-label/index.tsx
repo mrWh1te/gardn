@@ -20,11 +20,9 @@ export const PlantSpeciesStageLabel = () => {
     return <div>Error :( { error.graphQLErrors[0]?.message } </div>
   }
 
-  console.log('data = ', data);
   if (loading || !data) {
     return <div>Loading</div>
   }
-
 
   return <PlantSpeciesStageLabelUi plant={data.plant}></PlantSpeciesStageLabelUi>
 }

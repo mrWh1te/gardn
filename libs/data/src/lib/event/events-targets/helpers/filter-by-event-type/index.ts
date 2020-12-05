@@ -1,6 +1,6 @@
 import { EventType } from './../../../../generated';
-import { DBEventsTargets } from './../../interface';
+// import { DBEventsTargets } from './../../interface';
 
 export const filterByEventType = 
   (eventType: EventType) =>
-    ((eventsTargets: DBEventsTargets) => eventsTargets.eventType === eventType)
+    ((eventsTargets: {eventType: EventType}) => eventsTargets.eventType === eventType)

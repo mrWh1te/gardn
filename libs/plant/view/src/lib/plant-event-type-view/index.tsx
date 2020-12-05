@@ -11,7 +11,12 @@ import {
   FullScreenHeaderHeight,
   DataPoint
 } from '@gardn/ui';
-import { PlantEventTypeIdealDataPoint, PlantEventTypeLabel, PlantSpeciesStageLabel } from '@gardn/plant/smart';
+import { 
+  PlantEventTypeAttentionAlert,
+  PlantEventTypeIdealDataPoint,
+  PlantEventTypeLabel,
+  PlantSpeciesStageLabel
+} from '@gardn/plant/smart';
 
 const StyledPlantEventTypeView = styled.div`
   height: 100vh - ${FullScreenHeaderHeight};
@@ -37,13 +42,10 @@ export const PlantEventTypeView = () => {
           Graph TBI  
         </Grid>
         <Grid columns={2}>
-          {/* <h3>Basil (Sprout)</h3> */}
           <PlantSpeciesStageLabel />
           <PlantEventTypeIdealDataPoint />
         </Grid>
-        <Grid>
-          Dynamic "!" Action(s) Section TBI
-        </Grid>
+        <PlantEventTypeAttentionAlert />
       </StyledPlantEventTypeView>
 
     </CoverView>

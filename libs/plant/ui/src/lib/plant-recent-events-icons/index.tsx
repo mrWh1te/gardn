@@ -31,7 +31,7 @@ import {
 } from '@gardn/ui';
 import { LightChangeIcon } from '@gardn/events/ui';
 
-import { getCurrentPlantEnvironment } from '@gardn/plant/helpers';
+import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
 
 const StyledPlantRecentEventsIcons = styled.div`
   ol {
@@ -67,7 +67,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
     return null
   }
 
-  const currentEnvironment = getCurrentPlantEnvironment(plant);
+  const currentEnvironment = getPlantCurrentIdealEnvironment(plant);
 
   const attentionIcon = (
     <StyledAttentionIcon>

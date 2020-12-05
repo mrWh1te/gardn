@@ -689,6 +689,63 @@ export type GetPlantCurrentEnvironmentQuery = (
   )> }
 );
 
+export type GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables = Exact<{
+  plantId: Scalars['Int'];
+  eventType: EventType;
+  eventTimeMinimum: Scalars['Timestamp'];
+}>;
+
+
+export type GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery = (
+  { __typename?: 'Query' }
+  & { plant?: Maybe<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
+    & { currentPlantStage?: Maybe<(
+      { __typename?: 'PlantStage' }
+      & Pick<PlantStage, 'id'>
+      & { defaultEnvironment?: Maybe<(
+        { __typename?: 'Environment' }
+        & Pick<Environment, 'id'>
+        & EnvironmentConditionsFragment
+      )> }
+    )>, currentSpeciesPlantStage?: Maybe<(
+      { __typename?: 'SpeciesPlantStage' }
+      & Pick<SpeciesPlantStage, 'id'>
+      & { idealEnvironment?: Maybe<(
+        { __typename?: 'Environment' }
+        & Pick<Environment, 'id'>
+        & EnvironmentConditionsFragment
+      )> }
+    )> }
+  )>, events?: Maybe<Array<Maybe<(
+    { __typename?: 'Event' }
+    & Pick<Event, 'id' | 'type'>
+    & { data?: Maybe<(
+      { __typename: 'WaterEventData' }
+      & Pick<WaterEventData, 'id' | 'eventTime' | 'amount' | 'amountUnit' | 'temperature' | 'temperatureUnit'>
+    ) | (
+      { __typename: 'PlantStageEventData' }
+      & Pick<PlantStageEventData, 'id' | 'eventTime'>
+    ) | (
+      { __typename: 'TemperatureEventData' }
+      & Pick<TemperatureEventData, 'id' | 'eventTime' | 'temperature' | 'temperatureUnit'>
+    ) | (
+      { __typename: 'HumidityEventData' }
+      & Pick<HumidityEventData, 'id' | 'eventTime' | 'humidity' | 'humidityUnit'>
+    ) | (
+      { __typename: 'PHEventData' }
+      & Pick<PhEventData, 'id' | 'eventTime' | 'pH'>
+    ) | (
+      { __typename: 'ECEventData' }
+      & Pick<EcEventData, 'id' | 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
+    ) | (
+      { __typename: 'LightEventData' }
+      & Pick<LightEventData, 'id' | 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
+    )> }
+  )>>> }
+);
+
 export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables = Exact<{
   plantId: Scalars['Int'];
   limitPerType?: Maybe<Scalars['Int']>;
@@ -1580,6 +1637,106 @@ export function useGetPlantCurrentEnvironmentLazyQuery(baseOptions?: Apollo.Lazy
 export type GetPlantCurrentEnvironmentQueryHookResult = ReturnType<typeof useGetPlantCurrentEnvironmentQuery>;
 export type GetPlantCurrentEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantCurrentEnvironmentLazyQuery>;
 export type GetPlantCurrentEnvironmentQueryResult = Apollo.QueryResult<GetPlantCurrentEnvironmentQuery, GetPlantCurrentEnvironmentQueryVariables>;
+export const GetPlantRecentEventsForEventTypeWithIdealEnvironmentDocument = gql`
+    query getPlantRecentEventsForEventTypeWithIdealEnvironment($plantId: Int!, $eventType: EventType!, $eventTimeMinimum: Timestamp!) {
+  plant(id: $plantId) {
+    id
+    currentPlantStage {
+      id
+      defaultEnvironment {
+        id
+        ...EnvironmentConditions
+      }
+    }
+    currentSpeciesPlantStage {
+      id
+      idealEnvironment {
+        id
+        ...EnvironmentConditions
+      }
+    }
+  }
+  events(eventTargetId: $plantId, eventTargetType: PLANT, eventType: $eventType, sortDirection: DESCENDING, eventTimeMinimum: $eventTimeMinimum) {
+    id
+    type
+    data {
+      __typename
+      ... on BaseEventData {
+        id
+        eventTime
+      }
+      ... on TemperatureEventData {
+        id
+        eventTime
+        temperature
+        temperatureUnit
+      }
+      ... on HumidityEventData {
+        id
+        eventTime
+        humidity
+        humidityUnit
+      }
+      ... on PHEventData {
+        id
+        eventTime
+        pH
+      }
+      ... on ECEventData {
+        id
+        eventTime
+        electricalConductivity
+        electricalConductivityUnit
+      }
+      ... on LightEventData {
+        id
+        eventTime
+        lightOn
+        color
+        lumens
+        wattage
+        bulbType
+      }
+      ... on WaterEventData {
+        id
+        eventTime
+        amount
+        amountUnit
+        temperature
+        temperatureUnit
+      }
+    }
+  }
+}
+    ${EnvironmentConditionsFragmentDoc}`;
+
+/**
+ * __useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery__
+ *
+ * To run a query within a React component, call `useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery({
+ *   variables: {
+ *      plantId: // value for 'plantId'
+ *      eventType: // value for 'eventType'
+ *      eventTimeMinimum: // value for 'eventTimeMinimum'
+ *   },
+ * });
+ */
+export function useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery(baseOptions?: Apollo.QueryHookOptions<GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery, GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables>) {
+        return Apollo.useQuery<GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery, GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables>(GetPlantRecentEventsForEventTypeWithIdealEnvironmentDocument, baseOptions);
+      }
+export function useGetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery, GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables>) {
+          return Apollo.useLazyQuery<GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery, GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables>(GetPlantRecentEventsForEventTypeWithIdealEnvironmentDocument, baseOptions);
+        }
+export type GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryHookResult = ReturnType<typeof useGetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery>;
+export type GetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantRecentEventsForEventTypeWithIdealEnvironmentLazyQuery>;
+export type GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryResult = Apollo.QueryResult<GetPlantRecentEventsForEventTypeWithIdealEnvironmentQuery, GetPlantRecentEventsForEventTypeWithIdealEnvironmentQueryVariables>;
 export const GetPlantRecentEventsAndCurrentIdealEnvironmentDocument = gql`
     query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerType: Int, $eventType: EventType, $eventTimeMinimum: Timestamp) {
   plant(id: $plantId) {
@@ -1628,7 +1785,7 @@ export const GetPlantRecentEventsAndCurrentIdealEnvironmentDocument = gql`
       }
     }
   }
-  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING) {
+  events(eventTargetId: $plantId, eventTargetType: PLANT, limitPerType: $limitPerType, excludeEventTypes: [PLANT_STAGE_CHANGE, WATER, LIGHT_CHANGE], eventType: $eventType, sortDirection: DESCENDING, eventTimeMinimum: $eventTimeMinimum) {
     id
     type
     data {

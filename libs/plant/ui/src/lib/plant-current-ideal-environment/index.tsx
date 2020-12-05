@@ -12,7 +12,7 @@ import {
   BoltIcon,
   logoDarkGreen
 } from '@gardn/ui';
-import { getCurrentPlantEnvironment } from '@gardn/plant/helpers';
+import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
 
 const StyledPlantInfo = styled.div`
   p {
@@ -40,7 +40,7 @@ const IconContainer = styled.div`
 `
 
 export const PlantCurrentIdealEnvironment = ({plant}: GetPlantCurrentEnvironmentQuery) => {
-  const environment = getCurrentPlantEnvironment(plant)
+  const environment = getPlantCurrentIdealEnvironment(plant)
 
   if (!environment) {
     // there are no plant stage change events for which an ideal environment would have been set, therefore
