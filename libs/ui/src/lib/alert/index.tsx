@@ -23,7 +23,7 @@ const StyledAlert = styled.div`
 `;
 
 export const Alert: React.FC<AlertProps> = ({ severity, visible, title, children, onClose }) => {  
-  const styledAlert = (
+  const styledAlertComponent = (
     <StyledAlert>
       <MaterialAlert 
         severity={severity ?? 'warning'} 
@@ -39,14 +39,14 @@ export const Alert: React.FC<AlertProps> = ({ severity, visible, title, children
   if (typeof visible === 'boolean') {
     return (
       <Collapse in={ visible }>
-        { styledAlert }
+        { styledAlertComponent }
       </Collapse>
     )
   }
 
   return (
     <Fragment>
-      { styledAlert }
+      { styledAlertComponent }
     </Fragment>
   )
 }

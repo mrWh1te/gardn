@@ -18,6 +18,7 @@ import {
 } from '@gardn/data';
 import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
 import { Alert } from '@gardn/ui'
+import { EventTypeStatusProblem } from '@gardn/events/ui';
 
 export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
@@ -97,13 +98,9 @@ export const PlantEventTypeAttentionAlert = () => {
   }
   
   return (
-    <Alert title={'Attention'} visible={true}>
-      {/* todo UI component props: eventType & statusProblem 'low'|'high' */}
-      <p>The recorded humidity is below recommended levels.</p>
-      <p>Suggested action(s):</p>
-      <ul>
-        <li>Increase humidity with a humidifier</li>
-      </ul>
+    <Alert title={'Attention'}>
+      {/* todo EventTypeStatusProblem UI component props: eventType & statusProblem 'low'|'high' */}
+      <EventTypeStatusProblem eventType={eventTypeEnum} statusProblem={null} />
     </Alert>
   )
 }
