@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { 
@@ -18,7 +18,7 @@ import {
 } from '@gardn/data';
 import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
 import { Alert } from '@gardn/ui'
-import { EventTypeStatusProblem } from '@gardn/events/ui';
+import { EventStatusProblem, EventTypeStatusProblem } from '@gardn/events/ui';
 
 export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
@@ -61,7 +61,7 @@ export const PlantEventTypeAttentionAlert = () => {
 
   const recentEventOfEventType = eventsSelectOneByType(events, eventTypeEnum)
   
-  let eventTypeNeedsAttentionAlert: boolean
+  let eventTypeNeedsAttentionAlert: boolean|EventStatusProblem
 
   switch (recentEventOfEventType.data?.__typename) {
     case 'LightEventData':
@@ -100,7 +100,7 @@ export const PlantEventTypeAttentionAlert = () => {
   return (
     <Alert title={'Attention'}>
       {/* todo EventTypeStatusProblem UI component props: eventType & statusProblem 'low'|'high' */}
-      <EventTypeStatusProblem eventType={eventTypeEnum} statusProblem={null} />
+      <EventTypeStatusProblem eventType={eventTypeEnum} statusProblem={typeof eventTypeNeedsAttentionAlert === 'boolean' ? null : eventTypeNeedsAttentionAlert} />
     </Alert>
   )
 }
