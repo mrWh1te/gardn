@@ -1,9 +1,7 @@
-import { EventType } from '@gardn/data';
 import React, { Fragment } from 'react';
-
 import styled from '@emotion/styled';
 
-export type EventStatusProblem = 'high' | 'low'
+import { EventType, EventStatusProblem } from '@gardn/data';
 
 /* eslint-disable-next-line */
 interface EventTypeStatusProblemProps {

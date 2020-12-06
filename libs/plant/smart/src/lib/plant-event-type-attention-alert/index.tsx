@@ -14,11 +14,12 @@ import {
   doesECNeedAttention,
   doesHumidityNeedAttention,
   doesPHNeedAttention,
-  doesTemperatureNeedAttention
+  doesTemperatureNeedAttention,
+  EventStatusProblem
 } from '@gardn/data';
 import { getPlantCurrentIdealEnvironment } from '@gardn/plant/helpers';
 import { Alert } from '@gardn/ui'
-import { EventStatusProblem, EventTypeStatusProblem } from '@gardn/events/ui';
+import { EventTypeStatusProblem } from '@gardn/events/ui';
 
 export const PlantEventTypeAttentionAlert = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()

@@ -5,8 +5,9 @@ import { Event, EventData } from './../generated'
  */
 export type LooseEvent = Omit<Partial<Event>, 'data'> & {
   data: Partial<EventData> // don't require 'dateCreated'
-}
+} // todo replace "Loose*" with DeepPartial<*>
 
+export type EventStatusProblem = 'high' | 'low';
 
 export type EventTypeFriendlyUrl = 'ec' |
                                    'ph' |

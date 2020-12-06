@@ -1,7 +1,6 @@
+import { EventStatusProblem } from '../../../../types'
 import { LooseEnvironment } from './../../../../../environment/types'
 import { PhEventData } from './../../../../../generated'
-
-import { EventStatusProblem } from '@gardn/events/ui' // todo move EventStatusProblem into the Event(s) data lib
 
 export const doesPHNeedAttention = (lastPHReadingEventData: Partial<PhEventData>, idealEnvironment: Partial<LooseEnvironment>): EventStatusProblem|boolean => {
 
