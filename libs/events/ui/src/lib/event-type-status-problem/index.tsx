@@ -24,12 +24,12 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
       warningEnvironmentFactor = 'electrical conductivity'
       switch(statusProblem) {
         case 'low':
-          suggestedActions.push('Generally caused by a deficiency of micronutrients such as calcium and magnesium, which you will have to add')
+          suggestedActions.push('There is a deficiency of micronutrients such as calcium and magnesium, which you will to determine and add')
           break;
         case 'high':
-          suggestedActions.push('Add osmosis filters to filter the water')
-          suggestedActions.push('Note that distilled water has an EC of 0')
+          suggestedActions.push('Add osmosis filters to filter the water before feeding the plants')
           suggestedActions.push('Measure the EC of the feeding water to see if adding distilled water may lower EC')
+          suggestedActions.push('Distilled water has an EC of 0')
           break;
       }
       break;
@@ -55,6 +55,7 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
           break;
         case 'low':
           suggestedActions.push('Increase humidity with a Humidifier')
+          suggestedActions.push('Note its not uncommon for a rise in humidity to cause a slight rise in temperature, depends on your air circulation')
           break;
       }
       break;
