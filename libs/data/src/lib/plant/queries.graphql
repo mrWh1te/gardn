@@ -178,7 +178,7 @@ query getPlantEvents($id: Int!, $eventType: EventType, $eventTimeMinimum: Timest
         id, eventTime, electricalConductivity, electricalConductivityUnit
       }
       ... on LightEventData {
-        id, eventTime, lightOn, color, lumens, wattage, bulbType
+        id, eventTime, lightOn, previousLightOn, color, lumens, wattage, bulbType
       }
     }
   }

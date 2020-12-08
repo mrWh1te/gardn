@@ -5,7 +5,8 @@ import {
   EventTypeFriendlyUrl,
   eventTypeFriendlyUrlToEnum,
   getEventsLowHighRecentValuesByType,
-  useGetPlantEventsLazyQuery
+  useGetPlantEventsLazyQuery,
+  getLightEventsDarkLightHoursAndRecentStatus
 } from '@gardn/data';
 import { DataPoint, Grid } from '@gardn/ui';
 
@@ -40,12 +41,28 @@ export const PlantEventTypeInteractiveDataGraph = () => {
   }
 
   const { events } = data
-  const { low, high, recent } = getEventsLowHighRecentValuesByType(events, eventTypeEnum)
 
-  // todo add support for special edge-case of "light change" event type
-  // instead of "low" it's total "dark" hours
-  // instead of "high" it's total "light" hours
-  // "recent" is not a numerical value but "Light on" vs "Light off"
+  // special case for "light change" events
+  if (eventTypeEnum === 'LIGHT_CHANGE') {
+    const hoursAgo24 = new Date().getTime() - (24 * 60 * 60 * 1000)
+    const { dark, light, recent } = getLightEventsDarkLightHoursAndRecentStatus(events, hoursAgo24) // todo use brushed area for setting initial timestamp (2nd param)
+
+    return (
+      <Fragment>
+        <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
+          <DataPoint label={'dark'} value={dark} />
+          <DataPoint label={'recent'} value={recent} large={true} />
+          <DataPoint label={'light'} value={light} />
+        </Grid>
+        <Grid>
+          Graph TBI  
+        </Grid>
+      </Fragment>
+    )
+  }
+  
+  // regular case for all the other event types (except plant stage change which is not represented here)
+  const { low, high, recent } = getEventsLowHighRecentValuesByType(events, eventTypeEnum)
   return (
     <Fragment>
       <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>

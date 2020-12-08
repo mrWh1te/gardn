@@ -84,4 +84,7 @@ export * from './lib/event/events-targets/helpers/filter-by-event-type';
 export * from './lib/event/helpers/filter-events-by-type';
 export * from './lib/event/events/helpers/get-events-low-high-recent-values-by-type';
 
+export * from './lib/event/events/light/helpers/get-light-events-dark-light-hours-and-recent-status';
+export * from './lib/event/events/light/helpers/get-light-events-total-light-on-in-milliseconds';
+
 export * from './lib/environment/helpers/get-ideal-environment-value-by-event-type';

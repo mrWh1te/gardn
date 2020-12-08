@@ -16,7 +16,8 @@ import {
   doesHumidityNeedAttention,
   doesPHNeedAttention,
   doesTemperatureNeedAttention,
-  doesLightNeedAttention
+  doesLightNeedAttention,
+  EventStatusProblem
 } from '@gardn/data';
 import { 
   BoltIcon,
@@ -92,7 +93,7 @@ export const PlantRecentEventsIcons = ({ plant, events, lightChangeEvents, water
     throw new Error('[generateEventLabelForType] unknown event.data.__typename')
   }
 
-  const eventTypeNeedsAttention = (eventType: EventType): boolean => {
+  const eventTypeNeedsAttention = (eventType: EventType): boolean|EventStatusProblem => {
     if (!currentEnvironment) {
       return false // no data to compare against as to determine if event type needs attention
     }

@@ -854,7 +854,7 @@ export type GetPlantEventsQuery = (
       & Pick<EcEventData, 'id' | 'eventTime' | 'electricalConductivity' | 'electricalConductivityUnit'>
     ) | (
       { __typename: 'LightEventData' }
-      & Pick<LightEventData, 'id' | 'eventTime' | 'lightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
+      & Pick<LightEventData, 'id' | 'eventTime' | 'lightOn' | 'previousLightOn' | 'color' | 'lumens' | 'wattage' | 'bulbType'>
     )> }
   )>>> }
 );
@@ -1907,6 +1907,7 @@ export const GetPlantEventsDocument = gql`
         id
         eventTime
         lightOn
+        previousLightOn
         color
         lumens
         wattage

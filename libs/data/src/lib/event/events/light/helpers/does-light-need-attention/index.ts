@@ -2,19 +2,20 @@ import { LooseEnvironment } from './../../../../../environment/types'
 import { sortEventsByEventTime } from '../../../../helpers/sort-events-by-event-time'
 import { EventStatusProblem, LooseEvent } from '../../../../types'
 import { SortDirection } from './../../../../../generated'
+import { getLightEventsTotalLightOnInMilliSeconds } from '../get-light-events-total-light-on-in-milliseconds'
 
 /**
- * @param lightChangeEventsData
+ * @param lightChangeEvents
  * @param idealEnvironment 
  */
-export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
+export const doesLightNeedAttention = (lightChangeEvents: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
   if (typeof idealEnvironment.lightOnTime !== 'number') {
     return false
   }
 
-  const events = [...lightChangeEventsData]
+  const events = [...lightChangeEvents]
 
-  events.sort(sortEventsByEventTime(SortDirection.Ascending))
+  // events.sort(sortEventsByEventTime(SortDirection.Ascending))
 
   // off -> on (cut off 24 hours ago for difference to add)
   const hoursAgo24 = new Date().getTime() - (24 * 60 * 60 * 1000)
@@ -27,29 +28,8 @@ export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent
   // event (previousLightOn: false, lightOn: true, eventTime: 4pm) 4pm - 9am = 7hrs (no light), therefore 5 hours of light
   // event (previousLightOn: true, lightOn: false, eventTime: 11pm) 11pm - 4pm = 7hrs (light), therfore 12 hours of light
   // event (previousLightOn: false, lightOn: false, eventTime: 1am) 11pm - 1am = 2hrs (no light), therefore 12 hours of light
-  const totalLightOn = events.reduce((hoursLightOn, event, i, array) => {
-    // if (event.data['previousLightOn'] == false) {
-      // false -> true : don't add
-      // false -> false: don't add
-    // }
-
-    if (event.data['previousLightOn'] == true) {
-      // true -> true : add
-      // true -> false : add
-
-      // 1st event, no previous eventTime to compare to, so limit to 24 hours ago
-      let timeDelta // difference in time to add
-      if (i === 0) {
-        timeDelta = event.data.eventTime - hoursAgo24;
-      } else {
-        timeDelta = event.data.eventTime - array[i-1].data.eventTime
-      }
-
-      hoursLightOn += Math.round(timeDelta/1000/60/60)
-    }
-
-    return hoursLightOn
-  }, 0)
+  const totalLightOnInMilliSeconds = getLightEventsTotalLightOnInMilliSeconds(events, hoursAgo24)
+  const totalLightOnInHours = totalLightOnInMilliSeconds / 1000 / 60 / 60;
 
   // current limitation to be built into UI (limitation will be lack of edge-case support in code, not db)
   // limit TimeUnit to hours for both
@@ -57,10 +37,9 @@ export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent
   const marginOfError = .08 // 8%
 
   const lightOnTimeCushion = idealEnvironment.lightOnTime * marginOfError
-
-  if (totalLightOn < idealEnvironment.lightOnTime - lightOnTimeCushion) {
+  if (totalLightOnInHours < idealEnvironment.lightOnTime - lightOnTimeCushion) {
     return 'low'
-  } else if (totalLightOn > idealEnvironment.lightOnTime + lightOnTimeCushion) {
+  } else if (totalLightOnInHours > idealEnvironment.lightOnTime + lightOnTimeCushion) {
     return 'high'
   } else {
     return false; // sweet spot
