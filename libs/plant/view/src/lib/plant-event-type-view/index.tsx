@@ -9,12 +9,12 @@ import {
   logoLightGreen,
   FullScreenHeader,
   FullScreenHeaderHeight,
-  FullScreenHeaderGutter,
-  DataPoint
+  FullScreenHeaderGutter
 } from '@gardn/ui';
 import { 
   PlantEventTypeAttentionAlert,
   PlantEventTypeIdealDataPoint,
+  PlantEventTypeInteractiveDataGraph,
   PlantEventTypeLabel,
   PlantSpeciesStageLabel
 } from '@gardn/plant/smart';
@@ -35,14 +35,7 @@ export const PlantEventTypeView = () => {
         goBackColor={logoLightGreen} />
 
       <StyledPlantEventTypeView>
-        <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
-          <DataPoint label={'low'} value={'41.7%'} />
-          <DataPoint label={'recent'} value={'68.5%'} large={true} />
-          <DataPoint label={'high'} value={'82.1%'} />
-        </Grid>
-        <Grid>
-          Graph TBI  
-        </Grid>
+        <PlantEventTypeInteractiveDataGraph />
         <Grid columns={2}>
           <PlantSpeciesStageLabel />
           <PlantEventTypeIdealDataPoint />

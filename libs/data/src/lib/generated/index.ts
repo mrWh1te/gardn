@@ -820,6 +820,8 @@ export type GetPlantRecentEventsAndCurrentIdealEnvironmentQuery = (
 
 export type GetPlantEventsQueryVariables = Exact<{
   id: Scalars['Int'];
+  eventType?: Maybe<EventType>;
+  eventTimeMinimum?: Maybe<Scalars['Timestamp']>;
 }>;
 
 
@@ -1851,8 +1853,8 @@ export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryHookResult = Retu
 export type GetPlantRecentEventsAndCurrentIdealEnvironmentLazyQueryHookResult = ReturnType<typeof useGetPlantRecentEventsAndCurrentIdealEnvironmentLazyQuery>;
 export type GetPlantRecentEventsAndCurrentIdealEnvironmentQueryResult = Apollo.QueryResult<GetPlantRecentEventsAndCurrentIdealEnvironmentQuery, GetPlantRecentEventsAndCurrentIdealEnvironmentQueryVariables>;
 export const GetPlantEventsDocument = gql`
-    query getPlantEvents($id: Int!) {
-  events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING) {
+    query getPlantEvents($id: Int!, $eventType: EventType, $eventTimeMinimum: Timestamp) {
+  events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING, eventType: $eventType, eventTimeMinimum: $eventTimeMinimum) {
     id
     type
     data {
@@ -1928,6 +1930,8 @@ export const GetPlantEventsDocument = gql`
  * const { data, loading, error } = useGetPlantEventsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      eventType: // value for 'eventType'
+ *      eventTimeMinimum: // value for 'eventTimeMinimum'
  *   },
  * });
  */

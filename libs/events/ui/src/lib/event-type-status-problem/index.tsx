@@ -15,6 +15,10 @@ const StyledEventTypeStatusProblem = styled.div`
   }
 `;
 
+/**
+ * Environmental Factor Status Problem
+ *  i.e. Humidity is below recommended levels
+ */
 export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeStatusProblemProps) => {
   let warningEnvironmentFactor, warningEnvironmentFactorAdverb
   const suggestedActions = []
@@ -24,7 +28,7 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
       warningEnvironmentFactor = 'electrical conductivity'
       switch(statusProblem) {
         case 'low':
-          suggestedActions.push('There is a deficiency of micronutrients such as calcium and magnesium, which you will to determine and add')
+          suggestedActions.push('Determine which micronutrients are deficient, such as calcium and magnesium, then add them')
           break;
         case 'high':
           suggestedActions.push('Add osmosis filters to filter the water before feeding the plants')

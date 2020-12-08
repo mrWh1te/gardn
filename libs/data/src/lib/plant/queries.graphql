@@ -150,8 +150,8 @@ query getPlantRecentEventsAndCurrentIdealEnvironment($plantId: Int!, $limitPerTy
   }
 }
 
-query getPlantEvents($id: Int!) {
-  events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING) {
+query getPlantEvents($id: Int!, $eventType: EventType, $eventTimeMinimum: Timestamp) {
+  events(eventTargetId: $id, eventTargetType: PLANT, sortDirection: DESCENDING, eventType: $eventType, eventTimeMinimum: $eventTimeMinimum) {
     id, type, data {
       __typename
       ... on BaseEventData {
