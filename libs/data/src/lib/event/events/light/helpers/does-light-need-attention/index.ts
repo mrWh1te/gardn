@@ -1,13 +1,13 @@
 import { LooseEnvironment } from './../../../../../environment/types'
 import { sortEventsByEventTime } from '../../../../helpers/sort-events-by-event-time'
-import { LooseEvent } from '../../../../types'
+import { EventStatusProblem, LooseEvent } from '../../../../types'
 import { SortDirection } from './../../../../../generated'
 
 /**
  * @param lightChangeEventsData
  * @param idealEnvironment 
  */
-export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean => {
+export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
   if (typeof idealEnvironment.lightOnTime !== 'number') {
     return false
   }
@@ -57,9 +57,12 @@ export const doesLightNeedAttention = (lightChangeEventsData: Partial<LooseEvent
   const marginOfError = .08 // 8%
 
   const lightOnTimeCushion = idealEnvironment.lightOnTime * marginOfError
-  if (totalLightOn >= idealEnvironment.lightOnTime - lightOnTimeCushion && totalLightOn <= idealEnvironment.lightOnTime + lightOnTimeCushion) {
-    return false; // sweet spot
+
+  if (totalLightOn < idealEnvironment.lightOnTime - lightOnTimeCushion) {
+    return 'low'
+  } else if (totalLightOn > idealEnvironment.lightOnTime + lightOnTimeCushion) {
+    return 'high'
   } else {
-    return true; 
+    return false; // sweet spot
   }  
 }

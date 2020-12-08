@@ -1,4 +1,4 @@
-import { LooseEvent } from '../../../../types'
+import { EventStatusProblem, LooseEvent } from '../../../../types'
 import { LooseEnvironment } from 'libs/data/src/lib/environment/types';
 
 /**
@@ -6,7 +6,7 @@ import { LooseEnvironment } from 'libs/data/src/lib/environment/types';
  * @param lastWaterEventData 
  * @param idealEnvironment 
  */
-export const doesWaterNeedAttention = (lastWaterEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean => {
+export const doesWaterNeedAttention = (lastWaterEventsData: Partial<LooseEvent>[], idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
   if (typeof idealEnvironment.idealWaterAmount !== 'number') {
     // not enough data to compare too, to ascertain if target needs attention in respect to its watering
     return false
@@ -33,9 +33,11 @@ export const doesWaterNeedAttention = (lastWaterEventsData: Partial<LooseEvent>[
   const idealWaterAmountPerTimePeriod = idealEnvironment.idealWaterAmount * idealEnvironment.idealWaterAmountPerTimePeriod; // for now force a single TimeUnit of Day, therefore it's ideal water amount happening multiple times a day 1 or more (idealWaterAMountPerTimePeriod, for now time period fixed to 24 hours)
 
   const waterCushion = idealWaterAmountPerTimePeriod * marginOfError;
-  if (totalWatering >= idealWaterAmountPerTimePeriod - waterCushion && totalWatering <= idealWaterAmountPerTimePeriod + waterCushion) {
-    return false; // sweet spot
+  if (totalWatering < idealWaterAmountPerTimePeriod - waterCushion) {
+    return 'low'
+  } else if ( totalWatering > idealWaterAmountPerTimePeriod + waterCushion) {
+    return 'high'; 
   } else {
-    return true; 
+    return false; // sweet spot
   }  
 }

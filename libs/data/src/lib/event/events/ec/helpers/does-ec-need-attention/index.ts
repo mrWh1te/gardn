@@ -1,7 +1,8 @@
 import { LooseEnvironment } from 'libs/data/src/lib/environment/types'
+import { EventStatusProblem } from '../../../../types'
 import { EcEventData } from './../../../../../generated'
 
-export const doesECNeedAttention = (lastECReadingEventData: Partial<EcEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
+export const doesECNeedAttention = (lastECReadingEventData: Partial<EcEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
 
   // future have a threshold for when a reading event is considered too old, therefore a new reading is needed
   if (lastECReadingEventData.electricalConductivity == undefined) {
@@ -26,10 +27,12 @@ export const doesECNeedAttention = (lastECReadingEventData: Partial<EcEventData>
   }
 
   if (idealEnvironment.electricalConductivityMin && idealEnvironment.electricalConductivityMax) {
-    if (lastECReading >= idealEnvironment.electricalConductivityMin && lastECReading <= idealEnvironment.electricalConductivityMax) {
-      return false; // sweet spot
+    if (lastECReading < idealEnvironment.electricalConductivityMin) {
+      return 'low';
+    } else if (lastECReading > idealEnvironment.electricalConductivityMax) {
+      return 'high';
     } else {
-      return true;
+      return false; // sweet spot
     }
   }
   

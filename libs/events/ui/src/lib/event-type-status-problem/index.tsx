@@ -51,9 +51,9 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
           suggestedActions.push('Try adding a 90-10 mix of water and vinegar to lower pH more than coffee mix to more quickly lower pH')
           break;
         case 'low':
-          suggestedActions.push('Add alkaline material, known as base, to your soil such as crushed limestone')
+          suggestedActions.push('Add alkaline material to your soil such as crushed limestone')
           suggestedActions.push('Try adding baking soda into the soil and around the plant')
-          suggestedActions.push('Try sprinkling about 1/2″ of wood ash over the soil too then mix it into the top 6 to 8 inches')
+          suggestedActions.push('Try sprinkling about 1/2″ of wood ash over the soil then mix it in between 6 to 8 inches deep')
           suggestedActions.push('Try mixing in crushed egg shells into the soil')
           break;
       }

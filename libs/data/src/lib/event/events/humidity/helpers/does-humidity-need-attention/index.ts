@@ -1,7 +1,8 @@
+import { EventStatusProblem } from '../../../../types';
 import { LooseEnvironment } from './../../../../../environment/types';
 import { HumidityEventData } from './../../../../../generated'
 
-export const doesHumidityNeedAttention = (lastHumidityReadingEventData: Partial<HumidityEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
+export const doesHumidityNeedAttention = (lastHumidityReadingEventData: Partial<HumidityEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
 
   // future have a threshold for when a reading event is considered too old, therefore a new reading is needed
   if (lastHumidityReadingEventData.humidity == undefined) {
@@ -11,10 +12,12 @@ export const doesHumidityNeedAttention = (lastHumidityReadingEventData: Partial<
   const { humidity } = lastHumidityReadingEventData
 
   if (idealEnvironment.idealHumidityMin && idealEnvironment.idealHumidityMax) {
-    if (humidity >= idealEnvironment.idealHumidityMin && humidity <= idealEnvironment.idealHumidityMax) {
-      return false; // sweet spot
+    if (humidity < idealEnvironment.idealHumidityMin) {
+      return 'low';
+    } else if (humidity > idealEnvironment.idealHumidityMax) {
+      return 'high';
     } else {
-      return true;
+      return false; // sweet spot
     }
   }
   

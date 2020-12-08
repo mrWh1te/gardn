@@ -1,7 +1,8 @@
+import { EventStatusProblem } from '../../../../types';
 import { LooseEnvironment } from './../../../../../environment/types';
 import { TemperatureEventData } from './../../../../../generated'
 
-export const doesTemperatureNeedAttention = (lastTemperatureReadingEventData: Partial<TemperatureEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean => {
+export const doesTemperatureNeedAttention = (lastTemperatureReadingEventData: Partial<TemperatureEventData>, idealEnvironment: Partial<LooseEnvironment>): boolean|EventStatusProblem => {
 
   if (lastTemperatureReadingEventData.temperature == undefined) {
     return false
@@ -10,10 +11,12 @@ export const doesTemperatureNeedAttention = (lastTemperatureReadingEventData: Pa
   const { temperature } = lastTemperatureReadingEventData
 
   if (idealEnvironment.idealTemperatureMin && idealEnvironment.idealTemperatueMax) {
-    if (temperature >= idealEnvironment.idealTemperatureMin && temperature <= idealEnvironment.idealTemperatueMax) {
-      return false; // sweet spot
+    if (temperature < idealEnvironment.idealTemperatureMin) {
+      return 'low';
+    } else if (temperature > idealEnvironment.idealTemperatueMax) {
+      return 'high';
     } else {
-      return true;
+      return false; // sweet spot
     }
   }
   

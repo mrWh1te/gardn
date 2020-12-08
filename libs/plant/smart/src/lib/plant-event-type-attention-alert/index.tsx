@@ -66,14 +66,7 @@ export const PlantEventTypeAttentionAlert = () => {
 
   switch (recentEventOfEventType.data?.__typename) {
     case 'LightEventData':
-      // todo update each function from "does" to getting the status ailment in regards to needing attention
-      // todo   therefore return type is boolean false for no attention or problemStatus = 'low' | 'high' 
-      // todo   then knowing the status problem, a suggestion can be set via switch()
       eventTypeNeedsAttentionAlert = doesLightNeedAttention(events.filter(filterEventsByType(EventType.LightChange)), environment);
-
-      // todo     type StatusProblem = 'high'|'low'
-      // todo     rename functions ? i.e. forWhatDoesLightNeedAttention() : false | StatusProblem
-
       break;
     case 'WaterEventData':
       eventTypeNeedsAttentionAlert = doesWaterNeedAttention(events.filter(filterEventsByType(EventType.Water)), environment);
@@ -100,7 +93,6 @@ export const PlantEventTypeAttentionAlert = () => {
   
   return (
     <Alert title={'Attention'}>
-      {/* todo EventTypeStatusProblem UI component props: eventType & statusProblem 'low'|'high' */}
       <EventTypeStatusProblem eventType={eventTypeEnum} statusProblem={typeof eventTypeNeedsAttentionAlert === 'boolean' ? null : eventTypeNeedsAttentionAlert} />
     </Alert>
   )

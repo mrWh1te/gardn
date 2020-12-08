@@ -38,8 +38,6 @@ export const doesPHNeedAttention = (lastPHReadingEventData: Partial<PhEventData>
     if (pH > idealEnvironment.phMaximum) {
       return 'high';
     }
-
-    return false; // sweet spot, no attention needed
   }
   
   return false
