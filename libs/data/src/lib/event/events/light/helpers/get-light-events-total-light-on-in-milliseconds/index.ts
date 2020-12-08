@@ -11,7 +11,7 @@ export const getLightEventsTotalLightOnInMilliSeconds = (events: DeepPartial<Eve
   const initialEventTimestamp = calculateLightOnSinceUnixTimestamp ?? eventsCopy[0].data.eventTime as any as number
 
   // 3. calculate total light on
-  const totalLightOn = events.reduce((millisecondsLightOn, event, i, array) => {
+  const totalLightOn = eventsCopy.reduce((millisecondsLightOn, event, i, array) => {
     const eventTime = event.data.eventTime as any as number // todo expand upon DeepPartial to try maintain types better with optionality
 
     if (event.data['previousLightOn'] == true) {

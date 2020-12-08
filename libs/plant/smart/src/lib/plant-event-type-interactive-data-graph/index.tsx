@@ -50,9 +50,9 @@ export const PlantEventTypeInteractiveDataGraph = () => {
     return (
       <Fragment>
         <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
-          <DataPoint label={'dark'} value={dark} />
-          <DataPoint label={'recent'} value={recent} large={true} />
           <DataPoint label={'light'} value={light} />
+          <DataPoint label={'recent'} value={recent} large={true} />
+          <DataPoint label={'dark'} value={dark} />
         </Grid>
         <Grid>
           Graph TBI  

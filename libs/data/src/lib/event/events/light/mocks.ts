@@ -3,6 +3,7 @@ import { createDBLightEventData } from './helpers/create-db-light-event-data';
 
 export const mockLightEventData1 = createDBLightEventData({
   lightOn: false,
+  previousLightOn: true,
   bulbType: LightBulbType.Mh,
   wattage: 1000,
   color: LightBulbColor.FarRed,
