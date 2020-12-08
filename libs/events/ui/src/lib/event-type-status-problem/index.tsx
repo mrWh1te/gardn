@@ -22,10 +22,30 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
   switch (eventType) {
     case 'EC_READING':
       warningEnvironmentFactor = 'electrical conductivity'
-      
+      switch(statusProblem) {
+        case 'low':
+          suggestedActions.push('Generally caused by a deficiency of micronutrients such as calcium and magnesium, which you will have to add')
+          break;
+        case 'high':
+          suggestedActions.push('Add osmosis filters to filter the water')
+          suggestedActions.push('Note that distilled water has an EC of 0')
+          suggestedActions.push('Measure the EC of the feeding water to see if adding distilled water may lower EC')
+          break;
+      }
       break;
     case 'TEMPERATURE_READING':
       warningEnvironmentFactor = 'temperature'
+      switch(statusProblem) {
+        case 'low':
+          suggestedActions.push('Add a small room heater')
+          suggestedActions.push('Add insulation to the space such as blankets')
+          suggestedActions.push('Add reflective silver to your space such as Mylar Film')
+          break;
+        case 'high':
+          suggestedActions.push('Add a fan to increase air circulation')
+          suggestedActions.push('Add a vent near the heat sources such as the lights to remove heat from the space')
+          break;
+      }
       break;
     case 'HUMIDITY_READING':
       warningEnvironmentFactor = 'humidity'
