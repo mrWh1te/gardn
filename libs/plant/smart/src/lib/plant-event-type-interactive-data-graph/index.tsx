@@ -1,13 +1,20 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { EventTypeFriendlyUrl, eventTypeFriendlyUrlToEnum, useGetPlantEventsLazyQuery } from '@gardn/data';
+import { 
+  EventTypeFriendlyUrl,
+  eventTypeFriendlyUrlToEnum,
+  getEventsLowHighRecentValuesByType,
+  useGetPlantEventsLazyQuery
+} from '@gardn/data';
 import { DataPoint, Grid } from '@gardn/ui';
 
 export const PlantEventTypeInteractiveDataGraph = () => {
   const { eventType, id } = useParams<{eventType: EventTypeFriendlyUrl, id: string}>()
   const eventTypeEnum = eventTypeFriendlyUrlToEnum(eventType)
 
+  // todo default brushed area should be last 24 hours
+  // user will be able to brush the child graph to expand upon the data displayed in the main graph by up to 28 days (4weeks)
   const [brushedArea, setBrushedArea] = useState(undefined)
 
   const [getPlantRecentEventsByTypeWithIdealEnvironment, { data, loading, error }] = useGetPlantEventsLazyQuery();
@@ -33,15 +40,18 @@ export const PlantEventTypeInteractiveDataGraph = () => {
   }
 
   const { events } = data
+  const { low, high, recent } = getEventsLowHighRecentValuesByType(events, eventTypeEnum)
 
-  console.log('events = ', events)
-
+  // todo add support for special edge-case of "light change" event type
+  // instead of "low" it's total "dark" hours
+  // instead of "high" it's total "light" hours
+  // "recent" is not a numerical value but "Light on" vs "Light off"
   return (
     <Fragment>
       <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
-        <DataPoint label={'low'} value={'41.7%'} />
-        <DataPoint label={'recent'} value={'68.5%'} large={true} />
-        <DataPoint label={'high'} value={'82.1%'} />
+        <DataPoint label={'low'} value={low} />
+        <DataPoint label={'recent'} value={recent} large={true} />
+        <DataPoint label={'high'} value={high} />
       </Grid>
       <Grid>
         Graph TBI  

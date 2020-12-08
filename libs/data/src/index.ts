@@ -82,5 +82,6 @@ export * from './lib/event/helpers/event-type-friendly-url-to-enum';
 export * from './lib/event/events-targets/helpers/filter-by-event-type';
 
 export * from './lib/event/helpers/filter-events-by-type';
+export * from './lib/event/events/helpers/get-events-low-high-recent-values-by-type';
 
 export * from './lib/environment/helpers/get-ideal-environment-value-by-event-type';

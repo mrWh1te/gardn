@@ -109,8 +109,8 @@ export const EventTypeStatusProblem = ({ eventType, statusProblem }: EventTypeSt
           <p className="suggestions">Suggestion{suggestedActions.length > 1 && 's'}:</p>
           <ul>
             {
-              suggestedActions.map(suggestedAction =>
-                <li>{ suggestedAction }</li>
+              suggestedActions.map((suggestedAction, index) =>
+                <li key={index}>{ suggestedAction }</li>
               )
             }
           </ul>
