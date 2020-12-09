@@ -6,7 +6,8 @@ import {
   eventTypeFriendlyUrlToEnum,
   getEventsLowHighRecentValuesByType,
   useGetPlantEventsLazyQuery,
-  getLightEventsDarkLightHoursAndRecentStatus
+  getLightEventsDarkLightHoursAndRecentStatus,
+  measurementUnitToAbbreviation
 } from '@gardn/data';
 import { DataPoint, Grid } from '@gardn/ui';
 
@@ -50,9 +51,9 @@ export const PlantEventTypeInteractiveDataGraph = () => {
     return (
       <Fragment>
         <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
-          <DataPoint label={'light'} value={light} />
+          <DataPoint label={'light'} value={light} valueUnit={'hrs'} />
           <DataPoint label={'recent'} value={recent} large={true} />
-          <DataPoint label={'dark'} value={dark} />
+          <DataPoint label={'dark'} value={dark} valueUnit={'hrs'} />
         </Grid>
         <Grid>
           Graph TBI  
@@ -62,13 +63,13 @@ export const PlantEventTypeInteractiveDataGraph = () => {
   }
   
   // regular case for all the other event types (except plant stage change which is not represented here)
-  const { low, high, recent } = getEventsLowHighRecentValuesByType(events, eventTypeEnum)
+  const { low, high, recent, unit } = getEventsLowHighRecentValuesByType(events, eventTypeEnum)
   return (
     <Fragment>
       <Grid columns={3} style={{textAlign: 'center', alignItems: 'flex-end'}}>
-        <DataPoint label={'low'} value={low} />
-        <DataPoint label={'recent'} value={recent} large={true} />
-        <DataPoint label={'high'} value={high} />
+        <DataPoint label={'low'} value={low} valueUnit={measurementUnitToAbbreviation(unit)} />
+        <DataPoint label={'recent'} value={recent} large={true} valueUnit={measurementUnitToAbbreviation(unit)} />
+        <DataPoint label={'high'} value={high} valueUnit={measurementUnitToAbbreviation(unit)} />
       </Grid>
       <Grid>
         Graph TBI  

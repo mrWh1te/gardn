@@ -6,7 +6,7 @@ import { Event } from './../../../../../generated';
 interface DarkLightRecentValues {
   dark: string,
   light: string,
-  recent: string
+  recent: JSX.Element|string
 }
 
 /**
@@ -21,7 +21,7 @@ export const getLightEventsDarkLightHoursAndRecentStatus = (events: DeepPartial<
   const now = new Date().getTime()
   light = Math.round(totalLightOnInMilliSeconds / 1000 / 60 / 60);
   dark = Math.round((now - calculateLightOnSinceUnixTimestamp - totalLightOnInMilliSeconds) / 1000 / 60 / 60);
-  recent = events[0].data['lightOn'] === true ? 'Light On' : 'Light off'
+  recent = events[0].data['lightOn'] === true ? 'On' : 'Off'
 
   return { dark, light, recent }
 }
