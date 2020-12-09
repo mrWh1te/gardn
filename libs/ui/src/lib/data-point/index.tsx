@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 export interface DataPointProps {
   label: string
   value: number | string
+  valueUnit?: string
   large?: boolean
 }
 
@@ -18,6 +19,10 @@ const StyledDataPoint = styled.div`
 
   h5 {
     font-size: 1.5rem;
+    span {
+      font-size: .9rem;
+      font-weight: 300;
+    }
   }
   p {
     font-weight: 300;
@@ -27,14 +32,17 @@ const StyledDataPoint = styled.div`
   &.large {
     h5 {
       font-size: 2.5rem;
+      span {
+        font-size: 1.74rem;
+      }
     }
   }
 `;
 
-export const DataPoint = ({label, value, large}: DataPointProps) => {
+export const DataPoint = ({label, value, valueUnit, large}: DataPointProps) => {
   return (
     <StyledDataPoint className={large === true && 'large'}>
-      <h5>{ value }</h5>
+      <h5>{ value }{ valueUnit && <span>{ valueUnit }</span> }</h5>
       <p>{ label }</p>
     </StyledDataPoint>
   )

@@ -11,5 +11,5 @@ export const minimumParams = () => (
 );
 
 export const allParams = () => (
-  <DataPoint label={text('Label', 'Low')} value={text('Value', '42.1%')} large={boolean('Large', true)} />
+  <DataPoint label={text('Label', 'Low')} value={text('Value', '42.1')} valueUnit={text('Value Unit', '%')} large={boolean('Large', true)} />
 );
