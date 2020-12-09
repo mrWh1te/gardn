@@ -6,7 +6,7 @@ import { Event } from './../../../../../generated';
 interface DarkLightRecentValues {
   dark: string,
   light: string,
-  recent: JSX.Element|string
+  recent: string
 }
 
 /**
