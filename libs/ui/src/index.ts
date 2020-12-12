@@ -46,3 +46,7 @@ export * from './lib/alert';
 
 // Data display
 export * from './lib/data-point';
+
+// charts
+export * from './lib/charts/area-chart';
+export * from './lib/charts/brush-chart';
