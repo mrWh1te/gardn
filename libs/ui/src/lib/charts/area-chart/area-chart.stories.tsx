@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { number, boolean, color } from '@storybook/addon-knobs';
+import { number, boolean, color, object } from '@storybook/addon-knobs';
 
 import appleStock, { AppleStock } from '@visx/mock-data/lib/mocks/appleStock';
 import { scaleTime, scaleLinear } from '@visx/scale';
@@ -41,7 +41,7 @@ export const example = () => {
     <svg width={width}>
       <AreaChart
         hideBottomAxis={boolean('Hide Bottom Axis', false)}
-        data={appleStock}
+        data={object('Data', appleStock) as any as AppleStock[]}
         width={width}
         margin={{ top: number('Margin-top', 1), right: number('Margin-right', 1), bottom: number('Margin-bottom', 1), left: number('Margin-left', 1) }}
         yMax={yMax}

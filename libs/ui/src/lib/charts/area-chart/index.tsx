@@ -24,8 +24,8 @@ const axisLeftTickLabelProps = {
 };
 
 // accessors
-const getDate = (d: AppleStock) => new Date(d.date);
-const getStockValue = (d: AppleStock) => d.close;
+const getDate = (d: AppleStock) => new Date(d.date);  // x-axis
+const getStockValue = (d: AppleStock) => d.close;  // y-axis
 
 export default function AreaChart({
   data,
