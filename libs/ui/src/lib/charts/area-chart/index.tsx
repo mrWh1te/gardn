@@ -4,7 +4,6 @@ import { AreaClosed } from '@visx/shape';
 import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis';
 import { LinearGradient } from '@visx/gradient';
 import { curveMonotoneX } from '@visx/curve';
-import { AppleStock } from '@visx/mock-data/lib/mocks/appleStock';
 
 // Initialize some variables
 const axisColor = '#fff';
@@ -22,41 +21,50 @@ const axisLeftTickLabelProps = {
   textAnchor: 'end' as const,
   fill: axisColor,
 };
+interface AreaChartProps<M extends object> {
+  data: M[];
+  gradientColor: string;
 
-// accessors
-const getDate = (d: AppleStock) => new Date(d.date);  // x-axis
-const getStockValue = (d: AppleStock) => d.close;  // y-axis
+  xScale: AxisScale<number>;
+  yScale: AxisScale<number>;
+  xValueAccessor: (m: M) => number;
+  yValueAccessor: (m: M) => number;
 
-export default function AreaChart({
+  width: number;
+  yMax: number;
+  hideBottomAxis?: boolean;
+  hideLeftAxis?: boolean;
+  topMargin?: number;
+  leftMargin?: number;
+  children?: React.ReactNode;
+}
+
+/**
+ * M is the Model for which has data to graph through instances of it
+ * M will have at least two properties (unknown to this component)
+ *    that represent the x-axis and y-axis values (x, y) to graph
+ * @param param0 
+ *    xValueAccessor = accessor method to get the x-axis value from an instance of M
+ *    yValueAccessor = accessor method to get the y-axis value from an instance of M
+ */
+export default function AreaChart<M extends object>({
   data,
   gradientColor,
   width,
   yMax,
-  margin,
   xScale,
   yScale,
+  xValueAccessor,
+  yValueAccessor,
   hideBottomAxis = false,
   hideLeftAxis = false,
-  top,
-  left,
-  children,
-}: {
-  data: AppleStock[];
-  gradientColor: string;
-  xScale: AxisScale<number>;
-  yScale: AxisScale<number>;
-  width: number;
-  yMax: number;
-  margin: { top: number; right: number; bottom: number; left: number };
-  hideBottomAxis?: boolean;
-  hideLeftAxis?: boolean;
-  top?: number;
-  left?: number;
-  children?: React.ReactNode;
-}) {
+  topMargin,
+  leftMargin,
+  children
+}: AreaChartProps<M>) {
   if (width < 10) return null;
   return (
-    <Group left={left || margin.left} top={top || margin.top}>
+    <Group left={leftMargin} top={topMargin}>
       <LinearGradient
         id="gradient"
         from={gradientColor}
@@ -64,10 +72,10 @@ export default function AreaChart({
         to={gradientColor}
         toOpacity={0.2}
       />
-      <AreaClosed<AppleStock>
+      <AreaClosed<M>
         data={data}
-        x={d => xScale(getDate(d)) || 0}
-        y={d => yScale(getStockValue(d)) || 0}
+        x={d => xScale(xValueAccessor(d)) || 0}
+        y={d => yScale(yValueAccessor(d)) || 0}
         yScale={yScale}
         strokeWidth={1}
         stroke="url(#gradient)"

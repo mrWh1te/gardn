@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 
 import { number, boolean, color, object } from '@storybook/addon-knobs';
 
@@ -10,16 +10,16 @@ import AreaChart from './';
 
 export default { title: 'Charts/AreaChart' };
 
-const getDate = (d: AppleStock) => new Date(d.date);
+const getDate = (d: AppleStock): number => new Date(d.date) as any as number;
 const getStockValue = (d: AppleStock) => d.close;
 
 export const example = () => {
-  const yMax = number('yMax', 100)
-  const xMax = number('xMax', 400)
+  const yMax = number('yMax', 100, {}, 'Chart')
+  const xMax = number('xMax', 373, {}, 'Chart')
 
-  const width = number('Width', 400)
+  const width = number('Width', 400, {}, 'Chart')
 
-  const dateScale = useMemo(
+  const getDateScale = useMemo(
     () =>
       scaleTime<number>({
         range: [0, xMax],
@@ -27,7 +27,7 @@ export const example = () => {
       }),
     [xMax, appleStock],
   );
-  const stockScale = useMemo(
+  const getStockScale = useMemo(
     () =>
       scaleLinear<number>({
         range: [yMax, 0],
@@ -38,17 +38,24 @@ export const example = () => {
   );
   
   return (
-    <svg width={width}>
-      <AreaChart
-        hideBottomAxis={boolean('Hide Bottom Axis', false)}
-        data={object('Data', appleStock) as any as AppleStock[]}
-        width={width}
-        margin={{ top: number('Margin-top', 1), right: number('Margin-right', 1), bottom: number('Margin-bottom', 1), left: number('Margin-left', 1) }}
-        yMax={yMax}
-        xScale={dateScale}
-        yScale={stockScale}
-        gradientColor={color('Gradient', '#af8baf')}
-      />
-    </svg>
+    <Fragment>
+      <svg width={width}>
+        <AreaChart
+          hideBottomAxis={boolean('Hide Bottom Axis', false, 'Chart')}
+          hideLeftAxis={boolean('Hide Left Axis', false, 'Chart')}
+          data={object('Data', appleStock, 'Data') as any as AppleStock[]}
+          xValueAccessor={getDate}
+          yValueAccessor={getStockValue}
+          xScale={getDateScale}
+          yScale={getStockScale}
+          width={width}
+          topMargin={number('Margin-top', 1, {}, 'Chart')}
+          leftMargin={number('Margin-left', 27, {}, 'Chart')}
+          yMax={yMax}
+          gradientColor={color('Gradient', '#af8baf', 'Chart')}
+        />
+      </svg>
+      <p>Change to "dark mode" to see the left & bottom axis</p>
+    </Fragment>
   );
 }

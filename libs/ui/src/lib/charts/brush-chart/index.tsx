@@ -122,10 +122,13 @@ function BrushChart({
           hideBottomAxis={compact}
           data={filteredStock}
           width={width}
-          margin={{ ...margin, bottom: topChartBottomMargin }}
+          topMargin={margin.top}
+          leftMargin={margin.left}
           yMax={yMax}
           xScale={dateScale}
           yScale={stockScale}
+          xValueAccessor={getDate as any as () => number}
+          yValueAccessor={getStockValue}
           gradientColor={background2}
         />
         <AreaChart
@@ -136,8 +139,10 @@ function BrushChart({
           yMax={yBrushMax}
           xScale={brushDateScale}
           yScale={brushStockScale}
-          margin={brushMargin}
-          top={topChartHeight + topChartBottomMargin + margin.top}
+          xValueAccessor={getDate as any as () => number}
+          yValueAccessor={getStockValue}
+          topMargin={topChartHeight + topChartBottomMargin + margin.top}
+          leftMargin={brushMargin.left}
           gradientColor={background2}
         >
           <PatternLines
