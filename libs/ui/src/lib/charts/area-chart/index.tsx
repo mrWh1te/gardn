@@ -5,22 +5,11 @@ import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis';
 import { LinearGradient } from '@visx/gradient';
 import { curveMonotoneX } from '@visx/curve';
 
+import { white } from '../../colors';
+
 // Initialize some variables
-const axisColor = '#fff';
-const axisBottomTickLabelProps = {
-  textAnchor: 'middle' as const,
-  fontFamily: 'Arial',
-  fontSize: 10,
-  fill: axisColor,
-};
-const axisLeftTickLabelProps = {
-  dx: '-0.25em',
-  dy: '0.25em',
-  fontFamily: 'Arial',
-  fontSize: 10,
-  textAnchor: 'end' as const,
-  fill: axisColor,
-};
+// const axisColor = white;
+
 interface AreaChartProps<M extends object> {
   data: M[];
   gradientColor: string;
@@ -37,6 +26,8 @@ interface AreaChartProps<M extends object> {
   topMargin?: number;
   leftMargin?: number;
   children?: React.ReactNode;
+
+  axisColor?: string;
 }
 
 /**
@@ -60,8 +51,28 @@ export default function AreaChart<M extends object>({
   hideLeftAxis = false,
   topMargin,
   leftMargin,
-  children
+  children,
+  axisColor
 }: AreaChartProps<M>) {
+  // colors
+  axisColor = axisColor ?? white
+
+  // label styling
+  const axisBottomTickLabelProps = {
+    textAnchor: 'middle' as const,
+    fontFamily: 'Arial',
+    fontSize: 10,
+    fill: axisColor
+  };
+  const axisLeftTickLabelProps = {
+    dx: '-0.25em',
+    dy: '0.25em',
+    fontFamily: 'Arial',
+    fontSize: 10,
+    textAnchor: 'end' as const,
+    fill: axisColor
+  };
+
   if (width < 10) return null;
   return (
     <Group left={leftMargin} top={topMargin}>

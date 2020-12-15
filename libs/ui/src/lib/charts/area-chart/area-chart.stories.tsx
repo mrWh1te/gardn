@@ -53,6 +53,7 @@ export const example = () => {
           leftMargin={number('Margin-left', 27, {}, 'Chart')}
           yMax={yMax}
           gradientColor={color('Gradient', '#af8baf', 'Chart')}
+          axisColor={color('Axis Color', '#fff', 'Chart')}
         />
       </svg>
       <p>Change to "dark mode" to see the left & bottom axis</p>

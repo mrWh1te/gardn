@@ -8,6 +8,7 @@ import { LinearGradient } from '@visx/gradient';
 import { max, extent } from 'd3-array';
 
 import AreaChart from './../area-chart';
+import { logoDarkGreen, logoLightGreen, white } from './../../colors';
 
 // Initialize some variables
 const stock = appleStock.slice(1000);
@@ -15,9 +16,6 @@ const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 30;
 const PATTERN_ID = 'brush_pattern';
 const GRADIENT_ID = 'brush_gradient';
-export const accentColor = '#f6acc8';
-export const background = '#584153';
-export const background2 = '#af8baf';
 const selectedBrushStyle = {
   fill: `url(#${PATTERN_ID})`,
   stroke: 'white',
@@ -32,6 +30,9 @@ export type BrushProps = {
   height: number;
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
+  backgroundColor?: string;
+  backgroundColor2?: string;
+  accentColor?: string;
 };
 
 function BrushChart({
@@ -44,6 +45,9 @@ function BrushChart({
     bottom: 20,
     right: 20,
   },
+  backgroundColor,
+  backgroundColor2,
+  accentColor
 }: BrushProps) {
   const [filteredStock, setFilteredStock] = useState(stock);
 
@@ -113,10 +117,17 @@ function BrushChart({
     [brushDateScale],
   );
 
+  // colors
+  // todo once babel is fully updated (supports nullish assignments), simplify the nullish coalescing with ??=
+  // todo maybe find babel discord server and ask about nullish assignemtns
+  accentColor = accentColor ?? white
+  backgroundColor = backgroundColor ?? logoDarkGreen
+  backgroundColor2 = backgroundColor2 ?? logoLightGreen
+
   return (
     <div>
       <svg width={width} height={height}>
-        <LinearGradient id={GRADIENT_ID} from={background} to={background2} rotate={45} />
+        <LinearGradient id={GRADIENT_ID} from={backgroundColor} to={backgroundColor2} rotate={45} />
         <rect x={0} y={0} width={width} height={height} fill={`url(#${GRADIENT_ID})`} rx={14} />
         <AreaChart
           hideBottomAxis={compact}
@@ -129,7 +140,8 @@ function BrushChart({
           yScale={stockScale}
           xValueAccessor={getDate as any as () => number}
           yValueAccessor={getStockValue}
-          gradientColor={background2}
+          gradientColor={backgroundColor2}
+          axisColor={accentColor}
         />
         <AreaChart
           hideBottomAxis
@@ -143,7 +155,7 @@ function BrushChart({
           yValueAccessor={getStockValue}
           topMargin={topChartHeight + topChartBottomMargin + margin.top}
           leftMargin={brushMargin.left}
-          gradientColor={background2}
+          gradientColor={backgroundColor2}
         >
           <PatternLines
             id={PATTERN_ID}
