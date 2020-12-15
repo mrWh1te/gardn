@@ -12,17 +12,17 @@ export const exampleMinimumParams = () => (
 
 export const exampleAllParams = () => (
   <BrushChart 
-    width={number('Width', 400)} 
-    height={number('Height', 300)} 
-    compact={boolean('Compact', undefined)}
+    width={number('Width', 400, {}, 'Size')} 
+    height={number('Height', 300, {}, 'Size')} 
+    compact={boolean('Compact', undefined, 'Size')}
     margin={{
-      top: number('Margin-top', 20),
-      left: number('Margin-left', 50),
-      bottom: number('Margin-bottom', 20),
-      right: number('Margin-right', 20)
+      top: number('Margin-top', 20, {}, 'Margin'),
+      left: number('Margin-left', 50, {}, 'Margin'),
+      bottom: number('Margin-bottom', 20, {}, 'Margin'),
+      right: number('Margin-right', 20, {}, 'Margin')
     }}
-    backgroundColor={color('Background color', '#584153')}
-    backgroundColor2={color('Background color 2', '#af8baf')}
-    accentColor={color('Accent color', '#f6acc8')}
+    backgroundColor={color('Background color', '#584153', 'Colors')}
+    backgroundColor2={color('Background color 2', '#af8baf', 'Colors')}
+    accentColor={color('Accent color', '#f6acc8', 'Colors')}
   />
 );

@@ -14,10 +14,10 @@ const getDate = (d: AppleStock): number => new Date(d.date) as any as number;
 const getStockValue = (d: AppleStock) => d.close;
 
 export const example = () => {
-  const yMax = number('yMax', 100, {}, 'Chart')
-  const xMax = number('xMax', 373, {}, 'Chart')
+  const yMax = number('yMax', 100, {}, 'Size')
+  const xMax = number('xMax', 373, {}, 'Size')
 
-  const width = number('Width', 400, {}, 'Chart')
+  const width = number('Width', 400, {}, 'Size')
 
   const getDateScale = useMemo(
     () =>
@@ -41,19 +41,19 @@ export const example = () => {
     <Fragment>
       <svg width={width}>
         <AreaChart
-          hideBottomAxis={boolean('Hide Bottom Axis', false, 'Chart')}
-          hideLeftAxis={boolean('Hide Left Axis', false, 'Chart')}
+          hideBottomAxis={boolean('Hide Bottom Axis', false, 'Axis')}
+          hideLeftAxis={boolean('Hide Left Axis', false, 'Axis')}
           data={object('Data', appleStock, 'Data') as any as AppleStock[]}
           xValueAccessor={getDate}
           yValueAccessor={getStockValue}
           xScale={getDateScale}
           yScale={getStockScale}
           width={width}
-          topMargin={number('Margin-top', 1, {}, 'Chart')}
-          leftMargin={number('Margin-left', 27, {}, 'Chart')}
+          topMargin={number('Margin-top', 1, {}, 'Margin')}
+          leftMargin={number('Margin-left', 27, {}, 'Margin')}
           yMax={yMax}
-          gradientColor={color('Gradient', '#af8baf', 'Chart')}
-          axisColor={color('Axis Color', '#fff', 'Chart')}
+          gradientColor={color('Gradient', '#af8baf', 'Colors')}
+          axisColor={color('Axis Color', '#fff', 'Colors')}
         />
       </svg>
       <p>Change to "dark mode" to see the left & bottom axis</p>
